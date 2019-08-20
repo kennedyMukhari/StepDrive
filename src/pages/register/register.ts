@@ -72,8 +72,11 @@ export class RegisterPage {
     console.log('ionViewDidLoad RegisterPage');
   }
 
-
   goToLogin(){
+    this.navCtrl.setRoot(LoginPage);
+  }
+
+  goToLanding(){
     console.log(this.loginForm.valid);
     
     if(this.password != this.RepeatedPassword){
@@ -83,4 +86,5 @@ export class RegisterPage {
     }
    
   }
+
 }
