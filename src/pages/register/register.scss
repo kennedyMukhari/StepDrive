@@ -2,7 +2,7 @@
 page-register {
     .container {
         width: 100%;
-        height: 100%;
+        height:100%;
       .logo{
         width: 100%;
         height: 22%;
@@ -30,6 +30,7 @@ page-register {
           font-weight: normal;
           // margin: 20px 0px;
           letter-spacing: 5px;
+          margin-top: -9%;
         }
         .inputReg{
             text-align: center;
@@ -88,6 +89,7 @@ page-register {
         .forgot{
           text-align: right;
           width: 100%;
+          margin-top: -2%;
           button{
             background: white;
             color:  #4C0A0A;
