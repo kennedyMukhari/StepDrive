@@ -30,7 +30,7 @@ export class RegisterPage {
 
   
   validation_messages = {
-    
+
     'email': [
       {type: 'required', message: 'Email address is required.'},
       {type: 'pattern', message: 'Email address is not Valid.'},
@@ -40,16 +40,16 @@ export class RegisterPage {
 
     'password': [
      {type: 'required', message: 'Password is required.'},
-     {type: 'minlength', message: 'password must be atleast 6 char or more.'},
-     {type: 'maxlength', message: 'Password must be less than 8 char or less'},
+     {type: 'minlength', message: 'password must be more than 6 characters.'},
+     {type: 'maxlength', message: 'Password must be less than 10 characters.'},
    ],
 
 
 
    'RepeatedPassword': [
     {type: 'required', message: 'Password is required.'},
-    {type: 'minlength', message: 'password must be atleast 6 char or more.'},
-    {type: 'maxlength', message: 'Password must be less than 8 char or less'},
+    {type: 'minlength', message: 'password must be more than 6 characters.'},
+     {type: 'maxlength', message: 'Password must be less than 10 characters.'},
   ]
  
   }

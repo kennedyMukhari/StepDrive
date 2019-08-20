@@ -36,16 +36,16 @@ export class LoginPage {
 
     'password': [
      {type: 'required', message: 'Password is required.'},
-     {type: 'minlength', message: 'password must be more than 6 character.'},
-     {type: 'maxlength', message: 'Password must be less than 10 character.'},
+     {type: 'minlength', message: 'password must be more than 6 characters.'},
+     {type: 'maxlength', message: 'Password must be less than 10 characters.'},
    ],
 
 
 
    'RepeatedPassword': [
     {type: 'required', message: 'Password is required.'},
-    {type: 'minlength', message: 'password must be more than 6 character.'},
-     {type: 'maxlength', message: 'Password must be less than 10 character.'},
+    {type: 'minlength', message: 'password must be more than 6 characters.'},
+     {type: 'maxlength', message: 'Password must be less than 10 characters.'},
   ]
  
   }
