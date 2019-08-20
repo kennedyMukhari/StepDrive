@@ -7,27 +7,54 @@
       <h1>SIGNUP</h1>
       <div>
 
+        <form  [formGroup]="loginForm" class="login">
+
         <div class="input">
           <p>Email</p>
-          <input type="email">
+          <input type="email" formControlName="email" [(ngModel)]="email"> 
         </div>
+
+        <div class="error" *ngFor="let validate of validation_messages.email">
+          <div class="messages" *ngIf="loginForm.get('email').hasError(validate.type) && (loginForm.get('email').dirty || loginForm.get('email').touched)">
+            {{validate.message}}
+          </div>
+        </div>
+
+
+
 
         <div class="input">
           <p>Password</p>
-          <input type="password">
+          <input type="password" type="password" formControlName="password" [(ngModel)]="password">
+        </div>
+
+        <div class="error" *ngFor="let validate of validation_messages.password">
+          <div class="messages" *ngIf="loginForm.get('password').hasError(validate.type) && (loginForm.get('password').dirty || loginForm.get('password').touched)">
+            {{validate.message}}
+          </div>
         </div>
 
         <div class="inputReg">
             <p>Repeat Password</p>
-            <input type="password">
+            <input type="password" formControlName="RepeatedPassword" [(ngModel)]="RepeatedPassword">
           </div>
 
-        <div (click)="goToLogin()" class="forgot">
-          <button>Already have an account?</button>
+
+          <div class="error">
+              <div class="messages" *ngIf="value">
+                <p>Passwords do not match!</p>
+              </div>
+            </div>
+
+        </form>
+
+
+        <div  class="forgot">
+          <button>Already have and account?</button>
         </div>
 
         <div class="button">
-          <button>Register</button>
+          <button (click)="goToLogin()">Register</button>
         </div>
 
       </div>
