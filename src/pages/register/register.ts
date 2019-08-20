@@ -30,8 +30,7 @@ export class RegisterPage {
 
   
   validation_messages = {
-
-
+    
     'email': [
       {type: 'required', message: 'Email address is required.'},
       {type: 'pattern', message: 'Email address is not Valid.'},
