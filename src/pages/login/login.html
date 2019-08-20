@@ -7,17 +7,39 @@
         <h1>Login</h1>
       <div>
 
+          <form  [formGroup]="loginForm" class="login">
+
           <div class="input">
             <p>Email</p>
-            <input type="email">
+            <input type="email" formControlName="email" [(ngModel)]="email"> 
           </div>
+
+          
+        <div class="error" *ngFor="let validate of validation_messages.email">
+            <div class="messages" *ngIf="loginForm.get('email').hasError(validate.type) && (loginForm.get('email').dirty || loginForm.get('email').touched)">
+              {{validate.message}}
+            </div>
+          </div>
+
+
+
           <div class="input">
               <p>Password</p>
-              <input type="email">
+              <input type="email" type="password" formControlName="password" [(ngModel)]="password">
             </div>
+
+            <div class="error" *ngFor="let validate of validation_messages.password">
+                <div class="messages" *ngIf="loginForm.get('password').hasError(validate.type) && (loginForm.get('password').dirty || loginForm.get('password').touched)">
+                  {{validate.message}}
+                </div>
+              </div>
+
+          </form>
+
             <div class="forgot">
                 <button>Forgot Password?</button>
             </div>
+
             <div class="button">
               <button>Login</button>
             </div>
