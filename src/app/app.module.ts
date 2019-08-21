@@ -14,6 +14,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { ProfilePage } from '../pages/profile/profile';
 import { OnBoardingPage } from '../pages/on-boarding/on-boarding';
 import { QuizPage } from '../pages/quiz/quiz';
@@ -51,6 +52,7 @@ import { DataProvider } from '../providers/data/data';
   ],
   providers: [
     StatusBar,
+    Geolocation,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     DataProvider

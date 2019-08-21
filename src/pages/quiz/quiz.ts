@@ -1,4 +1,3 @@
-
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
 import { Quiz } from '../../app/model/Quiz.model';
@@ -8,13 +7,11 @@ import { Quiz } from '../../app/model/Quiz.model';
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-
 @IonicPage()
 @Component({
   selector: 'page-quiz',
   templateUrl: 'quiz.html',
 })
-
 export class QuizPage {
   total:any;
   title: string;
@@ -26,14 +23,11 @@ export class QuizPage {
   datastoreProv: any;
   ShowButton : boolean = false;
   count : number = 0;
-
-
   constructor(public navCtrl: NavController, public navParams: NavParams ) {
     this.quiz = Quiz;
     console.log(Quiz);
     
   }
-
   ionViewDidLoad() {
     console.log('ionViewDidLoad QuizPage');
     this.title = this.navParams.data;
@@ -42,12 +36,6 @@ export class QuizPage {
     this.slides.lockSwipeToPrev(true);
   
   }
-
-
-
-
-
-
   getCorrect(value){
     this.count += 1;
     if (value == true){  
@@ -69,17 +57,14 @@ export class QuizPage {
   // }
   // reset(){
   //   this.grandTotal=0;
-
 setQuestions(value){
   this.questions = value;
 }
 setTotal(val){
   this.grandTotal += val;
   console.log(this.grandTotal);
-
 }
 reset(){
   this.grandTotal=0;
 }
-
 }
