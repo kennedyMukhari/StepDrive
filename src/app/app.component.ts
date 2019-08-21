@@ -15,7 +15,7 @@ import { QuizPage } from '../pages/quiz/quiz';
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = QuizPage;
+  rootPage:any = LoginPage;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {
