@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { LoginPage } from '../login/login';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { HomePage } from '../home/home';
-
+import { Users } from '../../app/user';
 
 /**
  * Generated class for the RegisterPage page.
@@ -18,8 +18,8 @@ import { HomePage } from '../home/home';
   templateUrl: 'register.html',
 })
 export class RegisterPage {
+user =  {} as Users;
 
-  
   loginForm: FormGroup;
   
   

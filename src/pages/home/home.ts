@@ -4,6 +4,7 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 
 declare var google;
+import { ProfilePage } from '../profile/profile';
 
 @Component({
   selector: 'page-home',
@@ -86,4 +87,7 @@ export class HomePage {
 
   // }
 
+  Profile(){
+this.navCtrl.push(ProfilePage);
+  }
 }

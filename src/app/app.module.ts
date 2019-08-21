@@ -3,6 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
+
+
 import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
@@ -13,6 +15,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { ProfilePage } from '../pages/profile/profile';
+import { OnBoardingPage } from '../pages/on-boarding/on-boarding';
+import { QuizPage } from '../pages/quiz/quiz';
 
 @NgModule({
   declarations: [
@@ -22,7 +27,10 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
     HomePage,
     TabsPage,
     LoginPage,
-    RegisterPage
+    RegisterPage,
+    ProfilePage,
+    OnBoardingPage,
+    QuizPage
   ],
   imports: [
     BrowserModule,
@@ -36,7 +44,10 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
     HomePage,
     TabsPage,
     LoginPage,
-    RegisterPage
+    RegisterPage,
+    ProfilePage,
+    OnBoardingPage,
+    QuizPage
   ],
   providers: [
     StatusBar,
