@@ -4,6 +4,7 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
 
+
 import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
@@ -14,6 +15,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
 import { ProfilePage } from '../pages/profile/profile';
+import { OnBoardingPage } from '../pages/on-boarding/on-boarding';
+import { QuizPage } from '../pages/quiz/quiz';
 
 @NgModule({
   declarations: [
@@ -24,7 +27,9 @@ import { ProfilePage } from '../pages/profile/profile';
     TabsPage,
     LoginPage,
     RegisterPage,
-    ProfilePage
+    ProfilePage,
+    OnBoardingPage,
+    QuizPage
   ],
   imports: [
     BrowserModule,
@@ -39,7 +44,9 @@ import { ProfilePage } from '../pages/profile/profile';
     TabsPage,
     LoginPage,
     RegisterPage,
-    ProfilePage
+    ProfilePage,
+    OnBoardingPage,
+    QuizPage
   ],
   providers: [
     StatusBar,
