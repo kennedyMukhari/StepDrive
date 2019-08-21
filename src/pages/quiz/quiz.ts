@@ -31,9 +31,10 @@ export class QuizPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad QuizPage');
     this.title = this.navParams.data;
-    // this.questions = this.datastoreProv.questions;
+    this.questions = this.questions;
     console.log(this.questions);
     // this.slides.lockSwipeToPrev(true);
+    //this.slides.lockSwipeToPrev(true);
   
   }
   getCorrect(value){
