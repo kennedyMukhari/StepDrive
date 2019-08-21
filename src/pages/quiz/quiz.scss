@@ -1,3 +1,31 @@
 page-quiz {
-
+    .container {
+        display: flex;
+        flex-direction: column;
+        .top {
+            // height: 30%;
+            text-align: center;
+            background: #4C0A0A;
+            border-bottom-left-radius: 10%;
+            border-bottom-right-radius: 10%;
+            img {
+                width: 50%;
+            }
+            h1 {
+                color: white;
+            }
+        }
+        .question {
+            text-align: center;
+            .ItemSpace {
+                padding-top: -15px !important;
+                padding-bottom: -12px !important;
+                margin-top: -12px !important;
+                margin-bottom: -12px !important;
+            }
+        }
+        .btn {
+            
+        }
+    }
 }
