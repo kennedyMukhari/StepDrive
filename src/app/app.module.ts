@@ -17,6 +17,7 @@ import { RegisterPage } from '../pages/register/register';
 import { ProfilePage } from '../pages/profile/profile';
 import { OnBoardingPage } from '../pages/on-boarding/on-boarding';
 import { QuizPage } from '../pages/quiz/quiz';
+import { DataProvider } from '../providers/data/data';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { QuizPage } from '../pages/quiz/quiz';
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    DataProvider
   ]
 })
 export class AppModule {}
