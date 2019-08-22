@@ -5,6 +5,7 @@ import { MyApp } from './app.component';
 
 
 
+
 import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
@@ -19,6 +20,7 @@ import { ProfilePage } from '../pages/profile/profile';
 import { OnBoardingPage } from '../pages/on-boarding/on-boarding';
 import { QuizPage } from '../pages/quiz/quiz';
 import { DataProvider } from '../providers/data/data';
+import { MapPage } from '../pages/map/map';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,8 @@ import { DataProvider } from '../providers/data/data';
     RegisterPage,
     ProfilePage,
     OnBoardingPage,
-    QuizPage
+    QuizPage,
+    MapPage
   ],
   imports: [
     BrowserModule,
@@ -48,7 +51,8 @@ import { DataProvider } from '../providers/data/data';
     RegisterPage,
     ProfilePage,
     OnBoardingPage,
-    QuizPage
+    QuizPage,
+    MapPage
   ],
   providers: [
     StatusBar,
