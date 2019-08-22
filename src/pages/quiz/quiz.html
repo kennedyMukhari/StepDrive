@@ -4,14 +4,51 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
+<!-- <ion-header>
   <ion-navbar>
     <ion-title>quiz</ion-title>
   </ion-navbar>
-</ion-header>
+</ion-header> -->
 
-<ion-content padding >
-  <ion-slides  #slides pager >
+<ion-content>
+  <div class="container">
+    <div class="top">
+      <img src="../../assets/imgs/ColorLogo-1.png" alt="">
+      <div>
+        <h1>Questions</h1>
+      </div>
+    </div>
+
+    <div class="question" padding>
+      <ion-slides #slides>
+        <ion-slide *ngFor="let n of quiz[0].questions">
+          <h6> {{n.question}} </h6>
+          <ion-list no-lines>
+            <ion-item class="ItemSpace" *ngFor="let b of n.options" (click)="getCorrect(b.correct)">
+              <p>{{b.option}}</p>
+            </ion-item>
+          </ion-list>
+
+        </ion-slide>
+        <ion-slide>
+          <button ion-button full color="danger" (click)="toResults()">See Results</button>
+
+        </ion-slide>
+        <ion-slide>
+          Result
+
+        </ion-slide>
+      </ion-slides>
+
+    </div>
+    <!-- <div class="btn">
+      <button ion-button full>Next</button>
+    </div> -->
+  </div>
+</ion-content>
+
+
+<!-- <ion-slides  #slides pager >
     <ion-slide  *ngFor="let n of quiz[0].questions">
       <h2> {{n.question}} </h2>
       <ion-list >
@@ -19,32 +56,28 @@
           {{b.option}}
         </ion-item>
       </ion-list>
-      <button *ngIf = "ShowButton">hhh</button>
+     
     </ion-slide>
     <ion-slide>
-    
-      your score is {{grandTotal}}% 
-
- 
-     
-      
-        
+      <button ion-button full color="danger" (click)="toResults()">See Results</button>
   
-    
   </ion-slide>
   <ion-slide>
-    
-    your score is {{grandTotal}}% 
+  Result
 
-
-   
-    
-      
-
-  
 </ion-slide>
- 
-  </ion-slides>
+  </ion-slides> -->
+<!-- 
+  <div *ngFor="let n of quiz[0].questions" class="question">
+      <h4>
+        what must you do when you reach the intersection?
+      </h4>
+    </div>
 
-    
-</ion-content>
+    <div class="slideshow">
+      
+    </div>
+    <div class="btn">
+
+    </div>
+  </div>    -->
