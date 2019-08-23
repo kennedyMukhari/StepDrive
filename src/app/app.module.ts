@@ -29,6 +29,7 @@ import { Question1Page } from '../pages/question1/question1';
 import { Question2Page } from '../pages/question2/question2';
 import { Question3Page } from '../pages/question3/question3';
 import { Question4Page } from '../pages/question4/question4';
+import { CoverQuizPage } from '../pages/cover-quiz/cover-quiz';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { Question4Page } from '../pages/question4/question4';
     Question1Page,
     Question2Page,
     Question3Page,
-    Question4Page 
+    Question4Page,
+    CoverQuizPage
   ],
   imports: [
     BrowserModule,
@@ -71,7 +73,8 @@ import { Question4Page } from '../pages/question4/question4';
     Question1Page,
     Question2Page,
     Question3Page,
-    Question4Page 
+    Question4Page,
+    CoverQuizPage 
   ],
   providers: [
     StatusBar,
