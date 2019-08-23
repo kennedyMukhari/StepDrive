@@ -6,6 +6,7 @@ import { MyApp } from './app.component';
 
 
 
+
 import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
@@ -21,6 +22,13 @@ import { OnBoardingPage } from '../pages/on-boarding/on-boarding';
 import { QuizPage } from '../pages/quiz/quiz';
 import { DataProvider } from '../providers/data/data';
 import { MapPage } from '../pages/map/map';
+import { ScorePage } from '../pages/score/score';
+import { DatastoreProvider } from '../providers/datastore/datastore';
+import { HttpModule } from '@angular/http';
+import { Question1Page } from '../pages/question1/question1';
+import { Question2Page } from '../pages/question2/question2';
+import { Question3Page } from '../pages/question3/question3';
+import { Question4Page } from '../pages/question4/question4';
 
 @NgModule({
   declarations: [
@@ -34,11 +42,17 @@ import { MapPage } from '../pages/map/map';
     ProfilePage,
     OnBoardingPage,
     QuizPage,
-    MapPage
+    MapPage,
+    ScorePage,
+    Question1Page,
+    Question2Page,
+    Question3Page,
+    Question4Page 
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    HttpModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -52,14 +66,20 @@ import { MapPage } from '../pages/map/map';
     ProfilePage,
     OnBoardingPage,
     QuizPage,
-    MapPage
+    MapPage,
+    ScorePage,
+    Question1Page,
+    Question2Page,
+    Question3Page,
+    Question4Page 
   ],
   providers: [
     StatusBar,
     Geolocation,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    DataProvider
+    DataProvider,
+    DatastoreProvider
   ]
 })
 export class AppModule {}

@@ -20,64 +20,31 @@
     </div>
 
     <div class="question" padding>
-      <ion-slides #slides>
-        <ion-slide *ngFor="let n of quiz[0].questions">
-          <h6> {{n.question}} </h6>
-          <ion-list no-lines>
-            <ion-item class="ItemSpace" *ngFor="let b of n.options" (click)="getCorrect(b.correct)">
-              <p>{{b.option}}</p>
-            </ion-item>
-          </ion-list>
+     
 
-        </ion-slide>
-        <ion-slide>
-          <button ion-button full color="danger" (click)="toResults()">See Results</button>
 
-        </ion-slide>
-        <ion-slide>
-          Result
 
-        </ion-slide>
-      </ion-slides>
+        <div class="Q1" *ngIf="Politics">
+            {{Politics.question1}}
+           <br/> <br/> 
+             <input type="radio" name="name1" (click)=" checkAnswer1()">{{Politics.q1}}<br>
+            <input type="radio" name="name1" (click)=" checkAnswer1()">{{Politics.q2}}<br>
+            <input type="radio" name="name1" (click)=" checkAnswer1()">{{Politics.q3}}<br>
+            <input type="radio" name="name1" value="Steve Biko" [(ngModel)]="answer1" (change)="checkAnswer1()">{{Politics.q4}}
+ 
+          </div> 
+
+          
+           
+    
+                
+    
+    
+
 
     </div>
-    <!-- <div class="btn">
-      <button ion-button full>Next</button>
-    </div> -->
+   
   </div>
 </ion-content>
 
 
-<!-- <ion-slides  #slides pager >
-    <ion-slide  *ngFor="let n of quiz[0].questions">
-      <h2> {{n.question}} </h2>
-      <ion-list >
-        <ion-item *ngFor="let b of n.options" (click)="getCorrect(b.correct)">
-          {{b.option}}
-        </ion-item>
-      </ion-list>
-     
-    </ion-slide>
-    <ion-slide>
-      <button ion-button full color="danger" (click)="toResults()">See Results</button>
-  
-  </ion-slide>
-  <ion-slide>
-  Result
-
-</ion-slide>
-  </ion-slides> -->
-<!-- 
-  <div *ngFor="let n of quiz[0].questions" class="question">
-      <h4>
-        what must you do when you reach the intersection?
-      </h4>
-    </div>
-
-    <div class="slideshow">
-      
-    </div>
-    <div class="btn">
-
-    </div>
-  </div>    -->
