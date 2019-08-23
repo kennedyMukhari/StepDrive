@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+
 import { LoginPage } from '../login/login';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { HomePage } from '../home/home';
 import { Users } from '../../app/user';
-
+import * as firebase from 'firebase';
+import { IonicPage, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 /**
  * Generated class for the RegisterPage page.
  *
@@ -55,7 +56,7 @@ user =  {} as Users;
   }
 
 
-  constructor(public navCtrl: NavController, public forms: FormBuilder, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public forms: FormBuilder, public navParams: NavParams,  public loadingCtrl: LoadingController, public alertCtrl: AlertController) {
 
     this.loginForm = this.forms.group({
 
@@ -86,5 +87,31 @@ user =  {} as Users;
     }
    
   }
-
+  createRegister(user: Users) {
+    let loading = this.loadingCtrl.create({
+      content: 'Please wait...',
+      duration: 2000
+    })
+    loading.present();
+    let alertSuccess = this.alertCtrl.create({
+        title: 'Registration',
+        subTitle: 'you have been Successfully Registered. you can Login.',
+        buttons: ['Ok']
+    })
+    firebase.auth().createUserWithEmailAndPassword(user.email, user.password).then((result) => {
+      alertSuccess.present();
+      this.navCtrl.push(LoginPage);
+    }).catch(function(error) {
+      let errorCode = error.code;
+      let errorMessage = error.message;
+      // Handle Errors here.
+      let alert = this.alertCtrl.create({
+        title: errorCode,
+        subTitle: errorMessage,
+        buttons: ['Try Again'],
+    })
+    alert.present();
+    });
+ this.navCtrl.push(LoginPage);
+  }
 }

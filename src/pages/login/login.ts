@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { HomePage } from '../home/home';
 import { RegisterPage } from '../register/register';
+import { IonicPage, NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
+import { Users } from '../../app/user';
 import * as firebase from 'firebase';
-
 
 /**
  * Generated class for the LoginPage page.
@@ -19,7 +20,7 @@ import * as firebase from 'firebase';
   templateUrl: 'login.html',
 })
 export class LoginPage {
- 
+  user =  {} as Users;
   loginForm: FormGroup;
   
   
@@ -51,7 +52,7 @@ export class LoginPage {
   }
 
 
-  constructor(public navCtrl: NavController, public forms: FormBuilder, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public forms: FormBuilder, public navParams: NavParams, public loadingCtrl: LoadingController,   public alertCtrl: AlertController) {
 
     this.loginForm = this.forms.group({
       email: new FormControl('', Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-.]+$')])),
@@ -79,5 +80,33 @@ export class LoginPage {
       this.navCtrl.push(HomePage)
     }
   }
-
+  login(user: Users) {
+    let loading = this.loadingCtrl.create({
+      content: 'Please wait...',
+      duration: 2000
+    })
+  
+    loading.present();
+  
+  let alertSuccess = this.alertCtrl.create({
+   title: 'Login',
+   subTitle: 'You have Successfully LoggedIn',
+   buttons: ['Ok']
+  })
+  
+    firebase.auth().signInWithEmailAndPassword(user.email, user.password).then((result) => {
+        alertSuccess.present();
+        this.navCtrl.setRoot(HomePage);
+    }).catch((error) => {  
+      let errorCode = error.code;
+      let errorMessage = error.message;
+     
+      this.alertCtrl.create({
+        title: errorCode,
+        subTitle: errorMessage,
+        buttons: ['Ok']
+      }).present();
+    });
+  
+  }
 }
