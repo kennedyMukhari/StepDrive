@@ -57,6 +57,11 @@ export class Question2Page {
     }else{
       this.score1 += 0;
     }
+  }
+
+  checkAnswer1(){
+   
+  
     this.navCtrl.push(Question3Page, {score : this.score1})
   }
 

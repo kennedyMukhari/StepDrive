@@ -59,9 +59,14 @@ export class Question1Page {
     }else{
       this.score += 0;
     }
-    this.navCtrl.push(Question2Page, {score : this.score1})
+   
   }
 
+  checkAnswer1(){
+   
+   
+    this.navCtrl.push(Question2Page, {score : this.score1})
+  }
  
   results(): void{
     // if(this.CountNumber < 5){

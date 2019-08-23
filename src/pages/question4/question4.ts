@@ -58,10 +58,14 @@ export class Question4Page {
     }else{
       this.score1 += 0;
     }
-    this.navCtrl.push(ScorePage, {score : this.score1})
+   
   }
 
 
+  checkAnswer1(){
+   
+    this.navCtrl.push(ScorePage, {score : this.score1})
+  }
  
   results(): void{
     
