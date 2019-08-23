@@ -15,11 +15,11 @@
 </ion-header>
 
 <ion-content>
-  <ion-list [hidden]="autocompleteItems.length == 0">
-    <ion-item *ngFor="let item of autocompleteItems" tappable (click)="selectSearchResult(item)">
-      {{ item.description }}
-    </ion-item>
-  </ion-list>
+    <ion-list [hidden]="autocompleteItems.length == 0">
+  <ion-item *ngFor="let item of autocompleteItems" tappable (click)="selectSearchResult(item)">
+    {{ item.description }}
+  </ion-item>
+</ion-list>
   <div class="container">
     <div #map id="map"></div> 
 </div>

@@ -1,71 +1,68 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
 import { Quiz } from '../../app/model/Quiz.model';
-/**
- * Generated class for the QuizPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { HomePage } from '../home/home';
+import { ScorePage } from '../score/score';
+import { DatastoreProvider } from '../../providers/datastore/datastore';
+import { Question1Page } from '../question1/question1';
+
+
 @IonicPage()
 @Component({
   selector: 'page-quiz',
   templateUrl: 'quiz.html',
 })
 export class QuizPage {
-  total:any;
-  title: string;
-  questions: any;
-  lastSlide: any = false;
-  grandTotal: number = 0;
-  quiz = [];
-  @ViewChild('slides') slides: Slides;
-  datastoreProv: any;
-  ShowButton : boolean = false;
-  count : number = 0;
-  constructor(public navCtrl: NavController, public navParams: NavParams ) {
-    this.quiz = Quiz;
-    console.log(Quiz);
+
+  
+  Politics:any;
+  score: number = 0;
+  answer1: string ;
+  answer2: string ;
+  answer3: string ;
+  answer4: string ;
+  answer5: string ;
+
+  CountNumber: number = 0;
+  count1: number = 0;
+  count2: number = 0;
+  count3: number = 0;
+  count4: number = 0;
+  count5: number = 0;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, public data:DatastoreProvider  ) {
+   
     
   }
   ionViewDidLoad() {
-    console.log('ionViewDidLoad QuizPage');
-    this.title = this.navParams.data;
-    this.questions = this.questions;
-    console.log(this.questions);
-    // this.slides.lockSwipeToPrev(true);
-    //this.slides.lockSwipeToPrev(true);
-  
-  }
-  getCorrect(value){
-    this.count += 1;
-    if (value == true){  
-      this.setTotal(20);
-      if (this.count = 5)
-      this.ShowButton == true;
-    } else {
-      console.log('False');
-      
-    }
-    this.slides.slideNext();
-    if (this.slides.isEnd() == true){
-      this.lastSlide = true;
-    }
+    this.data.getData().subscribe(data => {this.Politics = data.Politics});
+
+    console.log('polotics', this.Politics);
     
   }
-  // toResults(){
-  //   this.navCtrl.push(ScorePage);
-  // }
-  // reset(){
-  //   this.grandTotal=0;
-setQuestions(value){
-  this.questions = value;
-}
-setTotal(val){
-  this.grandTotal += val;
-  console.log(this.grandTotal);
-}
-reset(){
-  this.grandTotal=0;
-}
+
+
+  checkAnswer1(){
+
+    if(this.answer1 == "Steve Biko"){
+      this.count1 += 1;
+      if(this.count1 == 1)
+      this.score += 20;
+    }else{
+      this.score += 0;
+    }
+    this.navCtrl.push(Question1Page, {score: this.score})
+  }
+  
+
+
+
+
+  results(): void{
+  
+      this.navCtrl.push(ScorePage , {results : this.score});
+  
+   
+
+  }
 }
