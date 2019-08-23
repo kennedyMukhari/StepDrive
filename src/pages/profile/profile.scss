@@ -1,4 +1,8 @@
 page-profile {
+
+    .no-scroll .scroll-content{
+        overflow: hidden;
+    }
     .container{
         display: flex;
         flex-direction: column;
@@ -16,7 +20,6 @@ page-profile {
         }
         .profImage {
             text-align: center;
-            background: grey;
             height: 25%;
             padding: 0 !important;
             img {
@@ -42,6 +45,9 @@ page-profile {
             height: 45%;
             border-top-left-radius: 25px;
             border-top-right-radius: 25px;
+            h2 {
+                color: white;
+            }
             .notes {
                 background: white;
                 border-top-left-radius: 10px;
@@ -63,7 +69,11 @@ page-profile {
                         border-radius: 10px;
                         width: 100%;
                         height: 100%;
-                        background: white;
+                        background: rgba(255, 255, 255, 0.123);
+
+                        ::placeholder {
+                            padding: 2%;
+                          }
                     }
 
                 }
@@ -72,9 +82,11 @@ page-profile {
                     padding-left:1%; 
                     button {
                         height: 30%;
-                        width: 80%;
+                        width: 85%;
                         background: white;
                         color: black;
+                        font-size:13px; 
+                        font-weight: bold;
                         border-radius: 20px;
                         
                     }
