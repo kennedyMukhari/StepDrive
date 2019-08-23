@@ -11,7 +11,7 @@
 
           <div class="input">
             <p>Email</p>
-            <input type="email" formControlName="email" [(ngModel)]="email"> 
+            <input type="email" formControlName="email" [(ngModel)]="user.email"> 
           </div>
 
           
@@ -25,7 +25,7 @@
 
           <div class="input">
               <p>Password</p>
-              <input type="email" type="password" formControlName="password" [(ngModel)]="password">
+              <input type="email" type="password" formControlName="password" [(ngModel)]="user.password">
             </div>
 
             <div class="error" *ngFor="let validate of validation_messages.password">
@@ -39,9 +39,12 @@
             <div class="forgot">
                 <button (click)="Reg()">Create Account</button>
             </div>
-
+<br>
+            <div class="forgot">
+              <button (click)="forget()">forget password</button>
+          </div>
             <div class="button">
-              <button (click)="Home()">Login</button>
+              <button (click) ="login(user)">Login</button>
             </div>
 
           </form>

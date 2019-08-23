@@ -18,7 +18,7 @@ import { ScorePage } from '../pages/score/score';
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = ProfilePage;
+  rootPage:any = LoginPage;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {

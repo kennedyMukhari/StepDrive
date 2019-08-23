@@ -11,7 +11,7 @@
 
         <div class="input">
           <p>Email</p>
-          <input type="email" formControlName="email" [(ngModel)]="email"> 
+          <input type="email" formControlName="email" [(ngModel)]="user.email"> 
         </div>
 
         <div class="error" *ngFor="let validate of validation_messages.email">
@@ -23,7 +23,7 @@
         
         <div class="input">
           <p>Password</p>
-          <input type="password" type="password" formControlName="password" [(ngModel)]="password">
+          <input type="password" type="password" formControlName="password" [(ngModel)]="user.password">
         </div>
 
         <div class="error" *ngFor="let validate of validation_messages.password">
@@ -52,7 +52,7 @@
         </div>
 
         <div class="button">
-          <button (click)="goToLanding()">Register</button>
+          <button (click)="createRegister(user)">Register</button>
         </div>
 
       </div>
