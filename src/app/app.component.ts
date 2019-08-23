@@ -18,7 +18,11 @@ import { ScorePage } from '../pages/score/score';
   templateUrl: 'app.html'
 })
 export class MyApp {
+<<<<<<< HEAD
   rootPage:any = LoginPage;
+=======
+  rootPage:any =  ScorePage ;
+>>>>>>> 45d66dc46f3747769242bc2de7a271eccce30324
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {
