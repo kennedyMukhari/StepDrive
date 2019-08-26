@@ -1,12 +1,7 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the OnBoardingPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
+import { LoginPage } from '../login/login';
+import { RegisterPage } from '../register/register';
 
 @IonicPage()
 @Component({
@@ -14,12 +9,21 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'on-boarding.html',
 })
 export class OnBoardingPage {
-
+  @ViewChild('slides') slides: Slides
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad OnBoardingPage');
   }
-
+  nextslides(){
+    this.slides.slideNext();
+  }
+  formPage(val) {
+    if (val == 0) {
+      this.navCtrl.setRoot(LoginPage);
+    } else {
+      this.navCtrl.setRoot(RegisterPage);
+    }
+  }
 }

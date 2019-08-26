@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Platform } from 'ionic-angular';
+import { Platform, Tabs } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -19,7 +19,7 @@ import { CoverQuizPage } from '../pages/cover-quiz/cover-quiz';
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = QuizPage;
+  rootPage:any = OnBoardingPage;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {

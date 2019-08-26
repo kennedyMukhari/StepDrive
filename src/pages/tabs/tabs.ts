@@ -4,6 +4,9 @@ import { AboutPage } from '../about/about';
 import { ContactPage } from '../contact/contact';
 import { HomePage } from '../home/home';
 import { QuizPage } from '../quiz/quiz';
+import { YouPage } from '../you/you';
+import { NavController } from 'ionic-angular';
+import { ProfilePage } from '../profile/profile';
 
 @Component({
   templateUrl: 'tabs.html'
@@ -11,11 +14,14 @@ import { QuizPage } from '../quiz/quiz';
 export class TabsPage {
 
   tab1Root = HomePage;
-  tab2Root = AboutPage;
-  tab3Root = ContactPage;
-  tab4Root = QuizPage;
+  tab2Root = QuizPage;
+  tab3Root = YouPage;
+  tab4Root = ProfilePage;
+  tab5Root = AboutPage;
+  constructor(public navCtrl: NavController) {
 
-  constructor() {
-
+  }
+  quizpage(){
+    this.navCtrl.setRoot(QuizPage);
   }
 }
