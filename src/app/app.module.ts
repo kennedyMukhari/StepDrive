@@ -30,6 +30,7 @@ import { Question2Page } from '../pages/question2/question2';
 import { Question3Page } from '../pages/question3/question3';
 import { Question4Page } from '../pages/question4/question4';
 import { CoverQuizPage } from '../pages/cover-quiz/cover-quiz';
+import { YouPage } from '../pages/you/you';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,9 @@ import { CoverQuizPage } from '../pages/cover-quiz/cover-quiz';
     Question2Page,
     Question3Page,
     Question4Page,
-    CoverQuizPage
+    CoverQuizPage,
+    YouPage,
+    ProfilePage
   ],
   imports: [
     BrowserModule,
@@ -74,7 +77,9 @@ import { CoverQuizPage } from '../pages/cover-quiz/cover-quiz';
     Question2Page,
     Question3Page,
     Question4Page,
-    CoverQuizPage 
+    CoverQuizPage,
+    YouPage,
+    ProfilePage
   ],
   providers: [
     StatusBar,

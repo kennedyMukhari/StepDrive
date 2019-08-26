@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+.scroll-content {
+  bottom: 0 !important;
+}
 page-login {
+
     .no-scroll .scroll-content{
         overflow: hidden;
     }
@@ -8,12 +12,14 @@ page-login {
       top: 0;
       left: 0;
       right: 0;
+      bottom: auto;
+      overflow: hidden;
       text-align: center;
       padding: 20px;
-      z-index: 1;
+      z-index: -1;
       text-align: center;
       img{
-        height: 100%;
+        width: 10vw;
       }
     }
     .container {
@@ -26,7 +32,7 @@ page-login {
      background-repeat: no-repeat;
      display: grid;
      align-content: center;
-
+      padding: 0 !important;
       .form{
         width: 100%;
         padding: 5%;

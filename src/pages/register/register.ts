@@ -6,12 +6,6 @@ import { HomePage } from '../home/home';
 import { Users } from '../../app/user';
 import * as firebase from 'firebase';
 import { IonicPage, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
-/**
- * Generated class for the RegisterPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -22,14 +16,14 @@ export class RegisterPage {
 user =  {} as Users;
 
   loginForm: FormGroup;
-  
-  
+
+
     email: string;
     password: string;
     RepeatedPassword: string;
     value: boolean = false;
 
-  
+
   validation_messages = {
 
     'email': [
@@ -52,18 +46,15 @@ user =  {} as Users;
     {type: 'minlength', message: 'password must be more than 6 characters.'},
      {type: 'maxlength', message: 'Password must be less than 10 characters.'},
   ]
- 
+
   }
 
 
   constructor(public navCtrl: NavController, public forms: FormBuilder, public navParams: NavParams,  public loadingCtrl: LoadingController, public alertCtrl: AlertController) {
 
     this.loginForm = this.forms.group({
-
       email: new FormControl('', Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-.]+$')])),
-
       password: new FormControl('', Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(10)])),
-
       RepeatedPassword: new FormControl('', Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(10)]))
     })
 
@@ -79,13 +70,13 @@ user =  {} as Users;
 
   goToLanding(){
     console.log(this.loginForm.valid);
-    
+
     if(this.password != this.RepeatedPassword){
-      this.value = true;  
+      this.value = true;
     }else if(this.loginForm.valid){
       this.navCtrl.setRoot(HomePage);
     }
-   
+
   }
   createRegister(user: Users) {
     let loading = this.loadingCtrl.create({

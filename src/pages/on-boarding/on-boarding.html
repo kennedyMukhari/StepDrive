@@ -1,6 +1,6 @@
 
 <ion-content>
-  <ion-slides pager>
+  <ion-slides #slides pager>
 
     <ion-slide>
       <div class="slide1">
@@ -17,7 +17,7 @@
         </div>
 
         <div class="btn">
-          <button ion-button ful>Get Started</button>
+          <button ion-button ful (click)="nextslides()">Get Started</button>
         </div>
 
       </div>
@@ -36,7 +36,7 @@
         </div>
 
         <div class="btn">
-          <button ion-button ful>Next</button>
+          <button ion-button ful (click)="nextslides()">Next</button>
         </div>
 
       </div>
@@ -55,10 +55,10 @@
         </div>
 
         <div class="btn">
-          <button ion-button ful>Login</button>
+          <button ion-button ful (click)="formPage(0)">Login</button>
         </div>
         <div class="btn2">
-          <button ion-button ful>SignUp</button>
+          <button ion-button ful (click)="formPage(1)">SignUp</button>
         </div>
       </div>
     </ion-slide>
