@@ -19,10 +19,7 @@ import { CoverQuizPage } from '../pages/cover-quiz/cover-quiz';
   templateUrl: 'app.html'
 })
 export class MyApp {
-
-  rootPage:any = LoginPage;
-
-
+  rootPage:any = QuizPage;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {
