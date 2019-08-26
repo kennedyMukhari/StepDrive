@@ -3,27 +3,35 @@ page-register {
     .no-scroll .scroll-content{
         overflow: hidden;
     }
+    .logo{
+      position: absolute;
+      left: 0;
+      right: 0;
+      text-align: center;
+      img{
+        height: 100%;
+      }
+    }
     .container {
+      display: grid;
+      align-content: center;
         width: 100%;
         height:100%;
-      .logo{
-        width: 100%;
-        height: 22%;
-        text-align: center;
-        img{
-          height: 100%;
-        }
-      }
+        background: url(../../assets/imgs/roberto-nickson-Ddjl0Cicdr4-unsplash.jpg);
+        background-attachment: fixed;
+        background-size: auto 100%;
+        background-position: center;
+        background-repeat: no-repeat;
       .form{
-        width: 80%;
-        height: 55%;
-        margin: auto;
-        padding: 5%;
-        height: 605;
-        background: #4C0A0A;
+        width: 100%;
+        padding: 10% 5%;
+        filter: blur(0px);
+        background:url(../../assets/imgs/roberto-nickson-Ddjl0Cicdr4-unsplash_blurred.jpg);
+        background-attachment: fixed;
+        background-position: center;
+        background-size: cover;
         color: white;
         text-align: right;
-        border-radius: 30px 30px 0px 30px;
         position: relative;
         display: grid;
         align-content: center;
@@ -103,28 +111,24 @@ page-register {
           }
         }
         .button{
+          text-align: center;
           position: absolute;
-          bottom: -30px;
-          border-radius: 30px 0px 30px 30px;
+          bottom: -20px;
           right: 0px;
-          right:  0px;
-          width: 50%;
+          left:  0px;
+          overflow: hidden;
           button{
+            text-shadow: 0px 2px 2px #1717174f;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color:#ffffff;
+            border-radius: 30px;
             margin: 0;
-            padding: 20px;
-            background: linear-gradient(#4C0A0A, #790B0B);
-            width: 100%;
-            color: white;
+            padding: 15px;
+            background: linear-gradient(#767B91, #2E354E);
+            width: 60%;
           }
         }
-      }
-      .footer-background{
-        width: 100%;
-        height: 30%;
-        background: url(../../assets/imgs/MaskFooter.svg);
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-size: 100% 100%;
       }
     }
 }
