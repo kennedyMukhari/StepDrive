@@ -31,7 +31,7 @@ import { Question3Page } from '../pages/question3/question3';
 import { Question4Page } from '../pages/question4/question4';
 import { CoverQuizPage } from '../pages/cover-quiz/cover-quiz';
 import { YouPage } from '../pages/you/you';
-
+import { IonicStorageModule } from "@ionic/storage";
 @NgModule({
   declarations: [
     MyApp,
@@ -57,7 +57,8 @@ import { YouPage } from '../pages/you/you';
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    HttpModule
+    HttpModule,
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -87,7 +88,8 @@ import { YouPage } from '../pages/you/you';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     DataProvider,
-    DatastoreProvider
+    DatastoreProvider,
+    HttpModule
   ]
 })
 export class AppModule {}

@@ -2,6 +2,8 @@
 import { Component, ViewChild, ElementRef, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { Http } from '@angular/http';
+import { PARAMETERS } from '@angular/core/src/util/decorators';
 declare var google;
 
 @IonicPage()
@@ -15,20 +17,14 @@ export class MapPage {
   GoogleAutocomplete: any;
   autocomplete: { input: string; };
   autocompleteItems: any[];
-
-
-
-
   GooglePlaces: any;
   geocoder: any
-
   loading: any;
   markers: any;
   nearbyItems: any[];
 
-  constructor(public navCtrl: NavController, public geolocation: Geolocation,public zone: NgZone,
+  constructor(public navCtrl: NavController, public geolocation: Geolocation,public zone: NgZone, private http: Http
     ) {
-
       this.geocoder = new google.maps.Geocoder;
       this.markers = [];
 
@@ -38,25 +34,25 @@ export class MapPage {
   }
 
   ionViewDidLoad(){
+    let location = '184a Matshaya Street, Naledi, Soweto';
+
     this.loadMap();
   }
 
 
   loadMap(){
-
-    let latLng = new google.maps.LatLng(-34.9290, 138.6010);
+    let latLng = new google.maps.LatLng(30.5595, 22.9375);
 
     let mapOptions = {
       center: latLng,
       zoom: 15,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
     }
 
     this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-
   }
 
-  addMarker(){
+  addMarker(value){
 
     let marker = new google.maps.Marker({
       map: this.map,
