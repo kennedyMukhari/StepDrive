@@ -13,6 +13,7 @@ import { QuizPage } from '../pages/quiz/quiz';
 import { MapPage } from '../pages/map/map';
 import { ProfilePage } from '../pages/profile/profile';
 import { ScorePage } from '../pages/score/score';
+import { CoverQuizPage } from '../pages/cover-quiz/cover-quiz';
 
 @Component({
   templateUrl: 'app.html'
