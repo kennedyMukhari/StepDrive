@@ -2,11 +2,7 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
-
-
-
-
-
+import { IonicSwipeAllModule } from "ionic-swipe-all";
 import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
@@ -16,12 +12,11 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
-import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { Geolocation } from '@ionic-native/geolocation';
 import { ProfilePage } from '../pages/profile/profile';
 import { OnBoardingPage } from '../pages/on-boarding/on-boarding';
 import { QuizPage } from '../pages/quiz/quiz';
 import { DataProvider } from '../providers/data/data';
-import { MapPage } from '../pages/map/map';
 import { ScorePage } from '../pages/score/score';
 import { DatastoreProvider } from '../providers/datastore/datastore';
 import { HttpModule } from '@angular/http';
@@ -44,7 +39,6 @@ import { IonicStorageModule } from "@ionic/storage";
     ProfilePage,
     OnBoardingPage,
     QuizPage,
-    MapPage,
     ScorePage,
     Question1Page,
     Question2Page,
@@ -58,7 +52,8 @@ import { IonicStorageModule } from "@ionic/storage";
     BrowserModule,
     IonicModule.forRoot(MyApp),
     HttpModule,
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
+    IonicSwipeAllModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -72,7 +67,6 @@ import { IonicStorageModule } from "@ionic/storage";
     ProfilePage,
     OnBoardingPage,
     QuizPage,
-    MapPage,
     ScorePage,
     Question1Page,
     Question2Page,

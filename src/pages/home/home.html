@@ -1,16 +1,24 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>
-      Map
-    </ion-title>
-    <ion-buttons end>
-      <button ion-button (click)="addMarker()"><ion-icon name="add"></ion-icon>Add Marker</button>
-    </ion-buttons>  
-  </ion-navbar>
-</ion-header>
-
 <ion-content>
+  <!--  -->
+
   <div class="container">
-    <div #map id="map"></div> 
+      <div #list (click)="swipeUp()" [ngClass]="{'list': display, 'listinactive': !display}">
+          <div class="toggler">
+              <ion-icon *ngIf="display" class="arrow" name="arrow-dropdown"></ion-icon>
+              <ion-icon *ngIf="!display" class="arrow" name="arrow-dropup"></ion-icon>
+          </div>
+          <div class="s-list">
+            <div class="card" *ngFor="let u of users">
+              <div class="image">
+                <img src="../../assets/imgs/african-american-teen-learning-to-drive-with-mom-123133825-580f95893df78c2c73b8c4ac.jpg" alt="">
+              </div>
+              <div class="details">
+                <p><b> L-Mani Driving School </b></p>
+                <p> 0000 Street Name, Soweto, Johannesburg</p>
+              </div>
+            </div>
+          </div>
+        </div>
+    <div #map id="map"></div>
 </div>
 </ion-content>

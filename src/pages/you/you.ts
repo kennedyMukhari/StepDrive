@@ -1,12 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the YouPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { Component, ViewChild, ElementRef, Renderer2 } from '@angular/core';
+import { IonicPage, NavController, NavParams, Keyboard } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -14,12 +7,27 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'you.html',
 })
 export class YouPage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  @ViewChild('image') image: ElementRef;
+  user = {
+    name: '',
+    surname: '',
+    number: null
+  }
+  constructor(public navCtrl: NavController, public navParams: NavParams, private keyBoard: Keyboard, private renderer: Renderer2) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad YouPage');
   }
+  checkeyboard(event) {
+    if (this.keyBoard.isOpen()) {
+      console.log('hasFocusedTextInput', this.keyBoard.isOpen());
+      this.renderer.setStyle(this.image.nativeElement, 'opacity', '0')
+    } else {
+      console.log('hasnotFocusedTextInput', this.keyBoard.isOpen());
+      this.renderer.setStyle(this.image.nativeElement, 'opacity', '1')
+    }
 
+
+  }
 }

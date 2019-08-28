@@ -1,10 +1,19 @@
-import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
-import { Quiz } from '../../app/model/Quiz.model';
-import { HomePage } from '../home/home';
-import { ScorePage } from '../score/score';
-import { DatastoreProvider } from '../../providers/datastore/datastore';
-import { Question1Page } from '../question1/question1';
+import {
+  Component,
+  ViewChild
+} from '@angular/core';
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  Slides
+} from 'ionic-angular';
+import {
+  ScorePage
+} from '../score/score';
+import {
+  DatastoreProvider
+} from '../../providers/datastore/datastore';
 
 
 @IonicPage()
@@ -13,60 +22,158 @@ import { Question1Page } from '../question1/question1';
   templateUrl: 'quiz.html',
 })
 export class QuizPage {
-
-  
-  Politics:any;
-  score: number = 0;
-  answer1: string ;
-  answer2: string ;
-  answer3: string ;
-  answer4: string ;
-  answer5: string ;
-
-  CountNumber: number = 0;
-  count1: number = 0;
-  count2: number = 0;
-  count3: number = 0;
-  count4: number = 0;
-  count5: number = 0;
-
-  constructor(public navCtrl: NavController, public navParams: NavParams, public data:DatastoreProvider  ) {
-   
-    
+  landing = {
+    active: true,
+    inactive: false
   }
-  ionViewDidLoad() {
-    this.data.getData().subscribe(data => {this.Politics = data.Politics});
+  @ViewChild('slide') slides: Slides;
+  grandTotal = 0;
+  questions: Array < QUESTION > = [
+    {
+    question: 'Reprehenderit laboris adipisicing qui do.',
+    options: [{
+        option: 'Option 1',
+        correct: true
+      },
+      {
+        option: 'Option 2',
+        correct: false
+      },
+      {
+        option: 'Option 3',
+        correct: false
+      },
+      {
+        option: 'Option 4',
+        correct: false
+      }
+    ]
+  },{
+    question: 'Sono da non. E esperienza con e forza noia volta alli impermutabile io. Uomini propria quale dea quali sua fu. ',
+    options: [{
+        option: 'Option 1',
+        correct: true
+      },
+      {
+        option: 'Option 2',
+        correct: false
+      },
+      {
+        option: 'Option 3',
+        correct: false
+      },
+      {
+        option: 'Option 4',
+        correct: false
+      }
+    ]
+  },{
+    question: 'E apparire donne noi raccontare non lui. Infiniti temporali divina essaudisce dovendo.',
+    options: [{
+        option: 'Option 1',
+        correct: true
+      },
+      {
+        option: 'Option 2',
+        correct: false
+      },
+      {
+        option: 'Option 3',
+        correct: false
+      },
+      {
+        option: 'Option 4',
+        correct: false
+      }
+    ]
+  },{
+    question: 'Viviamo alle e piaceri alla audaci in come né la. Volta beati con fa cosa piene piú divenuti e infiniti. Delle potendo a di alli transitorie accio in e esser. Intendo ora. Noi degli.',
+    options: [{
+        option: 'Option 1',
+        correct: true
+      },
+      {
+        option: 'Option 2',
+        correct: false
+      },
+      {
+        option: 'Option 3',
+        correct: false
+      },
+      {
+        option: 'Option 4',
+        correct: false
+      }
+    ]
+  },{
+    question: "E siamo e di né udita fosse sí sua. In l'acume fermi. L'uomo quale impetrata di che credere. Beati degli noi di. Se fosse impetrata tutte infiniti beati colui cose alle. Transitorie procuratore benignita che di principio se.",
+    options: [{
+        option: 'Option 1',
+        correct: true
+      },
+      {
+        option: 'Option 2',
+        correct: false
+      },
+      {
+        option: 'Option 3',
+        correct: false
+      },
+      {
+        option: 'Option 4',
+        correct: false
+      }
+    ]
+  }]
 
-    console.log('polotics', this.Politics);
-    
+  constructor(public navCtrl: NavController, public navParams: NavParams, public data: DatastoreProvider) {}
+  ionViewDidLoad() {this.slides.lockSwipes(true);this.grandTotal = 0;}
+  start() {
+    this.landing.inactive = true;
   }
+  checkAnswer(value) {
+    console.log(value);
 
-
-  checkAnswer1(){
-
-    if(this.answer1 == "Steve Biko"){
-      this.count1 += 1;
-      if(this.count1 == 1)
-      this.score += 20;
-    }else{
-      this.score += 0;
+    if(this.slides.isEnd()) {
+      if (value) {
+        this.grandTotal += 20;
+        this.navCtrl.setRoot(ScorePage, this.grandTotal)
+      } else {
+        this.navCtrl.setRoot(ScorePage, this.grandTotal)
+      }
+    } else {
+      if (value) {
+        this.grandTotal += 20;
+        this.slides.lockSwipes(false);
+        this.slides.slideNext();
+        this.slides.lockSwipes(true);
+      } else {
+        this.slides.lockSwipes(false);
+        this.slides.slideNext();
+        this.slides.lockSwipes(true);
+      }
     }
-   
   }
 
-  checkAnswer2(){
-    this.navCtrl.push(Question1Page, {score: this.score})
-  }
-  
-
-
-
-
-  results(): void{
-  
-      this.navCtrl.push(ScorePage , {results : this.score});
-  
-   
-
-  }
+  results(): void {}
+}
+export interface QUESTION {
+  question: string;
+  options: [{
+      option: string,
+      correct: boolean
+    },
+    {
+      option: string,
+      correct: boolean
+    },
+    {
+      option: string,
+      correct: boolean
+    },
+    {
+      option: string,
+      correct: boolean
+    }
+  ]
 }

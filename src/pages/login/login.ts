@@ -8,13 +8,6 @@ import { Users } from '../../app/user';
 import * as firebase from 'firebase';
 import { TabsPage } from '../tabs/tabs';
 
-/**
- * Generated class for the LoginPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @IonicPage()
 @Component({
   selector: 'page-login',
@@ -101,8 +94,10 @@ export class LoginPage {
       loading.dismiss();
         this.navCtrl.setRoot(TabsPage);
     }).catch((error) => {
+      console.log(error);
+
       loading.dismiss();
-      let errorCode = error.code;
+      let errorCode = 'Error';
       let errorMessage = error.message;
 
       this.alertCtrl.create({

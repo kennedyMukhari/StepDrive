@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 
 import { LoginPage } from '../login/login';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import { HomePage } from '../home/home';
 import { Users } from '../../app/user';
 import * as firebase from 'firebase';
 import { IonicPage, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
+import { TabsPage } from '../tabs/tabs';
 
 @IonicPage()
 @Component({
@@ -68,16 +68,6 @@ user =  {} as Users;
     this.navCtrl.setRoot(LoginPage);
   }
 
-  goToLanding(){
-    console.log(this.loginForm.valid);
-
-    if(this.password != this.RepeatedPassword){
-      this.value = true;
-    }else if(this.loginForm.valid){
-      this.navCtrl.setRoot(HomePage);
-    }
-
-  }
   createRegister(user: Users) {
     let loading = this.loadingCtrl.create({
       content: 'Please wait...',
@@ -91,7 +81,7 @@ user =  {} as Users;
     })
     firebase.auth().createUserWithEmailAndPassword(user.email, user.password).then((result) => {
       alertSuccess.present();
-      this.navCtrl.push(LoginPage);
+      this.navCtrl.push(TabsPage);
     }).catch(function(error) {
       let errorCode = error.code;
       let errorMessage = error.message;

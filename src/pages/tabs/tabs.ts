@@ -1,18 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 
 import { AboutPage } from '../about/about';
 import { ContactPage } from '../contact/contact';
 import { HomePage } from '../home/home';
 import { QuizPage } from '../quiz/quiz';
 import { YouPage } from '../you/you';
-import { NavController } from 'ionic-angular';
+import { NavController, Tabs } from 'ionic-angular';
 import { ProfilePage } from '../profile/profile';
 
 @Component({
   templateUrl: 'tabs.html'
 })
 export class TabsPage {
-
+  @ViewChild('tabs') tabs: Tabs;
   tab1Root = HomePage;
   tab2Root = QuizPage;
   tab3Root = YouPage;
@@ -21,7 +21,9 @@ export class TabsPage {
   constructor(public navCtrl: NavController) {
 
   }
-  quizpage(){
-    this.navCtrl.setRoot(QuizPage);
+  async quizpage(){
+    if (this.tabs.getSelected().tabTitle == 'Quiz') {
+      await this.navCtrl.setRoot(QuizPage);
+    }
   }
 }
