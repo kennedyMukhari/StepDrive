@@ -14,6 +14,7 @@ export class OnBoardingPage {
   }
 
   ionViewDidLoad() {
+    // this.storage.clear()
     this.storage.get('onboarding').then((res) => {
       if (res) {
         this.navCtrl.setRoot(LoginPage);

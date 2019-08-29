@@ -63,7 +63,7 @@ page-you {
   }
   .image {
     position: absolute;
-    bottom: 10px !important;
+    bottom: -30px !important;
     z-index: 5;
     left: 0;
     right: 0;
@@ -77,13 +77,14 @@ page-you {
     }
   }
   .foot {
-    height: 30%;
+    height: 40%;
     width: 100%;
+    background: url(../../assets/imgs/header.svg);
     transform: translateY(-10%) !important;
     overflow: hidden !important;
-    img {
-      transform: rotate(180deg) !important;
-      width: 100vw !important;
-    }
+    background-position-y: 100%;
+    transform: rotate(180deg) !important;
+    background-repeat: no-repeat;
+    background-size: cover;
   }
 }

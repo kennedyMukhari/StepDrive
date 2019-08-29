@@ -23,7 +23,7 @@ export class ScorePage {
   ionViewDidLoad() {
    this.results = this.navParams.data;
    if(this.results < 80){
-     this.title = "On boy :("
+     this.title = "Oh boy :("
     this.text = "There are some things you did not  get right";
     this.pass = false;
   }else{

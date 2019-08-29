@@ -1,4 +1,4 @@
-<ion-content swipeAll (click)="checkeyboard($event)">
+<ion-content swipeAll (click)="checkeyboard()">
 <div class="container">
   <div class="header">
     <h1>Create Profile</h1>
@@ -7,7 +7,6 @@
         <button>Select Image</button>
       </div>
     <div class="form">
-
         <div class="input">
             <p>Name</p>
             <input type="text" [(ngModel)]="user.name">
@@ -29,7 +28,7 @@
       <img src="../../assets/imgs/blacklogo.svg" alt="">
     </div>
     <div class="foot">
-        <img  id="bg" src="../../assets/imgs/header.svg" alt="">
+        <!-- <img src="../../assets/imgs/header.svg" alt=""> -->
     </div>
 </div>
 </ion-content>

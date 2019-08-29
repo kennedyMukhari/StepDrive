@@ -19,15 +19,11 @@ export class YouPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad YouPage');
   }
-  checkeyboard(event) {
+  checkeyboard() {
     if (this.keyBoard.isOpen()) {
-      console.log('hasFocusedTextInput', this.keyBoard.isOpen());
       this.renderer.setStyle(this.image.nativeElement, 'opacity', '0')
     } else {
-      console.log('hasnotFocusedTextInput', this.keyBoard.isOpen());
       this.renderer.setStyle(this.image.nativeElement, 'opacity', '1')
     }
-
-
   }
 }
