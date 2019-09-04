@@ -1,34 +1,83 @@
-<ion-content swipeAll (click)="checkeyboard()">
-<div class="container">
-  <div class="header">
-    <h1>Create Profile</h1>
-    </div>
-    <div class="button">
-        <button>Select Image</button>
-      </div>
-    <div class="form">
-        <div class="input">
-            <p>Name</p>
-            <input type="text" [(ngModel)]="user.name">
+<ion-content (click)="checkkeyboard() " >
+<div class="ultimate" >
+    <div *ngIf="!isprofile" class='container'>
+        <div class="header">
+          <h1>Create Profile</h1>
           </div>
-          <div class="input">
-              <p>Surname</p>
-              <input type="text" [(ngModel)]="user.surname">
+          <div *ngIf="!user.image" class="button">
+                <button (click)="getImage()" >Select Image</button>
             </div>
-            <div class="input">
-                <p>Number</p>
-                <input type="tel" [(ngModel)]="user.number">
+            <div *ngIf="user.image" class="profileimage">
+              <img src="{{user.image}}" alt="">
+              <div (click)="removeimage()" class="delete">
+                  <ion-icon name="trash" style="margin: auto;font-size: 5vw;"></ion-icon>
               </div>
-
-    </div>
-    <div class="button">
-                  <button>Done</button>
+            </div>
+            <form  [formGroup]="profileForm">
+              <div class="form">
+              <div class="input">
+                  <p>Name</p>
+                  <input (click)="checkkeyboard()" type="text" formControlName="name" [(ngModel)]="user.name">
                 </div>
-    <div #image class="image">
-      <img src="../../assets/imgs/blacklogo.svg" alt="">
-    </div>
-    <div class="foot">
-        <!-- <img src="../../assets/imgs/header.svg" alt=""> -->
-    </div>
+                <div class="input">
+                    <p>Surname</p>
+                    <input (click)="checkkeyboard()" type="text" formControlName="surname" [(ngModel)]="user.surname">
+                  </div>
+                  <div class="input">
+                      <p>Number</p>
+                      <input (click)="checkkeyboard()" type="tel" formControlName="phone" [(ngModel)]="user.phone">
+                    </div>
+          </div>
+            </form>
+          <div class="button">
+                        <button [disabled]="user.image==null" (click)="createUser(user)">Done</button>
+                      </div>
+          <div *ngIf="!keyOpen" class="image">
+            <img src="../../assets/imgs/blacklogo.svg">
+          </div>
+          <div class="foot">
+              <!-- <img src="../../assets/imgs/header.svg" alt=""> -->
+          </div>
+      </div>
+      <div *ngIf="isprofile" class="profile">
+        <div class="prof-header">
+          <img src="../../assets/imgs/header.svg" alt="">
+        </div>
+        <div  class="prof-container">
+          <div></div>
+          <div *ngIf="!keyOpen" class="user-p">
+              <div class="prof-image">
+                  <img src="{{user.image}}" alt="">
+                </div>
+                <div class="prof-data">
+                  <h1>Hello, {{user.name}}</h1>
+                  <p *ngIf="user.address">{{user.address}}</p>
+                  <p>{{user.phone}}</p>
+                  <div *ngIf="user.location" class="address">
+                    <p>{{user.location.address}}</p>
+                  </div>
+                  <button ion-button round>Logout</button>
+                </div>
+          </div>
+          <div class="prof-edit">
+            <button (click)="editprof()">Edit Profile</button>
+          </div>
+          <div class="prof-notes">
+            <div class="n-head">
+              <h2>My Notes</h2>
+            </div>
+            <div class="n-cont">
+              <div *ngFor="let n of notes; let i = index" class="n-bubble">
+                <h5>Lesson {{i+1}}</h5>
+                <p>"{{n.text}}" - <sub>{{n.datecreated}}</sub> </p>
+              </div>
+            </div>
+            <div class="n-input">
+              <textarea rows="5" placeholder="New Note..." [(ngModel)]="note.text"></textarea>
+              <button (click)="createnote()">Create Note</button>
+            </div>
+          </div>
+        </div>
+      </div>
 </div>
 </ion-content>

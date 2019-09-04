@@ -1,17 +1,36 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>
-      Contact
-    </ion-title>
-  </ion-navbar>
-</ion-header>
+<ion-content class="no-scroll">
+    <div class="logo">
+        <img src="../../assets/imgs/african-american-teen-learning-to-drive-with-mom-123133825-580f95893df78c2c73b8c4ac.jpg" alt="">
+      </div>
+  <div class="container">
+    <div class="form">
 
-<ion-content>
-  <ion-list>
-    <ion-list-header>Follow us on Twitter</ion-list-header>
-    <ion-item>
-      <ion-icon name="ionic" item-start></ion-icon>
-      @ionicframework
-    </ion-item>
-  </ion-list>
+      <div>
+
+
+<p>Requested {{request.package.number}} lessons for R{{request.package.amount}}.00</p>
+        <div class="input">
+          <p>Date In</p>
+          <ion-datetime [(ngModel)]="request.datein" style="border: solid 1px white;border-radius: 200px;" displayFormat="YYYY-MM-DD" pickerFormat="DD MMMM YYYY" ></ion-datetime>
+        </div>
+        <div class="input">
+            <p>Date out</p>
+            <ion-datetime [(ngModel)]="request.dateout" style="border: solid 1px white;border-radius: 200px;" displayFormat="YYYY-MM-DD" pickerFormat="DD MMMM YYYY"></ion-datetime>
+          </div>
+          <div class="input">
+              <p>Address</p>
+              <input (change)="checkAddress()" [(ngModel)]="request.location.address" type="text">
+              <div>{{message}}</div>
+            </div>
+          <div class="input">
+              <ion-checkbox color="dark" [(ngModel)]="request.book"></ion-checkbox> I want a study guide (book)
+          </div>
+          <p>*This information is kept very safe and it is only used
+              to notify the instructor where to find you.</p>
+          <div class="button">
+              <button [disabled]="!addressokay" (click)="createrequest()">Send Request</button>
+            </div>
+      </div>
+    </div>
+  </div>
 </ion-content>
