@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.ionic.starter" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.team.stepdriveowner" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>stepDrive</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="hi@ionicframework.com" href="http://ionicframework.com/">Ionic Framework Team</author>
-    <content src="index.html" />
+    <content original-src="index.html" src="http://192.168.1.19:8100" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -105,4 +105,5 @@
     <plugin name="cordova-plugin-ionic-webview" spec="^4.0.0" />
     <allow-navigation href="http://192.168.1.32:8100" />
     <allow-navigation href="http://192.168.1.11:8100" sessionid="9b5a36b5" />
+    <allow-navigation href="http://192.168.1.19:8100" sessionid="89b38a0b" />
 </widget>
