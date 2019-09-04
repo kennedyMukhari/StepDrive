@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 
 import { AboutPage } from '../about/about';
 import { ContactPage } from '../contact/contact';
@@ -19,7 +19,6 @@ export class TabsPage {
   tab4Root = ProfilePage;
   tab5Root = AboutPage;
   constructor(public navCtrl: NavController) {
-
   }
   async quizpage(){
     if (this.tabs.getSelected().tabTitle == 'Quiz') {

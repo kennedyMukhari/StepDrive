@@ -1,24 +1,58 @@
 <ion-content>
-  <!--  -->
-
+    <div class="aboutschool" [ngClass]="{'aboutschool-inactive': about, 'aboutschool': !about}">
+        <div class="information">
+          <div class="s-image">
+            <div class="a-back">
+              <button ion-fab mini (click)="viewSchool(school)" ><ion-icon name="arrow-back"></ion-icon></button>
+            </div>
+            <img src="{{school.image}}">
+          </div>
+          <h1 *ngIf="school.schoolname">{{school.schoolname}}</h1>
+          <p>{{school.desc}}
+              </p>
+              <p>{{school.address}}</p>
+        </div>
+        <div class="lesson-cont">
+            <div class="lessons" *ngFor="let p of school.packages">
+                <p>{{p.number}} lesson(s) R{{p.amount}}.00</p> <button (click)="requestLesson(school, p)">Request lesson</button>
+              </div>
+                    <div class="custom">
+                        <div class="input">
+                           <div> <p>Custom Lessons</p>
+                            <input type="tel" [(ngModel)]="noLessons"></div>
+                          </div>
+                          <div class="r-bbutton">
+                              <button [disabled]="!noLessons" (click)="requestLesson(school, noLessons)">Request lesson</button>
+                          </div>
+                    </div>
+        </div>
+      </div>
   <div class="container">
-      <div #list (click)="swipeUp()" [ngClass]="{'list': display, 'listinactive': !display}">
-          <div class="toggler">
+      <div #list  [ngClass]="{'list': display, 'listinactive': !display}">
+          <div (click)="swipeUp()" class="toggler">
               <ion-icon *ngIf="display" class="arrow" name="arrow-dropdown"></ion-icon>
               <ion-icon *ngIf="!display" class="arrow" name="arrow-dropup"></ion-icon>
           </div>
           <div class="s-list">
             <div class="card" *ngFor="let u of users">
               <div class="image">
-                <img src="../../assets/imgs/african-american-teen-learning-to-drive-with-mom-123133825-580f95893df78c2c73b8c4ac.jpg" alt="">
+                <img *ngIf="u.image" src="{{u.image}}" alt="">
+                <img *ngIf="!u.image" src="https://icon-library.net/images/image-placeholder-icon/image-placeholder-icon-3.jpg" alt="">
               </div>
               <div class="details">
-                <p><b> L-Mani Driving School </b></p>
-                <p> 0000 Street Name, Soweto, Johannesburg</p>
+                <p><b> {{u.schoolname}} </b></p>
+                <p>{{u.address}}</p>
+              </div>
+              <div class="call">
+                <button ion-fab mini (click)="call(u)"><ion-icon name="call" ></ion-icon></button>
+              </div>
+              <div class="request">
+                <button ion-button round small (click)="viewSchool(u)">View More</button>
               </div>
             </div>
           </div>
         </div>
-    <div #map id="map"></div>
+        <div #map id="map"></div>
 </div>
+
 </ion-content>

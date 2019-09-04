@@ -27,6 +27,8 @@ import { Question4Page } from '../pages/question4/question4';
 import { CoverQuizPage } from '../pages/cover-quiz/cover-quiz';
 import { YouPage } from '../pages/you/you';
 import { IonicStorageModule } from "@ionic/storage";
+import { Camera } from '@ionic-native/camera';
+import { CallNumber } from '@ionic-native/call-number';
 @NgModule({
   declarations: [
     MyApp,
@@ -83,7 +85,11 @@ import { IonicStorageModule } from "@ionic/storage";
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     DataProvider,
     DatastoreProvider,
-    HttpModule
+    HttpModule,
+    Camera,
+    CallNumber,
+    HttpModule,
+    Camera
   ]
 })
 export class AppModule {}
