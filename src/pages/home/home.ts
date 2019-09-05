@@ -19,10 +19,7 @@ export class HomePage {
   storage = firebase.storage().ref();
   display = false;
   @ViewChild('map') mapElement: ElementRef;
-  // @ViewChild('pacCard') card: ElementRef;
-  // @ViewChild('infoWindowContent') infoWindowContent: ElementRef
-  // @ViewChild('Input') searchIn:ElementRef
-  // @ViewChild('list') list: ElementRef;
+
   map: any;
  // restriction for the map
  users = [];
@@ -65,8 +62,13 @@ mapCenter = {
     this.getlocation();
     this.getusers();
   }
-  onSearchChange(event) {
-    console.log(event.target.value);
+  async onSearchChange(event) {
+    let querytext = event.target.value.toLowerCase();
+    let filterd = []
+    let res = this.users.forEach(element => {
+      element.includes(querytext);
+    });
+    console.log(res);
 
   }
   viewSchool(data) {

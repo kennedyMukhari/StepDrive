@@ -1,9 +1,14 @@
 <ion-content>
-    <div class="pac-card" id="pac-card">
+    <!-- <div class="pac-card" id="pac-card">
         <div id="pac-container">
-          <!-- <ion-searchbar (ionInput)="onSearchChange($event)"></ion-searchbar> -->
+          <ion-searchbar (ionInput)="onSearchChange($event)"></ion-searchbar>
         </div>
-      </div>
+        <div class="searchresult">
+          <div class="res"  *ngFor="let u of users">
+            <p>{{u.schoolname}}</p>
+          </div>
+        </div>
+      </div> -->
       <div #map id="map"></div>
       <div id="infowindow-content">
         <img src="" width="16" height="16" id="place-icon">
