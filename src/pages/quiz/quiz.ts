@@ -6,15 +6,18 @@ import {
   IonicPage,
   NavController,
   NavParams,
-  Slides
+  Slides,
+  App
 } from 'ionic-angular';
 import {
-  ScorePage
+  ScorePage,
+
 } from '../score/score';
 import {
   DatastoreProvider
 } from '../../providers/datastore/datastore';
 import * as firebase from 'firebase';
+import { TabsPage } from '../tabs/tabs';
 
 
 @IonicPage()
@@ -33,7 +36,7 @@ export class QuizPage {
   questions = []
   Qs = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public data: DatastoreProvider) {}
+  constructor(public navCtrl: NavController, public navParams: NavParams, public data: DatastoreProvider, public appCtrl: App) {}
   async ionViewDidLoad() {
     this.questions = []
   this.Qs = [];
@@ -55,6 +58,9 @@ export class QuizPage {
   }
   start() {
     this.landing.inactive = true;
+  }
+  cancel(){
+    this.navCtrl.setRoot(TabsPage)
   }
   checkAnswer(value) {
     console.log(value);

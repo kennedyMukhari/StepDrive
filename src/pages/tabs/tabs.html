@@ -1,7 +1,7 @@
 <div>
-    <ion-tabs #tabs (click)="quizpage()" color="primary">
+    <ion-tabs hide-tabs #tabs (ionChange)="quizpage($event)" color="primary">
         <ion-tab [root]="tab1Root" tabTitle="Map" tabIcon="map"></ion-tab>
-        <ion-tab [root]="tab2Root" tabTitle="Quiz" tabIcon="ribbon"></ion-tab>
+        <ion-tab [root]="tab2Root"   tabTitle="Quiz" tabIcon="ribbon"></ion-tab>
         <ion-tab [root]="tab3Root" tabTitle="You" tabIcon="person"></ion-tab>
         <ion-tab [root]="tab4Root" tabTitle="Inbox" tabIcon="text"></ion-tab>
         <ion-tab [root]="tab5Root" tabTitle="About" tabIcon="help"></ion-tab>

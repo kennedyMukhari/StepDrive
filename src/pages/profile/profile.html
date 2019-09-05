@@ -1,16 +1,17 @@
 <ion-content class="no-scroll">
   <div class="head">
     <div class="img">
-        <img src="{{user.image}}" alt="">
+        <img *ngIf="user.image" src="{{user.image}}" alt="">
+        <img *ngIf="!user.image" src="../../assets/imgs/placeholder-images-image_large.png" alt="">
     </div>
-  </div>
+  </div>s
   <div class="booking">
-    <div class="noreqs">
+    <div *ngIf="!request[0]" class="noreqs">
       <h1>No Requests</h1>
     </div>
     <div class="card" *ngFor="let s of request; let i = index">
-      <div class="image">
-        <img src="{{s.school.image}}">
+      <div *ngIf="!request[0]" class="image">
+        <img *ngIf="request[0]"  src="{{s.school.image}}">
       </div>
       <div class="details">
         <h3>{{s.school.schoolname}}</h3>

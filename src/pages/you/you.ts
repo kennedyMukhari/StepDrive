@@ -1,9 +1,11 @@
 import { Component, ViewChild, ElementRef, Renderer2 } from '@angular/core';
-import { IonicPage, NavController, NavParams, Keyboard, LoadingController, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Keyboard, LoadingController, ToastController, App } from 'ionic-angular';
 import { Camera, CameraOptions } from "@ionic-native/camera";
 import { FormBuilder, FormControl, FormGroup, Validator, Validators } from '@angular/forms';
 import * as firebase from 'firebase';
 import { Storage } from "@ionic/storage";
+import { LoginPage } from '../login/login';
+import { TabsPage } from '../tabs/tabs';
 @IonicPage()
 @Component({
   selector: 'page-you',
@@ -32,7 +34,9 @@ export class YouPage {
   isprofile = false;
   keyOpen = false;
   profileForm:FormGroup
-  constructor(public navCtrl: NavController, public navParams: NavParams, private keyBoard: Keyboard, private renderer: Renderer2, private camera: Camera, public loadingCtrl: LoadingController, public forms: FormBuilder, public store: Storage, public toastCtrl: ToastController) {
+  moveto = false
+  isediting = false;
+  constructor(public navCtrl: NavController, public navParams: NavParams, private keyBoard: Keyboard, private renderer: Renderer2, private camera: Camera, public loadingCtrl: LoadingController, public forms: FormBuilder, public store: Storage, public toastCtrl: ToastController, private appCtrl: App) {
     this.profileForm = this.forms.group({
       name: new FormControl(this.user.name, Validators.compose([Validators.required])),
       surname: new FormControl(this.user.surname, Validators.compose([Validators.required])),
@@ -40,7 +44,10 @@ export class YouPage {
       phone: new FormControl(this.user.phone, Validators.compose([Validators.required])),
     })
   }
-
+  ionViewDidEnter() {
+    // get the profile
+    this.getprofile();
+  }
   ionViewDidLoad() {
 
     firebase.auth().onAuthStateChanged(res => {
@@ -51,17 +58,12 @@ export class YouPage {
     this.store.get('homelocation').then(res => {
       this.user.location = res;
     })
-    this.getprofile();
     this.getnote();
   }
   checkkeyboard() {
     console.log('Key');
 
-    if (this.keyBoard.isOpen()) {
-      this.keyOpen = true;
-    } else {
-      this.keyOpen = false;
-    }
+ 
   }
   getImage() {
     console.log('Opem image');
@@ -153,11 +155,21 @@ export class YouPage {
       })
     })
   }
+  logout() {
+    firebase.auth().signOut().then(res => {
+      this.appCtrl.getRootNav().setRoot(LoginPage)
+    })
+  }
   getprofile() {
+    const loader = this.loadingCtrl.create({
+      content: 'Just a sec...',
+    })
+    // loader.present()
     firebase.auth().onAuthStateChanged(user => {
       this.user.uid = user.uid
-      this.db.collection('users').doc(user.uid).get().then(res => {
 
+      this.db.collection('users').doc(user.uid).get().then(res => {
+        loader.dismiss();
 
         if (res.exists) {
           this.user.image = res.data().image
@@ -166,17 +178,12 @@ export class YouPage {
         this.user.phone = res.data().phone
         this.user.surname = res.data().surname
         this.user.uid = res.data().uid
-        this.editprof();
-        loader.dismiss();
+          this.isprofile = true;
         console.log('Got Profile: ', this.user);
+
         }
       })
     })
-    const loader = this.loadingCtrl.create({
-      content: 'Just a sec...',
-    })
-    loader.present()
-
   }
   createUser() {
     console.log(this.user);
@@ -189,8 +196,25 @@ export class YouPage {
       this.user.uid = user.uid
       this.db.collection('users').doc(this.user.uid).set(this.user).then(res => {
       console.log('Profile Created');
-      this.getprofile();
-      loader.dismiss()
+      this.db.collection('users').doc(user.uid).get().then(res => {
+
+        if (res.exists) {
+          this.user.image = res.data().image
+        this.user.location = res.data().location
+        this.user.name = res.data().name
+        this.user.phone = res.data().phone
+        this.user.surname = res.data().surname
+        this.user.uid = res.data().uid
+
+        console.log('Got Profile: ', this.user);
+        loader.dismiss();
+        if (this.isediting) {
+          this.isprofile = true;
+        } else {
+          this.navCtrl.setRoot(TabsPage);
+        }
+        }
+      })
     }).catch(err => {
       console.log('Profile Creation error');
       loader.dismiss()
@@ -198,6 +222,7 @@ export class YouPage {
     })
   }
   editprof() {
+    this.isediting = true;
     this.isprofile = !this.isprofile;
   }
   removeimage(){

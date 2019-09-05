@@ -50,11 +50,16 @@ page-quiz {
     padding: 0;
     margin: 5vw 0%;
   }
+  #cancel {
+    background: linear-gradient(#30343B,rgb(53, 60, 75));
+    color: white;
+    transform: scale(0.8);
+  }
   button {
     margin: 5vw auto;
   width: 60%;
   padding: 5vw;
-  font-size: 2vw;
+  font-size: 3vw;
   border-radius: 200px;
   letter-spacing: 10px;
   text-transform: uppercase;

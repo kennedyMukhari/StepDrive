@@ -1,4 +1,15 @@
 <ion-content>
+    <div class="pac-card" id="pac-card">
+        <div id="pac-container">
+          <!-- <ion-searchbar (ionInput)="onSearchChange($event)"></ion-searchbar> -->
+        </div>
+      </div>
+      <div #map id="map"></div>
+      <div id="infowindow-content">
+        <img src="" width="16" height="16" id="place-icon">
+        <span id="place-name"  class="title"></span><br>
+        <span id="place-address"></span>
+      </div>
     <div class="aboutschool" [ngClass]="{'aboutschool-inactive': about, 'aboutschool': !about}">
         <div class="information">
           <div class="s-image">
@@ -13,8 +24,8 @@
               <p>{{school.address}}</p>
         </div>
         <div class="lesson-cont">
-            <div class="lessons" *ngFor="let p of school.packages">
-                <p>{{p.number}} lesson(s) R{{p.amount}}.00</p> <button (click)="requestLesson(school, p)">Request lesson</button>
+            <div class="lessons" *ngFor="let p of school.packages" (click)="requestLesson(school, p)">
+                <p><b>{{p.name}}</b> <br> {{p.number}} lessons R{{p.amount}}.00</p>
               </div>
                     <div class="custom">
                         <div class="input">
@@ -44,15 +55,20 @@
                 <p>{{u.address}}</p>
               </div>
               <div class="call">
-                <button ion-fab mini (click)="call(u)"><ion-icon name="call" ></ion-icon></button>
+                <button ion-fab mini (click)="call(u)" style="background: #a4c639"><ion-icon name="call" ></ion-icon></button>
               </div>
               <div class="request">
-                <button ion-button round small (click)="viewSchool(u)">View More</button>
+                <button ion-button round small style="background:#EEAE2B; color: rgb(255, 255, 255);" (click)="viewSchool(u)">View More</button>
               </div>
             </div>
           </div>
         </div>
         <div #map id="map"></div>
+        <div #infoWindowContent id="infowindow-content">
+            <img src="" width="16" height="16" id="place-icon">
+            <span id="place-name"  class="title"></span><br>
+            <span id="place-address"></span>
+          </div>
 </div>
 
 </ion-content>

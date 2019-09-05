@@ -8,6 +8,7 @@ import * as firebase from 'firebase';
 import { OnBoardingPage } from '../pages/on-boarding/on-boarding';
 
 
+
 @Component({
   templateUrl: 'app.html'
 })

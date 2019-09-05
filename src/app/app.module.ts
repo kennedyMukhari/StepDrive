@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { IonicSwipeAllModule } from "ionic-swipe-all";
-import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
@@ -29,10 +28,12 @@ import { YouPage } from '../pages/you/you';
 import { IonicStorageModule } from "@ionic/storage";
 import { Camera } from '@ionic-native/camera';
 import { CallNumber } from '@ionic-native/call-number';
+import { SchoolsProvider } from '../providers/schools/schools';
+import { HttpClientModule } from '@angular/common/http';
+
 @NgModule({
   declarations: [
     MyApp,
-    AboutPage,
     ContactPage,
     HomePage,
     TabsPage,
@@ -60,7 +61,6 @@ import { CallNumber } from '@ionic-native/call-number';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    AboutPage,
     ContactPage,
     HomePage,
     TabsPage,
@@ -85,11 +85,11 @@ import { CallNumber } from '@ionic-native/call-number';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     DataProvider,
     DatastoreProvider,
-    HttpModule,
     Camera,
     CallNumber,
-    HttpModule,
-    Camera
+    Camera,
+    SchoolsProvider,
+    HttpClientModule
   ]
 })
 export class AppModule {}

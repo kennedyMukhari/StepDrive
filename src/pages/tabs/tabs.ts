@@ -1,12 +1,11 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-
-import { AboutPage } from '../about/about';
-import { ContactPage } from '../contact/contact';
 import { HomePage } from '../home/home';
 import { QuizPage } from '../quiz/quiz';
 import { YouPage } from '../you/you';
-import { NavController, Tabs } from 'ionic-angular';
+import { NavController, Tabs, AlertController, App, Tab } from 'ionic-angular';
 import { ProfilePage } from '../profile/profile';
+import { Question4Page } from '../question4/question4';
+import { DataProvider } from '../../providers/data/data';
 
 @Component({
   templateUrl: 'tabs.html'
@@ -17,12 +16,32 @@ export class TabsPage {
   tab2Root = QuizPage;
   tab3Root = YouPage;
   tab4Root = ProfilePage;
-  tab5Root = AboutPage;
-  constructor(public navCtrl: NavController) {
+  tab5Root = Question4Page;
+  constructor(public navCtrl: NavController, private dataProv:DataProvider, public alertCtrl: AlertController, public appCtrl: App) {
   }
-  async quizpage(){
-    if (this.tabs.getSelected().tabTitle == 'Quiz') {
-      await this.navCtrl.setRoot(QuizPage);
+  async quizpage(event: Tab){
+    if (event.tabTitle == 'Quiz') {
+      console.log('Quiz Page');
+this.alertCtrl.create({
+      title: 'Start Quiz?',
+      message: 'This quiz is a quick recap before the driving lesson. Do you want to Start?',
+      buttons: [
+        {
+          text: 'Yes',
+          handler: () => {
+            
+          }
+        },
+        {
+          text: 'No',
+          handler: () => {
+            this.navCtrl.setRoot(TabsPage)
+          }
+        }
+      ]
+    }).present()
     }
+
+
   }
 }
