@@ -76,7 +76,8 @@
       "cordova-plugin-advanced-http": {},
       "cordova-plugin-nativegeocoder": {},
       "cordova-plugin-camera": {},
-      "mx.ferreyra.callnumber": {}
+      "mx.ferreyra.callnumber": {},
+      "call-number": {}
     },
     "platforms": [
       "android"
