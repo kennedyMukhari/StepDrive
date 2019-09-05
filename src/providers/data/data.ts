@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Http } from '@angular/http';
 
 @Injectable()
 export class DataProvider {
   questions: any;
   grandTotal: number = 0;
-  constructor(public http: HttpClient) {
+  constructor(public http: Http) {
     console.log('Hello DataProvider Provider');
   }
   setQuestions(value){
@@ -18,5 +19,7 @@ export class DataProvider {
   }
   reset(){
     this.grandTotal=0;
+}
+controlTab(val) {
 }
 }

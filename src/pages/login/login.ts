@@ -1,12 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { HomePage } from '../home/home';
 import { RegisterPage } from '../register/register';
-import { IonicPage, NavController, NavParams, LoadingController, AlertController, Keyboard } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, AlertController, Keyboard, ToastController, Tabs } from 'ionic-angular';
 import { Users } from '../../app/user';
 import * as firebase from 'firebase';
 import { TabsPage } from '../tabs/tabs';
+import { ProfilePage } from '../profile/profile';
+import { YouPage } from '../you/you';
 
 @IonicPage()
 @Component({
@@ -14,6 +16,8 @@ import { TabsPage } from '../tabs/tabs';
   templateUrl: 'login.html',
 })
 export class LoginPage {
+  @ViewChild('tabs') tabs: Tabs
+  db = firebase.firestore();
   user =  {} as Users;
   loginForm: FormGroup;
 
@@ -46,7 +50,7 @@ export class LoginPage {
   }
 
 
-  constructor(public navCtrl: NavController, public forms: FormBuilder, public navParams: NavParams, public loadingCtrl: LoadingController,   public alertCtrl: AlertController, public keyboard: Keyboard) {
+  constructor(public navCtrl: NavController, public forms: FormBuilder, public navParams: NavParams, public loadingCtrl: LoadingController,   public alertCtrl: AlertController, public keyboard: Keyboard, public toastCtrl: ToastController) {
 
     this.loginForm = this.forms.group({
       email: new FormControl('', Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-.]+$')])),
@@ -58,6 +62,11 @@ export class LoginPage {
   }
 
   ionViewDidLoad() {
+    if (this.tabs) {
+      this.tabs.setElementStyle('display', 'none')
+      console.log('Tabs', this.tabs);
+
+    }
     this.keyboard
     let loading = this.loadingCtrl.create({
       content: 'Please wait...'
@@ -65,8 +74,15 @@ export class LoginPage {
     loading.present();
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        loading.dismiss();
-        this.navCtrl.setRoot(TabsPage);
+        this.db.collection('users').where('uid', '==', user.uid).get().then(res => {
+          if (res.empty) {
+            loading.dismiss();
+            this.navCtrl.setRoot(YouPage);
+          } else {
+            loading.dismiss();
+            this.navCtrl.setRoot(TabsPage);
+          }
+        })
       } else {
         loading.dismiss();
       }
@@ -76,7 +92,44 @@ export class LoginPage {
   Reg(){
    this.navCtrl.push(RegisterPage);
   }
-
+  forget(){
+    this.alertCtrl.create({
+      title: 'Verification Email',
+      message: 'We will send a password reset link to this email address.',
+      inputs: [{
+        name: 'email',
+        type: 'email'
+      }],
+      buttons: [
+        {
+          text: 'Send Verification',
+          handler: data => {
+            console.log(data);
+            this.emailsent(data)
+          }
+        }
+      ]
+    }).present()
+  }
+  emailsent(val) {
+    firebase.auth().sendPasswordResetEmail(val.email).then(() => {
+      this.alertCtrl.create({
+        title: 'Email Sent',
+        message: 'Please check you inbox for the verification link.',
+        buttons: [
+          {text: 'Okay'}
+        ]
+      }).present()
+    }).catch((error) => {
+      this.alertCtrl.create({
+        title: 'Email Not Sent',
+        message: 'Oops, something went wrong. Please try again later.',
+        buttons: [
+          {text: 'Okay'}
+        ]
+      }).present()
+    });
+  }
   Home(){
     console.log(this.loginForm.valid);
     if(this.loginForm.valid){
@@ -90,22 +143,30 @@ export class LoginPage {
 
     loading.present();
 
-    firebase.auth().signInWithEmailAndPassword(user.email, user.password).then((result) => {
-      loading.dismiss();
-        this.navCtrl.setRoot(TabsPage);
-    }).catch((error) => {
-      console.log(error);
-
-      loading.dismiss();
-      let errorCode = 'Error';
-      let errorMessage = error.message;
-
-      this.alertCtrl.create({
-        title: errorCode,
-        subTitle: errorMessage,
-        buttons: ['Ok']
+    if (!user.email || !user.password) {
+      loading.dismiss()
+      this.toastCtrl.create({
+        message: 'Provide all required credentials.',
+        duration: 2000
       }).present();
-    });
+    } else {
+      firebase.auth().signInWithEmailAndPassword(user.email, user.password).then((result) => {
+        loading.dismiss();
+          this.navCtrl.setRoot(TabsPage);
+      }).catch((error) => {
+        console.log(error);
+
+        loading.dismiss();
+        let errorCode = 'Error';
+        let errorMessage = error.message;
+
+        this.alertCtrl.create({
+          title: errorCode,
+          subTitle: errorMessage,
+          buttons: ['Ok']
+        }).present();
+      });
+    }
 
   }
 }

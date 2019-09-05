@@ -28,7 +28,12 @@ export class ProfilePage {
     firebase.auth().onAuthStateChanged(res => {
       this.user.uid = res.uid;
       this.db.collection('users').doc(res.uid).get().then(user => {
-        this.user.image = user.data().image;
+        if (user.data()) {
+          this.user.image = user.data().image;
+        } else {
+          console.log('Got no data');
+
+        }
       })
       this.getBooking()
     })

@@ -56,7 +56,7 @@
                   <div *ngIf="user.location" class="address">
                     <p>{{user.location.address}}</p>
                   </div>
-                  <button ion-button round>Logout</button>
+                  <button ion-button small round color="danger" (click)="logout()">Logout</button>
                 </div>
           </div>
           <div class="prof-edit">

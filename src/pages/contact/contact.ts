@@ -1,16 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { NavController, NavParams, LoadingController, AlertController, ToastController } from 'ionic-angular';
 import { map } from 'rxjs/operator/map';
 import 'rxjs/add/operator/map';
 import { Http } from '@angular/http';
 import * as firebase from 'firebase'
 import { Question1Page } from '../question1/question1';
+import { Geolocation } from '@ionic-native/geolocation';
+
+
 declare var google;
 @Component({
   selector: 'page-contact',
   templateUrl: 'contact.html'
 })
 export class ContactPage {
+  @ViewChild('map') mapElement: ElementRef;
+  map: any;
   db = firebase.firestore();
   storage = firebase.storage().ref();
   request = {
@@ -33,9 +38,21 @@ export class ContactPage {
   }
   addressokay = false;
   message = '';
-  constructor(public navCtrl: NavController, public navParams: NavParams, private http: Http, public loadingCtrl: LoadingController, public alertCtrl: AlertController, public toastCtrl: ToastController) {
+
+  SOUTH_AFRICAN_BOUNDS = {
+    north: -21.914461,
+    south: -35.800139,
+    west: 15.905430,
+    east: 34.899504
+  }
+  mapCenter = {
+    lng: 0,
+    lat: 0
+  }
+  constructor(public navCtrl: NavController,public geolocation: Geolocation, public navParams: NavParams, private http: Http, public loadingCtrl: LoadingController, public alertCtrl: AlertController, public toastCtrl: ToastController) {
   }
   ionViewDidLoad(){
+    this.getlocation()
     console.log('Contact', this.navParams.data);
 
     const date = new Date();
@@ -54,7 +71,108 @@ export class ContactPage {
     this.request.package.amount = this.navParams.data.lessons.amount ;
     this.request.package.name = this.navParams.data.lessons.name ;
   }
+  geocodePosition(pos){
+    let geocoder = new google.maps.Geocoder();
+    geocoder.geocode
+     ({
+         latLng: pos
+     },
+         function(results, status)
+         {
+             if (status == google.maps.GeocoderStatus.OK)
+             {
+               console.log(results[0].formatted_address);
+             }
+             else
+             {
+                 console.log(status);
 
+             }
+         }
+     );
+ }
+  async getlocation() {
+    await this.geolocation.getCurrentPosition().then((resp) => {
+      console.log('Get loc res', resp);
+
+      this.mapCenter.lat = resp.coords.latitude;
+      this.mapCenter.lng = resp.coords.longitude;
+      let data = {
+        schooladdress: {
+          lng: resp.coords.longitude,
+          lat: resp.coords.latitude
+        },
+        schoolname: 'You',
+        address: ' '
+      }
+
+      this.loadMap();
+      this.addMarker(data);
+
+    }).catch((err) => {
+      console.log('Geo err', err);
+
+      this.mapCenter.lat = -29.465306;
+      this.mapCenter.lng = 24.741967;
+      console.log('Geo Error: ', err);
+      this.loadMap();
+    })
+  }
+    // add marker function
+    addMarker(props) {
+      // console.log('Marker triggerd', props);
+
+      // add marker
+      const marker = new google.maps.Marker({
+        position: props.schooladdress,
+        map: this.map,
+        draggable:true,
+        animation: google.maps.Animation.DROP,
+
+      })
+      marker.addListener('drag', (event) =>
+{
+    console.log(event.getPosition());
+
+});
+      // check for custom icon
+      if(props.iconImage) {
+        // set custom icon
+        marker.setIcon(props.iconImage)
+      }
+
+      // check for content
+      if(props.address || props.schoolname) {
+        // set custom content
+       let infoWindow = new google.maps.InfoWindow({
+         content: `<h5 style="margin:0;padding:0;">${props.schoolname} </h5>`+props.address
+       });
+       marker.addListener('click', () => {
+        infoWindow.open(this.map, marker);
+       })
+      }
+    }
+
+  async loadMap(){
+    console.log('Map Centerd', this.mapCenter);
+
+    let location;
+    var ref = this;
+    // let watch = this.geolocation.watchPosition();
+
+    let mapOptions = {
+      center: this.mapCenter,
+      zoom: 3,
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
+      disableDefaultUI: true,
+      restriction: {
+        latLngBounds: this.SOUTH_AFRICAN_BOUNDS,
+        strictBounds: true
+      }
+    }
+
+    this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+  }
   async saveAddress() {
     console.log(this.request);
 

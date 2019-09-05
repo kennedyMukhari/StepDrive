@@ -1,28 +1,45 @@
-<!--
-  Generated template for the Question4Page page.
+<ion-content>
+  <div class="container">
 
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
-<!-- <ion-header>
-  <ion-navbar>
-    <ion-title>question4</ion-title>
-  </ion-navbar>
-</ion-header> -->
+              <div class="logo">
+                  <img src="../../assets/imgs/blacklogo.svg" alt="">
+              </div>
+              <p id="version">v1.0.0</p>
+              <div class="details">
+                  <div class="card about" (click)="aboutUs()">
+                      <div class="label">
+                          <p>About Us</p>
+                      </div>
+                      <div class="image">
+                          <img src="../../assets/imgs/Aboutus.svg" width="50vw" alt="">
+                      </div>
+                  </div>
+                  <div class="card dis" (click)="disclaimer()">
+                      <div class="label">
+                          <p>Disclaimer</p>
+                      </div>
+                      <div class="image">
+                          <img src="../../assets/imgs/Desclaimer.svg" width="50vw" alt="">
+                      </div>
+                  </div>
+                  <div class="card terms">
+                      <div class="label">
+                          <p>Terms of Use</p>
+                      </div>
+                      <div class="image">
+                          <img src="../../assets/imgs/TermsofUse.svg" width="50vw" alt="">
+                      </div>
+                  </div>
 
-<ion-content padding>
+                      <div class="card poli">
+                              <div class="label">
+                                  <p>Privacy Policy</p>
+                              </div>
+                              <div class="image">
+                                  <img src="../../assets/imgs/PrivacyPolicy.svg" width="50vw" alt="">
+                              </div>
+                          </div>
 
-    <div class="Q5"  *ngIf="Politics">
-        {{Politics.question5}}
-         <br/> <br/>
-          <input type="radio" name="name5" (click)="checkAnswer5()">{{Politics.q51}}<br/>
-          <input type="radio" name="name5"  (click)="checkAnswer5()">{{Politics.q52}}<br/>
-          <input type="radio" name="name5" value="Democratic Alliance" [(ngModel)]="answer5" (change)="checkAnswer5()">{{Politics.q53}}<br/>
-
-          <input type="radio" name="name5"  (click)="checkAnswer5()">{{Politics.q54}}
-          <br>
-       <button (click)="checkAnswer1()">Finish</button>
-        </div> 
-
-         
+              </div>
+          </div>
 </ion-content>

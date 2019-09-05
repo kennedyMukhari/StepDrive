@@ -4,8 +4,9 @@ import { LoginPage } from '../login/login';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { Users } from '../../app/user';
 import * as firebase from 'firebase';
-import { IonicPage, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, LoadingController, ToastController } from 'ionic-angular';
 import { TabsPage } from '../tabs/tabs';
+import { YouPage } from '../you/you';
 
 @IonicPage()
 @Component({
@@ -39,7 +40,7 @@ user =  {} as Users;
   }
 
 
-  constructor(public navCtrl: NavController, public forms: FormBuilder, public navParams: NavParams,  public loadingCtrl: LoadingController, public alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public forms: FormBuilder, public navParams: NavParams,  public loadingCtrl: LoadingController, public alertCtrl: AlertController, public toastCtrl: ToastController) {
 
     this.loginForm = this.forms.group({
       email: new FormControl('', Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-.]+$')])),
@@ -62,25 +63,47 @@ user =  {} as Users;
       duration: 2000
     })
     loading.present();
-    let alertSuccess = this.alertCtrl.create({
-        title: 'Registration',
-        subTitle: 'you have been Successfully Registered. you can Login.',
-        buttons: ['Ok']
-    })
-    firebase.auth().createUserWithEmailAndPassword(user.email, user.password).then((result) => {
-      alertSuccess.present();
-      this.navCtrl.push(TabsPage);
-    }).catch(function(error) {
+
+
+
+    if (!user.email || !user.password) {
+      loading.dismiss()
+      this.toastCtrl.create({
+        message: 'Provide all required credentials.',
+        duration: 2000
+      }).present();
+
+
+    } else {
+       firebase.auth().createUserWithEmailAndPassword(user.email, user.password).then((result) => {
+      this.navCtrl.push(YouPage);
+      loading.dismiss()
+
+
+
+    }).catch(error => {
       let errorCode = error.code;
       let errorMessage = error.message;
+      loading.dismiss()
+      console.log(errorMessage);
+
       // Handle Errors here.
       let alert = this.alertCtrl.create({
-        title: errorCode,
+        title: 'Oops!',
         subTitle: errorMessage,
-        buttons: ['Try Again'],
+        buttons: [{
+          text: 'Try Again',
+          handler: () => {
+            user.email = ''
+            user.password = ''
+          }
+        }],
     })
     alert.present();
     });
- this.navCtrl.push(LoginPage);
+    }
+
   }
+
+
 }
