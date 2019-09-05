@@ -30,7 +30,7 @@ import { Camera } from '@ionic-native/camera';
 import { CallNumber } from '@ionic-native/call-number';
 import { SchoolsProvider } from '../providers/schools/schools';
 import { HttpClientModule } from '@angular/common/http';
-
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
 @NgModule({
   declarations: [
     MyApp,
@@ -89,7 +89,8 @@ import { HttpClientModule } from '@angular/common/http';
     CallNumber,
     Camera,
     SchoolsProvider,
-    HttpClientModule
+    HttpClientModule,
+    ScreenOrientation
   ]
 })
 export class AppModule {}

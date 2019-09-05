@@ -6,7 +6,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { firebaseConfig } from '../app/Enveronment';
 import * as firebase from 'firebase';
 import { OnBoardingPage } from '../pages/on-boarding/on-boarding';
-
+import { ScreenOrientation } from "@ionic-native/screen-orientation";
 
 
 @Component({
@@ -15,8 +15,11 @@ import { OnBoardingPage } from '../pages/on-boarding/on-boarding';
 export class MyApp {
   rootPage:any = OnBoardingPage;
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
+  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private screenOrien: ScreenOrientation) {
     platform.ready().then(() => {
+      if (platform.is('android')) {
+        screenOrien.lock(this.screenOrien.ORIENTATIONS.PORTRAIT);
+      }
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();

@@ -49,10 +49,11 @@ mapCenter = {
   startAt = new Subject();
   endAt = new Subject();
   searchres
+  markers = []
+  geocoder = new google.maps.Geocoder;
   constructor(public navCtrl: NavController, public geolocation: Geolocation, public store: Storage, public alertCtrl: AlertController,private callNumber: CallNumber, public appCtrl: App) { }
 
   ionViewDidLoad(){
-
     console.log('Native el', this.placeSearch);
 
     firebase.auth().onAuthStateChanged(user => {
@@ -63,12 +64,24 @@ mapCenter = {
     this.getusers();
   }
   async onSearchChange(event) {
-    let querytext = event.target.value.toLowerCase();
     let filterd = []
-    let res = this.users.forEach(element => {
-      element.includes(querytext);
-    });
-    console.log(res);
+    if (event.target.value) {
+  this.users.forEach(element => {
+    let n:string = element.schoolname.includes(event.target.value)
+    if (n) {
+      console.log('yes');
+      filterd.push(element)
+    } else {
+      console.log('no');
+    }
+this.users = filterd
+
+  });
+    } else {
+      this.getusers()
+    }
+
+
 
   }
   viewSchool(data) {
@@ -100,8 +113,19 @@ mapCenter = {
       this.store.set('homelocation', data);
 
       this.loadMap();
+      let radius = new google.maps.Circle({
+        strokeColor: 'rgba(255, 154, 59, 0.589)',
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: 'rgb(255, 148, 49)',
+        fillOpacity: 0.35,
+        map: this.map,
+        center: data.schooladdress,
+        radius: Math.sqrt(500) * 100
+      });
       // this.initMap()
       this.addMarker(data);
+
 
     }).catch((err) => {
       console.log('Geo err', err);
@@ -220,7 +244,7 @@ mapCenter = {
 
     let mapOptions = {
       center: this.mapCenter,
-      zoom: 3,
+      zoom: 14,
       mapTypeId: google.maps.MapTypeId.ROADMAP,
       disableDefaultUI: true,
       restriction: {
@@ -258,6 +282,7 @@ mapCenter = {
       infoWindow.open(this.map, marker);
      })
     }
+
   }
   addInfoWindow(marker, content){
     let infoWindow = new google.maps.InfoWindow({
@@ -267,16 +292,39 @@ mapCenter = {
       infoWindow.open(this.map, marker);
     });
   }
-  getusers(){
-    this.db.collection('drivingschools').onSnapshot(snapshot => {
+  async getusers(){
+   await this.db.collection('drivingschools').onSnapshot(async snapshot => {
       this.users = [];
-      snapshot.forEach(doc => {
+      snapshot.forEach( async doc => {
         this.users.push(doc.data());
-        this.addMarker(doc.data());
+        // this.addMarker(doc.data());
+        this.markers.push(doc.data());
       })
+     await this.markers.forEach( async element => {
+        // this.addMarker(element);
+      await this.geocoder.geocode({'location': this.mapCenter}, (results, status) => {
+        if (status === 'OK') {
+          if (results[0]) {
+            for (let index = 0; index < results.length; index++) {
+              const element = results[index];
+              console.log('Results ', element.formatted_address);
+            }
+          } else {
+            console.log('No results found');
+          }
+        } else {
+          console.log('Geocoder failed due to: ' + status);
+        }
+      });
+
+      })
+
       // console.log('Users: ', this.users);
 
     })
+  }
+  clearMarker() {
+
   }
   call(school) {
 

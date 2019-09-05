@@ -1,20 +1,15 @@
 <ion-content>
-    <!-- <div class="pac-card" id="pac-card">
+    <div [ngClass]="{'pac-card': display, 'pac-card-hide': !display}" id="pac-card">
         <div id="pac-container">
           <ion-searchbar (ionInput)="onSearchChange($event)"></ion-searchbar>
         </div>
         <div class="searchresult">
           <div class="res"  *ngFor="let u of users">
-            <p>{{u.schoolname}}</p>
+            <!-- <p>{{u.schoolname}}</p> -->
           </div>
         </div>
-      </div> -->
-      <div #map id="map"></div>
-      <div id="infowindow-content">
-        <img src="" width="16" height="16" id="place-icon">
-        <span id="place-name"  class="title"></span><br>
-        <span id="place-address"></span>
       </div>
+      <div #map id="map"></div>
     <div class="aboutschool" [ngClass]="{'aboutschool-inactive': about, 'aboutschool': !about}">
         <div class="information">
           <div class="s-image">
@@ -50,7 +45,7 @@
               <ion-icon *ngIf="!display" class="arrow" name="arrow-dropup"></ion-icon>
           </div>
           <div class="s-list">
-            <div class="card" *ngFor="let u of users">
+            <div class="card" *ngFor="let u of users" (click)="clearMarker()">
               <div class="image">
                 <img *ngIf="u.image" src="{{u.image}}" alt="">
                 <img *ngIf="!u.image" src="https://icon-library.net/images/image-placeholder-icon/image-placeholder-icon-3.jpg" alt="">
@@ -69,11 +64,7 @@
           </div>
         </div>
         <div #map id="map"></div>
-        <div #infoWindowContent id="infowindow-content">
-            <img src="" width="16" height="16" id="place-icon">
-            <span id="place-name"  class="title"></span><br>
-            <span id="place-address"></span>
-          </div>
+
 </div>
 
 </ion-content>
