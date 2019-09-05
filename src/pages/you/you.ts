@@ -63,7 +63,7 @@ export class YouPage {
   checkkeyboard() {
     console.log('Key');
 
- 
+
   }
   getImage() {
     console.log('Opem image');
