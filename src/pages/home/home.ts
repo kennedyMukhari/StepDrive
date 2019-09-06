@@ -115,15 +115,26 @@ this.users = filterd
       this.loadMap();
       let radius = new google.maps.Circle({
         strokeColor: 'rgba(255, 154, 59, 0.589)',
-        strokeOpacity: 0.8,
+        strokeOpacity: 0.01,
         strokeWeight: 2,
         fillColor: 'rgb(255, 148, 49)',
-        fillOpacity: 0.35,
+        fillOpacity: 0.01,
         map: this.map,
         center: data.schooladdress,
         radius: Math.sqrt(500) * 100
       });
       // this.initMap()
+      const marker = new google.maps.Marker({
+        position: data.schooladdress,
+        map: this.map,
+        icon: 'https://firebasestorage.googleapis.com/v0/b/step-drive-95bbe.appspot.com/o/icons8-map-pin-64.png?alt=media&token=80953d82-f9c0-4b32-b8e9-dc83f9286f8b'
+      })
+      let infoWindow = new google.maps.InfoWindow({
+        content: `<h5 style="margin:0;padding:0;">${data.schoolname} </h5>`+data.address
+      });
+      marker.addListener('click', () => {
+        infoWindow.open(this.map, marker);
+       })
       this.addMarker(data);
 
 
@@ -140,101 +151,7 @@ this.users = filterd
   swipeUp() {
     this.display = !this.display;
   }
-  initMap() {
-    let mapOptions = {
-      center: this.mapCenter,
-      zoom: 3,
-      mapTypeId: google.maps.MapTypeId.ROADMAP,
-      disableDefaultUI: true,
-      restriction: {
-        latLngBounds: this.SOUTH_AFRICAN_BOUNDS,
-        strictBounds: true
-      }
-    }
-    var map = new google.maps.Map(document.getElementById('map'), {
-      center: this.mapCenter,
-      zoom: 13
-    });
-    var card = document.getElementById('pac-card');
-    var input = document.getElementById('pac-input');
-    var types = document.getElementById('type-selector');
-    var strictBounds = document.getElementById('strict-bounds-selector');
 
-    map.controls[google.maps.ControlPosition.TOP_RIGHT].push(card);
-
-    var autocomplete = new google.maps.places.Autocomplete(input);
-
-    // Bind the map's bounds (viewport) property to the autocomplete object,
-    // so that the autocomplete requests use the current map bounds for the
-    // bounds option in the request.
-    autocomplete.bindTo('bounds', map);
-
-    // Set the data fields to return when the user selects a place.
-    autocomplete.setFields(
-        ['address_components', 'geometry', 'icon', 'name']);
-
-    var infowindow = new google.maps.InfoWindow();
-    var infowindowContent = document.getElementById('infowindow-content');
-    infowindow.setContent(infowindowContent);
-    var marker = new google.maps.Marker({
-      map: map,
-      anchorPoint: new google.maps.Point(0, -29)
-    });
-
-    autocomplete.addListener('place_changed', () => {
-      infowindow.close();
-      marker.setVisible(false);
-      var place = autocomplete.getPlace();
-      if (!place.geometry) {
-        // User entered the name of a Place that was not suggested and
-        // pressed the Enter key, or the Place Detaisls request failed.
-        window.alert("No details available for input: '" + place.name + "'");
-        return;
-      }
-
-      // If the place has a geometry, then present it on a map.
-      if (place.geometry.viewport) {
-        marker.setPosition(place.geometry.location);
-        map.fitBounds(place.geometry.viewport);
-      } else {
-        console.log('Set center');
-
-        map.setCenter(place.geometry.location);
-        map.setZoom(17);  // Why 17? Because it looks good.
-      }
-      marker.setPosition(place.geometry.location);
-      marker.setVisible(true);
-
-      var address = '';
-      if (place.address_components) {
-        address = [
-          (place.address_components[0] && place.address_components[0].short_name || ''),
-          (place.address_components[1] && place.address_components[1].short_name || ''),
-          (place.address_components[2] && place.address_components[2].short_name || '')
-        ].join(' ');
-      }
-
-      infowindowContent.children['place-icon'].src = place.icon;
-      infowindowContent.children['place-name'].textContent = place.name;
-      infowindowContent.children['place-address'].textContent = address;
-      infowindow.open(map, marker);
-    });
-
-    // Sets a listener on a radio button to change the filter type on Places
-    // Autocomplete.
-    function setupClickListener(id, types) {
-      var radioButton = document.getElementById(id);
-      radioButton.addEventListener('click', function() {
-        autocomplete.setTypes(types);
-      });
-    }
-
-    setupClickListener('changetype-all', []);
-    setupClickListener('changetype-address', ['address']);
-    setupClickListener('changetype-establishment', ['establishment']);
-    setupClickListener('changetype-geocode', ['geocode']);
-
-  }
   async loadMap(){
     // console.log('Map Centerd', this.mapCenter);
 
@@ -264,14 +181,13 @@ this.users = filterd
     const marker = new google.maps.Marker({
       position: props.schooladdress,
       map: this.map,
-
+      icon: 'https://firebasestorage.googleapis.com/v0/b/step-drive-95bbe.appspot.com/o/icons8-car-16.png?alt=media&token=3a913499-e6d2-4128-9b4e-4a4ae206e08d'
     })
     // check for custom icon
     if(props.iconImage) {
       // set custom icon
-      marker.setIcon(props.iconImage)
+      marker.seticon()
     }
-
     // check for content
     if(props.address || props.schoolname) {
       // set custom content
@@ -297,25 +213,26 @@ this.users = filterd
       this.users = [];
       snapshot.forEach( async doc => {
         this.users.push(doc.data());
-        // this.addMarker(doc.data());
+        this.addMarker(doc.data());
+        this.markers = []
         this.markers.push(doc.data());
       })
      await this.markers.forEach( async element => {
-        // this.addMarker(element);
-      await this.geocoder.geocode({'location': this.mapCenter}, (results, status) => {
-        if (status === 'OK') {
-          if (results[0]) {
-            for (let index = 0; index < results.length; index++) {
-              const element = results[index];
-              console.log('Results ', element.formatted_address);
-            }
-          } else {
-            console.log('No results found');
-          }
-        } else {
-          console.log('Geocoder failed due to: ' + status);
-        }
-      });
+        this.addMarker(element);
+      // await this.geocoder.geocode({'location': this.mapCenter}, (results, status) => {
+      //   if (status === 'OK') {
+      //     if (results[0]) {
+      //       for (let index = 0; index < results.length; index++) {
+      //         const element = results[index];
+      //         console.log('Results ', element.formatted_address);
+      //       }
+      //     } else {
+      //       console.log('No results found');
+      //     }
+      //   } else {
+      //     console.log('Geocoder failed due to: ' + status);
+      //   }
+      // });
 
       })
 

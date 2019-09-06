@@ -7,16 +7,23 @@ import { firebaseConfig } from '../app/Enveronment';
 import * as firebase from 'firebase';
 import { OnBoardingPage } from '../pages/on-boarding/on-boarding';
 import { ScreenOrientation } from "@ionic-native/screen-orientation";
+import { Storage } from '@ionic/storage';
+import { LoginPage } from '../pages/login/login';
 
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = OnBoardingPage;
+  rootPage:any;
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private screenOrien: ScreenOrientation) {
+  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private screenOrien: ScreenOrientation, public storage: Storage) {
     platform.ready().then(() => {
+      if (this.storage.get('onboarding')) {
+        this.rootPage = LoginPage
+      } else {
+        this.rootPage = OnBoardingPage
+      }
       if (platform.is('android')) {
         screenOrien.lock(this.screenOrien.ORIENTATIONS.PORTRAIT);
       }

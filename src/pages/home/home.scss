@@ -1,9 +1,9 @@
 page-home {
   * {
     // transition: 0.4s;
-  }
+  }s
   .pac-card {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     right: 0;
@@ -30,7 +30,7 @@ page-home {
     right: 0;
     bottom: 0;
     top: 85vh;
-    z-index: 5;
+    z-index: 15;
     background: white;
     overflow: hidden;
     .toggler {
@@ -135,7 +135,7 @@ page-home {
     .container{
         display: flex;
         flex-direction: column;
-        height: 0%;
+        height: 0;
         overflow: hidden !important;
     }
     .scroll {
@@ -144,7 +144,7 @@ page-home {
 
       #map {
         width: 100%;
-        height: 100%;
+        height: 91%;
         overflow: hidden;
       }
       .aboutschool {
