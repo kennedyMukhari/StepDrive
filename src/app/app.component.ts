@@ -15,15 +15,10 @@ import { LoginPage } from '../pages/login/login';
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any;
+  rootPage:any = OnBoardingPage;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private screenOrien: ScreenOrientation, public storage: Storage) {
-    platform.ready().then(() => {
-      if (this.storage.get('onboarding')) {
-        this.rootPage = LoginPage
-      } else {
-        this.rootPage = OnBoardingPage
-      }
+    platform.ready().then(async () => {
       if (platform.is('android')) {
         screenOrien.lock(this.screenOrien.ORIENTATIONS.PORTRAIT);
       }

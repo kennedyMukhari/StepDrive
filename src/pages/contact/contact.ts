@@ -25,6 +25,7 @@ export class ContactPage {
     uid: null, // from auth state
     schooluid: '', // from params
     datecreated: null, // from js
+    confirmed: 'waiting',
     location: { // always filled, from google
       address: '',
       lng: null,
@@ -37,8 +38,11 @@ export class ContactPage {
     }
   }
   addressokay = false;
-  message = '';
-
+  message = {
+    text: '',
+    id: null
+  }
+  showMap = false;
   SOUTH_AFRICAN_BOUNDS = {
     north: -21.914461,
     south: -35.800139,
@@ -49,6 +53,8 @@ export class ContactPage {
     lng: 0,
     lat: 0
   }
+  geocoder = new google.maps.Geocoder;
+  infowindow = new google.maps.InfoWindow;
   constructor(public navCtrl: NavController,public geolocation: Geolocation, public navParams: NavParams, private http: Http, public loadingCtrl: LoadingController, public alertCtrl: AlertController, public toastCtrl: ToastController) {
   }
   ionViewDidLoad(){
@@ -71,6 +77,7 @@ export class ContactPage {
     this.request.package.amount = this.navParams.data.lessons.amount ;
     this.request.package.name = this.navParams.data.lessons.name ;
   }
+
   geocodePosition(pos){
     let geocoder = new google.maps.Geocoder();
     geocoder.geocode
@@ -91,6 +98,9 @@ export class ContactPage {
          }
      );
  }
+ displayMap() {
+  this.showMap = !this.showMap;
+}
   async getlocation() {
     await this.geolocation.getCurrentPosition().then((resp) => {
       console.log('Get loc res', resp);
@@ -101,9 +111,7 @@ export class ContactPage {
         schooladdress: {
           lng: resp.coords.longitude,
           lat: resp.coords.latitude
-        },
-        schoolname: 'You',
-        address: ' '
+        }
       }
 
       this.loadMap();
@@ -128,13 +136,38 @@ export class ContactPage {
         map: this.map,
         draggable:true,
         animation: google.maps.Animation.DROP,
+        icon: 'https://firebasestorage.googleapis.com/v0/b/step-drive-95bbe.appspot.com/o/icons8-map-pin-64.png?alt=media&token=80953d82-f9c0-4b32-b8e9-dc83f9286f8b'
 
       })
-      marker.addListener('drag', (event) =>
-{
-    console.log(event.getPosition());
-
-});
+      marker.addListener('dragend', (event) => {
+        let data = {
+          lat: event.latLng.lat(),
+          lng: event.latLng.lng()
+        }
+    console.log(data);
+    this.geocoder.geocode({'location': data},(results, status) =>{
+      if (status === 'OK') {
+        if (results[0]) {
+          this.map.setZoom(17);
+          this.infowindow.setContent(results[0].formatted_address);
+          this.request.location.address = results[0].formatted_address;
+          this.request.location.lat = data.lat;
+          this.request.location.lng = data.lng;
+          this.infowindow.open(map, marker);
+          this.message.text = "Address Okay"
+          this.message.id = 0;
+          this.addressokay = true;
+        } else {
+          console.log('No results found');
+          this.message.text = "Address Invalid"
+          this.message.id = 0;
+          this.addressokay = false;
+        }
+      } else {
+        console.log('Geocoder failed due to: ' + status);
+      }
+    });
+      });
       // check for custom icon
       if(props.iconImage) {
         // set custom icon
@@ -162,7 +195,7 @@ export class ContactPage {
 
     let mapOptions = {
       center: this.mapCenter,
-      zoom: 3,
+      zoom: 10,
       mapTypeId: google.maps.MapTypeId.ROADMAP,
       disableDefaultUI: true,
       restriction: {
@@ -239,7 +272,8 @@ export class ContactPage {
     }).subscribe(res => {
         console.log('Address', res.json());
         if (res.json().status == 'OK') {
-          this.message = "Address Okay"
+          this.message.text = "Address Okay"
+          this.message.id = 1;
           this.addressokay = true;
           this.request.location.address = res.json().results[0].formatted_address;
           this.request.location.lat = res.json().results[0].geometry.location.lat;
@@ -247,7 +281,8 @@ export class ContactPage {
           console.log('Data: ', this.request);
 
         } else {
-          this.message = "Address not found or Invalid."
+          this.message.text = "Address not found or Invalid."
+          this.message.id = 0;
         }
     }, err => {
       console.log(err);

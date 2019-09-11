@@ -1,43 +1,138 @@
 <ion-content class="no-scroll">
-  <div class="head">
-    <div class="img">
-        <img *ngIf="user.image" src="{{user.image}}" alt="">
-        <img *ngIf="!user.image" src="../../assets/imgs/placeholder-images-image_large.png" alt="">
-    </div>
+  <div class="feedback">
+      <input type="text" placeholder="Write Something..">
+    <button>Send Feedback</button>
   </div>
-  <div class="booking">
-    <div *ngIf="!request[0]" class="noreqs">
-      <h1>No Requests</h1>
+  <!-- <div class="reviews">
+    <div class="r-title" (pan)="reviews($event)">
+      <p><b>What they say</b></p>
     </div>
-    <div class="card" *ngFor="let s of request; let i = index">
-      <div *ngIf="!request[0]" class="image">
-        <img *ngIf="request[0]"  src="{{s.school.image}}">
-      </div>
-      <div class="details">
-        <h3>{{s.school.schoolname}}</h3>
-        <div *ngIf="more.id==i" class="more">
-            <p>{{s.school.desc}}</p>
+    <div class="r-body">
+      <div class="r-card">
+        <div class="r-image">
+          <img src="../../assets/imgs/african-american-teen-learning-to-drive-with-mom-123133825-580f95893df78c2c73b8c4ac.jpg" alt="">
         </div>
-        <div class="dates">
-            <p>Date in: {{s.request.datein | date}}</p>
-            <p>Date out: {{s.request.dateout | date}}</p>
-        </div>
-        <div class="pack">
-            <p>{{s.request.package.name}}: {{s.request.package.number}} lessons(s) for R{{s.request.package.amount}}.00</p>
-        </div>
-        <div class="confirmation">
-          <p *ngIf="!s.request.confirmed" style="float: left; color: rgb(255, 153, 0);">Awaiting Confirmation</p>
-          <p *ngIf="s.request.confirmed=='accepted'" style="float: left; color: rgb(0, 185, 15);">Accept</p>
-          <p *ngIf="s.request.confirmed=='rejected'" style="float: left; color: rgb(255, 0, 0);">Reject</p>
+        <div class="r-content">
+          <p><b>Name Surname</b></p>
+          <p>"Fugiat duis veniam culpa voluptate culpa culpa Lorem consequat."</p>
         </div>
       </div>
-      <div class="show" (click)="showMore(i)">
-        <p *ngIf="!more.cond">More</p>
-        <p *ngIf="more.cond">Less</p>
-      </div>
-      <div (click)="delete(s.request.docid)" class="delete">
-        <ion-icon style="margin: auto; color: white;" name="trash"></ion-icon>
+      <div class="r-card">
+          <div class="r-image">
+            <img src="../../assets/imgs/african-american-teen-learning-to-drive-with-mom-123133825-580f95893df78c2c73b8c4ac.jpg" alt="">
+          </div>
+          <div class="r-content">
+            <p><b>Name Surname</b></p>
+            <p>"Fugiat duis veniam culpa voluptate culpa culpa Lorem consequat."</p>
+          </div>
+        </div>
+        <div class="r-card">
+            <div class="r-image">
+              <img src="../../assets/imgs/african-american-teen-learning-to-drive-with-mom-123133825-580f95893df78c2c73b8c4ac.jpg" alt="">
+            </div>
+            <div class="r-content">
+              <p><b>Name Surname</b></p>
+              <p>"Fugiat duis veniam culpa voluptate culpa culpa Lorem consequat."</p>
+            </div>
+          </div>
+          <div class="r-card">
+              <div class="r-image">
+                <img src="../../assets/imgs/african-american-teen-learning-to-drive-with-mom-123133825-580f95893df78c2c73b8c4ac.jpg" alt="">
+              </div>
+              <div class="r-content">
+                <p><b>Name Surname</b></p>
+                <p>"Fugiat duis veniam culpa voluptate culpa culpa Lorem consequat."</p>
+              </div>
+            </div>
+            <div class="r-card">
+                <div class="r-image">
+                  <img src="../../assets/imgs/african-american-teen-learning-to-drive-with-mom-123133825-580f95893df78c2c73b8c4ac.jpg" alt="">
+                </div>
+                <div class="r-content">
+                  <p><b>Name Surname</b></p>
+                  <p>"Fugiat duis veniam culpa voluptate culpa culpa Lorem consequat."</p>
+                </div>
+              </div>
+              <div class="r-card">
+                  <div class="r-image">
+                    <img src="../../assets/imgs/african-american-teen-learning-to-drive-with-mom-123133825-580f95893df78c2c73b8c4ac.jpg" alt="">
+                  </div>
+                  <div class="r-content">
+                    <p><b>Name Surname</b></p>
+                    <p>"Fugiat duis veniam culpa voluptate culpa culpa Lorem consequat."</p>
+                  </div>
+                </div>
+                <div class="r-card">
+                    <div class="r-image">
+                      <img src="../../assets/imgs/african-american-teen-learning-to-drive-with-mom-123133825-580f95893df78c2c73b8c4ac.jpg" alt="">
+                    </div>
+                    <div class="r-content">
+                      <p><b>Name Surname</b></p>
+                      <p>"Fugiat duis veniam culpa voluptate culpa culpa Lorem consequat."</p>
+                    </div>
+                  </div>
+                  <div class="r-card">
+                      <div class="r-image">
+                        <img src="../../assets/imgs/african-american-teen-learning-to-drive-with-mom-123133825-580f95893df78c2c73b8c4ac.jpg" alt="">
+                      </div>
+                      <div class="r-content">
+                        <p><b>Name Surname</b></p>
+                        <p>"Fugiat duis veniam culpa voluptate culpa culpa Lorem consequat."</p>
+                      </div>
+                    </div>
+
+    </div>
+  </div> -->
+    <div [ngClass]="{'tutorial': !showTips,'tutorial-inactive': showTips}">
+
+      <h1>Hi there Learner!</h1>
+      <p><i>If you choose to learn to drive with a driving instructor, picking the right person is very important. You’ll learn better with someone you get along with and who makes you feel safe and comfortable. You also want to make sure that you’re being taught the correct methods – you don’t want to waste money learning the wrong thing! Here are some tips we’ve put together to help you choose the right instructor for you:</i></p>
+      <hr>
+      <h2>Find the Right Style</h2>
+      <p>What kind of teaching style suits you best? Do you do better with a softer and more gentle approach to teaching, or one more firm and disciplined? Make sure to chat to your potential instructors and find out if their teaching styles suit you. You want to create the best possible conditions for you to learn, and being taught in the right style goes a long way towards that.</p>
+      <h2>Referrals</h2>
+      <p>You should look into whether your instructor has any referrals – if people are happy enough with a service that they go out of their way to give positive feedback, this is generally an indication of a good instructor. Our site allows users to give feedback on instructors, so you’ll be able to see the reviews of potential teachers.</p>
+      <div (click)="closeTips()" class="close">Close</div>
+    </div>
+    <div class="head">
+      <div class="img">
+          <img *ngIf="user.image" src="{{user.image}}" alt="">
+          <img *ngIf="!user.image" src="../../assets/imgs/placeholder-images-image_large.png" alt="">
       </div>
     </div>
-  </div>
-</ion-content>
+    <div class="booking">
+      <div *ngIf="!request[0]" class="noreqs">
+        <h1>No Requests</h1>
+      </div>
+      <div class="card" *ngFor="let s of request; let i = index">
+        <div *ngIf="!request[0]" class="image">
+          <img *ngIf="request[0]"  src="{{s.school.image}}">
+        </div>
+        <div class="details">
+          <h3>{{s.school.schoolname}}</h3>
+          <div *ngIf="more.id==i" class="more">
+              <p>{{s.school.desc}}</p>
+          </div>
+          <div class="dates">
+              <p>Date in: {{s.request.datein | date}}</p>
+              <p>Date out: {{s.request.dateout}}</p>
+          </div>
+          <div class="pack">
+              <p>{{s.request.package.name}}: {{s.request.package.number}} lessons(s) for R{{s.request.package.amount}}.00</p>
+          </div>
+          <div class="confirmation">
+            <p *ngIf="s.request.confirmed=='waiting'" style="float: left; color: rgb(255, 153, 0);">Awaiting Confirmation</p>
+            <p *ngIf="s.request.confirmed=='accepted'" style="float: left; color: rgb(0, 185, 15);">Accepted</p>
+            <p *ngIf="s.request.confirmed=='rejected'" style="float: left; color: rgb(255, 0, 0);">Rejected</p>
+          </div>
+        </div>
+        <div class="show" (click)="showMore(i)">
+          <p *ngIf="!more.id==i">More</p>
+          <p *ngIf="more.id==i">Less</p>
+        </div>
+        <div (click)="delete(s.request.docid)" class="delete">
+          <ion-icon style="margin: auto; color: white;" name="trash"></ion-icon>
+        </div>
+      </div>
+    </div>
+  </ion-content>

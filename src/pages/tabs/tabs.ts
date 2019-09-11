@@ -8,6 +8,7 @@ import { Question4Page } from '../question4/question4';
 import { DataProvider } from '../../providers/data/data';
 
 @Component({
+  selector: 'page-tabs',
   templateUrl: 'tabs.html'
 })
 export class TabsPage {
@@ -29,7 +30,7 @@ this.alertCtrl.create({
         {
           text: 'Yes',
           handler: () => {
-            
+
           }
         },
         {

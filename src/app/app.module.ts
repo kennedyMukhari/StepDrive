@@ -31,6 +31,8 @@ import { CallNumber } from '@ionic-native/call-number';
 import { SchoolsProvider } from '../providers/schools/schools';
 import { HttpClientModule } from '@angular/common/http';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
+import { LocalNotifications } from "@ionic-native/local-notifications";
+
 @NgModule({
   declarations: [
     MyApp,
@@ -90,7 +92,8 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
     Camera,
     SchoolsProvider,
     HttpClientModule,
-    ScreenOrientation
+    ScreenOrientation,
+    LocalNotifications
   ]
 })
 export class AppModule {}

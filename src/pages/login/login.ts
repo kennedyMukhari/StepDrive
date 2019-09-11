@@ -65,7 +65,6 @@ export class LoginPage {
     if (this.tabs) {
       this.tabs.setElementStyle('display', 'none')
       console.log('Tabs', this.tabs);
-
     }
     this.keyboard
     let loading = this.loadingCtrl.create({

@@ -20,7 +20,7 @@ page-score {
   }
   .results {
     width: 100%;
-    height: 50vw;
+    height: 40vw;
     display: grid;
     align-content: center;
     p {
@@ -35,12 +35,12 @@ page-score {
   }
   .button {
     width: 100%;
-    height: 20vh;
+    height: 25vh;
     padding: 20px;
     display: flex;
     text-align: center;
     flex-direction: column;
-    overflow: hidden;
+    overflow: show;
     justify-content: center;
     .white {
       background: white !important;
@@ -49,7 +49,7 @@ page-score {
     button {
       margin: 10px auto;
       width: 80%;
-      padding: 6vw 0vw;
+      padding: 5vw 0vw;
       border-radius: 200px;
       letter-spacing: 10px;
       text-transform: uppercase;

@@ -135,7 +135,7 @@ this.users = filterd
       marker.addListener('click', () => {
         infoWindow.open(this.map, marker);
        })
-      this.addMarker(data);
+      // this.addMarker(data);
 
 
     }).catch((err) => {

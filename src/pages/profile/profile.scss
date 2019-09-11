@@ -3,6 +3,100 @@ page-profile {
     transition: 0.4s;
     transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1);
   }
+  .feedback {
+    position: absolute;
+    z-index: 25;
+    left: 0;
+    right: 0;
+    bottom: 10vw;
+    display: flex;
+    input {
+      width: 70%;
+      border: none;
+      padding: 10px;
+      background: white;
+    }
+    button {
+      background: greenyellow;
+      color: black;
+    }
+  }
+  .reviews{
+    position: absolute;
+    z-index: 20;
+    background: white;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding-bottom: 19vw;
+  }
+  .r-title{
+    background: rgb(241, 241, 241);
+    padding: 10px;
+    height: 6%;
+    p {
+      margin: 0;
+      padding: 0;
+    }
+  }
+  .r-body {
+    height: 94%;
+    overflow-y: auto;
+    .r-card {
+      box-shadow: 0px 0px 8px #17171717;
+      border-radius: 10px;
+      overflow: hidden;
+      width: 90%;
+      margin: 20px auto;
+      display: flex;
+      .r-image {
+        width: 30%;
+        img {
+          object-fit: cover;
+          width: 100%;
+          height: 100%;
+        }
+      }
+      .r-content{
+        padding: 0pxr 10px;
+      }
+    }
+  }
+  .tutorial {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.904);
+    overflow-y: auto;
+    z-index: 1700;
+    transform: scale(0);
+  }
+  .tutorial-inactive {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.904);
+    overflow-y: auto;
+    z-index: 1700;
+    transform: scale(1);
+    .close {
+      width: 90%;
+      margin: 5vw auto;
+      height: 13vw;
+      background: orange;
+      color: black;
+      display: grid;
+      align-content: center;
+      text-align: center;
+      border-radius: 200px;
+    }
+  }
+
 .head {
   width: 100%;
   height: 20%;
