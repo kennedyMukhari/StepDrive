@@ -28,11 +28,13 @@ export class ProfilePage {
   // get the request of the user
   // get the schooldata where they made the request
   ionViewDidLoad() {
+    let reviewDiv = this.element.nativeElement.children[0].children[1].children[1];
     this.plt.ready().then(ready=>{
+      this.renderer.setStyle(reviewDiv, 'top', '80%');
       this.db.collection('bookings').where('uid', '==', this.user.uid).onSnapshot(res=> {
         this.count += 1;
         // if (this.count > 1) {
-          this.pushNotification();
+          // this.pushNotification();
           console.log('Count :' , this.count);
 
         // }
@@ -55,12 +57,16 @@ this.initialiseTips();
 this.pushNotification();
   }
   reviews(event) {
-
-    console.log(event.deltaY);
-
     let reviewDiv = this.element.nativeElement.children[0].children[1].children[1];
-    this.renderer.setStyle(reviewDiv, 'top', `translateY(${event.deltaY})`);
+      let height =  this.plt.height();
+      let width =  this.plt.width();
+    console.log(event.deltaY);
+    this.renderer.setStyle(reviewDiv, 'top', `${event.deltaY}px`)
+    if (event.deltaY > height) {
+      // this.renderer.setStyle(reviewDiv, 'top', `${event.deltaY}vh`)
+    }
 
+    // console.log('Element', reviewDiv)
 
   }
   initialiseTips() {
@@ -147,7 +153,7 @@ setTimeout(() => {
       content: 'Please Wait'
     })
     loader.present()
-    this.db.collection('bookings').where('uid', '==', this.user.uid).get().then(res => {
+    this.db.collection('bookings').where('uid', '==', this.user.uid).onSnapshot(res => {
       res.forEach(doc => {
         data.request.docid = doc.id;
         // this is extreme bad programming :(
@@ -160,7 +166,7 @@ setTimeout(() => {
         data.request.dateout= doc.data().dateout
         data.request.schooluid= doc.data().schooluid
         data.request.uid= doc.data().uid
-        this.db.collection('drivingschools').where('schooluid', '==', data.request.schooluid).get().then(res => {
+        this.db.collection('drivingschools').where('schooluid', '==', data.request.schooluid).onSnapshot(res => {
           res.forEach(doc => {
             data.school.allday = doc.data().allday;
             data.school.cellnumber = doc.data().cellnumber;
