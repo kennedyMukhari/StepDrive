@@ -17,15 +17,19 @@ import { LoginPage } from '../pages/login/login';
 export class MyApp {
   rootPage:any = OnBoardingPage;
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private screenOrien: ScreenOrientation, public storage: Storage) {
+  constructor(platform: Platform,public statusBar: StatusBar, splashScreen: SplashScreen, private screenOrien: ScreenOrientation, public storage: Storage) {
     platform.ready().then(async () => {
+      statusBar.backgroundColorByHexString('#D28B2B');
       if (platform.is('android')) {
         screenOrien.lock(this.screenOrien.ORIENTATIONS.PORTRAIT);
       }
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      statusBar.styleDefault();
-      splashScreen.hide();
+      // statusBar.styleDefault();
+      setTimeout(()=>{
+        splashScreen.hide();
+      }, 1000)
+
     });
     firebase.initializeApp(firebaseConfig);
   }

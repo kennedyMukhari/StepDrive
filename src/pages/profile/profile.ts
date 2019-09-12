@@ -1,8 +1,9 @@
 import { Component, ViewChild, ElementRef, Renderer2 } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController, AlertController, ToastController, Platform } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, AlertController, ToastController, Platform, Keyboard } from 'ionic-angular';
 import * as firebase from 'firebase';
 import { Storage } from '@ionic/storage';
 import { LocalNotifications} from '@ionic-native/local-notifications';
+
 @IonicPage()
 @Component({
   selector: 'page-profile',
@@ -16,6 +17,7 @@ export class ProfilePage {
     image: null
   }
   request = []
+  userReviews = []
   school = {}
   more = {
     cond: false,
@@ -30,21 +32,33 @@ export class ProfilePage {
     image: '',
     schooluid: '',
     text: '',
-    username: ''
+    username: '',
+    rating: 0
   }
-  constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public alertCtrl: AlertController, public toastCtrl: ToastController, private store: Storage, public plt: Platform, public localNot: LocalNotifications, public element: ElementRef, public renderer: Renderer2) {
+  reviewDiv: any;
+  feedbackDiv: any;
+  constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public alertCtrl: AlertController, public toastCtrl: ToastController, private store: Storage, public plt: Platform, public localNot: LocalNotifications, public element: ElementRef, public renderer: Renderer2, public keyb: Keyboard) {
   }
   // get the request of the user
   // get the schooldata where they made the request
   ionViewDidLoad() {
-    let reviewDiv = this.element.nativeElement.children[0].children[1].children[0].children[1]
-    let feedbackDiv = this.element.nativeElement.children[0].children[1].children[0].children[0].children[2]
-    this.reviewCardLength = this.element.nativeElement.children[0].children[1].children[0].children[0].children[1].children.length
+    this.getReviews()
+    // check if all the elemnts exist
+    if (this.element.nativeElement.children[0].children[1].children[0].children[1]) {
+      this.reviewDiv = this.element.nativeElement.children[0].children[1].children[0].children[1]
+    }
+    if (this.element.nativeElement.children[0].children[1].children[0].children[0].children[2]) {
+      this.feedbackDiv = this.element.nativeElement.children[0].children[1].children[0].children[0].children[2]
+    }
+    if (this.element.nativeElement.children[0].children[1].children[0].children[0].children[1].children.length) {
+      this.reviewCardLength = this.element.nativeElement.children[0].children[1].children[0].children[0].children[1].children.length
+    }
 
+    // loop through all the reviews that are in the array
     for (let i = 0; i < this.reviewCardLength; i++) {
        let translate = i % 2;
        console.log('Translate upon load', translate);
-
+      // reference to each card
       let card = this.element.nativeElement.children[0].children[1].children[0].children[0].children[1].children[i]
       // console.log('Cards,  ', card);
       if (translate) {
@@ -53,12 +67,19 @@ export class ProfilePage {
         this.renderer.setStyle(card, 'transform', 'translateX(100vw)');
       }
     }
+    // log the page's native elements for reverence
     let Div = this.element
     console.log(Div);
 
     this.plt.ready().then(ready=>{
-      this.renderer.setStyle(reviewDiv, 'top', '80%');
-      this.renderer.setStyle(feedbackDiv, 'opacity', '0');
+      // after the platform is ready chech if the reference divs are available
+      if (this.reviewDiv) {
+        this.renderer.setStyle(this.reviewDiv, 'top', '80%');
+      }
+
+      if (this.feedbackDiv) {
+        this.renderer.setStyle(this.feedbackDiv, 'opacity', '0');
+      }
       this.db.collection('bookings').where('uid', '==', this.user.uid).onSnapshot(res=> {
         this.count += 1;
         // if (this.count > 1) {
@@ -86,8 +107,21 @@ export class ProfilePage {
 this.initialiseTips();
 this.pushNotification();
   }
-  reviews(event) {
-    // reference to the feed back div
+
+  logRatingChange(ev) {
+    console.log(ev);
+    this.review.rating = ev
+    console.log(this.review);
+
+  }
+  reviews(event, school) {
+    this.review.datecreated = new Date().toDateString();
+    console.log('the S', school);
+    console.log('Review objet', this.review);
+    if (school.request) {
+      this.review.schooluid = school.request.schooluid
+    }
+
     let feedbackDiv = this.element.nativeElement.children[0].children[1].children[0].children[0].children[2];
 
     // reference to the reviews divs
@@ -141,7 +175,23 @@ this.pushNotification();
     }
 
     // console.log('Element', reviewDiv)
-
+    if (this.revsOpen == true) {
+      let elements = document.querySelectorAll(".tabbar");
+    if (elements != null) {
+      Object.keys(elements).map((key) => {
+          elements[key].style.opacity = '0';
+      });
+      this.showTips = true;
+  }
+    } else {
+      let elements = document.querySelectorAll(".tabbar");
+    if (elements != null) {
+      Object.keys(elements).map((key) => {
+          elements[key].style.opacity = '1';
+      });
+      this.showTips = true;
+  }
+    }
   }
   initialiseTips() {
     let elements = document.querySelectorAll(".tabbar");
@@ -158,6 +208,7 @@ setTimeout(() => {
       if (elements != null) {
         Object.keys(elements).map((key) => {
             elements[key].style.display = 'none';
+            elements[key].style.transition = '0.4s';
         });
         this.showTips = true;
     }
@@ -177,24 +228,49 @@ setTimeout(() => {
     if (elements != null) {
         Object.keys(elements).map((key) => {
             elements[key].style.display = 'flex';
+            elements[key].style.transition = '0.4s';
         });
 
     }
     this.showTips = false;
   }
+
   pushNotification() {
     this.db.collection('bookings').where('uid', '==', this.user.uid).onSnapshot(res => {
-      if (this.count > 1) {
-        this.localNot.schedule({
-          id: 1,
-          title: 'StepDrive',
-          text: 'One of the driving instructors responded to your request.'
-        })
-      }
+      res.forEach(doc => {
+        if (doc.data().confirmed == 'accepted' || doc.data().confirmed == 'rejected') {
+          this.localNot.schedule({
+            id: 1,
+            title: 'StepDrive',
+            text: 'One of the driving instructors responded to your request.'
+          })
+        }
+      })
     })
   }
   sendReview() {
+    this.db.collection('reviews').doc(firebase.auth().currentUser.uid).set(this.review).then(res=> {
+      const toaster = this.toastCtrl.create({
+        message: 'Thank You',
+        duration: 2000
+      }).present()
+      this.userReviews = []
+      this.getReviews()
+    }).catch(err => {
+      const toaster = this.toastCtrl.create({
+        message: 'Oops!'+err.message,
+        duration: 2000
+      }).present()
+    })
+  }
+  getReviews() {
+    this.db.collection('reviews').get().then(res => {
+      res.forEach(doc => {
+        this.userReviews.push(doc.data());
+      })
+    }).catch(err => {
 
+    })
   }
   getBooking(){
     let data = {
@@ -259,7 +335,7 @@ setTimeout(() => {
           })
 
         })
-        // this.request = []
+        this.request = []
         this.request.push(data);
         // this.more = this.request.indexOf()
         this.count += 1;

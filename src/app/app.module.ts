@@ -96,7 +96,8 @@ import { LocalNotifications } from "@ionic-native/local-notifications";
     SchoolsProvider,
     HttpClientModule,
     ScreenOrientation,
-    LocalNotifications
+    LocalNotifications,
+
   ]
 })
 export class AppModule {}

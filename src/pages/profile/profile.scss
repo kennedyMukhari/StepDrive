@@ -14,6 +14,15 @@ page-profile {
     background: white;
     width: 90%;
     margin: auto;
+    position: relative;
+    .r-rating {
+      position: absolute;
+      top: -25px;
+      left: 10px;
+      background: linear-gradient(white,rgb(228, 228, 228));
+      padding: 0px 10px;
+      border-radius: 10px 10px 0px 0px;
+    }
     input {
       border-radius: 10px 0px 0px 10px;
       margin: 5px 0px;
@@ -72,8 +81,17 @@ page-profile {
       width: 90%;
       margin: 20px auto;
       display: flex;
+      position: relative;
+      .ionic3-star-rating {
+        position: absolute;
+        top: 0;
+        right: 0;
+      }
       .r-image {
-        width: 30%;
+        width: 50px;
+        height: 20vw;
+        overflow: hidden;
+        display: grid;
         img {
           object-fit: cover;
           width: 100%;
@@ -82,6 +100,18 @@ page-profile {
       }
       .r-content{
         padding: 0px 10px;
+        .name-rating {
+          display: flex;
+          width: 100%;
+          #name {
+            flex-basis: 50%;
+          }
+          p {
+            margin: 0;
+            padding: 7px 0px;
+          }
+
+        }
       }
     }
   }
@@ -106,6 +136,7 @@ page-profile {
     overflow-y: auto;
     z-index: 1700;
     transform: scale(1);
+    display: none;
     .close {
       width: 90%;
       margin: 5vw auto;
@@ -212,10 +243,22 @@ page-profile {
       position: absolute;
       width: 40px;
       height: 40px;
-      bottom: 0;
-      right: 0;
+      bottom: -5px;
+      right: -5px;
       z-index: 17;
-      border-radius: 10px;
+      border-radius: 20px 0px 0px 0px;
+      display: grid;
+      align-items: center;
+    }
+    .comment {
+      background: #2A324B;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      bottom: -5px;
+      left: -5px;
+      z-index: 17;
+      border-radius: 0px 20px 0px 0px;
       display: grid;
       align-items: center;
     }
