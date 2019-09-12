@@ -20,7 +20,7 @@ export class MyApp {
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private screenOrien: ScreenOrientation, public storage: Storage) {
     platform.ready().then(async () => {
       if (platform.is('android')) {
-        // screenOrien.lock(this.screenOrien.ORIENTATIONS.PORTRAIT);
+        screenOrien.lock(this.screenOrien.ORIENTATIONS.PORTRAIT);
       }
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
