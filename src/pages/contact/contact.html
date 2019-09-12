@@ -10,7 +10,8 @@
     <div class="form">
 
       <div>
-<p>Requested {{request.package.number}} lessons for R{{request.package.amount}}.00</p>
+<p *ngIf="request.package.number">Requesting {{request.package.number}} lessons for R{{request.package.amount}}.00</p>
+<p *ngIf="!request.package.number">Requested {{request.package.number}} lessons for R{{request.package.amount}}.00</p>
         <div class="input">
           <p>Date In</p>
           <ion-datetime [(ngModel)]="request.datein" style="border: solid 1px white;border-radius: 200px;" displayFormat="YYYY-MM-DD" pickerFormat="DD MMMM YYYY" ></ion-datetime>

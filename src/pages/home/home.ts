@@ -4,6 +4,7 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { Storage } from "@ionic/storage";
 import { CallNumber } from '@ionic-native/call-number';
 import { SchoolsProvider } from "../../providers/schools/schools";
+
 declare var google;
 
 import * as firebase from 'firebase';
@@ -63,6 +64,10 @@ mapCenter = {
     this.getlocation();
     this.getusers();
   }
+  logRatingChange(rating){
+    console.log("changed rating: ",rating);
+    // do your stuff
+}
   async onSearchChange(event) {
     let filterd = []
     if (event.target.value) {
