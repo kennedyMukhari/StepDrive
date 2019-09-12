@@ -23,6 +23,7 @@
     <preference name="KeyboardResize" value="false" />
     <preference name="KeyboardStyle" value="dark" />
     <preference name="resizeOnFullScreen" value="true" />
+    <preference name="GOOGLE_MAPS_ANDROID_API_KEY" value="AIzaSyAT55USDnQ-tZLHJlzryDJbxseD8sLSdZE" />
     <preference name="AndroidPersistentFileLocation" value="Compatibility" />
     <platform name="android">
         <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application" xmlns:android="http://schemas.android.com/apk/res/android">

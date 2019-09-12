@@ -1,6 +1,7 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+import { StarRatingModule } from "ionic3-star-rating";
 import { MyApp } from './app.component';
 import { IonicSwipeAllModule } from "ionic-swipe-all";
 import { ContactPage } from '../pages/contact/contact';
@@ -33,6 +34,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { LocalNotifications } from "@ionic-native/local-notifications";
 
+
 @NgModule({
   declarations: [
     MyApp,
@@ -58,7 +60,8 @@ import { LocalNotifications } from "@ionic-native/local-notifications";
     IonicModule.forRoot(MyApp),
     HttpModule,
     IonicStorageModule.forRoot(),
-    IonicSwipeAllModule
+    IonicSwipeAllModule,
+    StarRatingModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

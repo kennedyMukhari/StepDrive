@@ -72,10 +72,15 @@ export class ContactPage {
     // set the school uid
     this.request.schooluid = this.navParams.data.school.schooluid;
     // set the number of lessons
-    this.request.package.number = this.navParams.data.lessons.number;
+    if (this.navParams.data.lessons.amount) {
+      this.request.package.number = this.navParams.data.lessons.number;
     // set the cost
     this.request.package.amount = this.navParams.data.lessons.amount ;
     this.request.package.name = this.navParams.data.lessons.name ;
+    } else {
+      this.request.package.number = this.navParams.data.lessons
+      this.request.package.amount = this.navParams.data.school.cost * parseInt(this.request.package.number );
+    }
   }
 
   geocodePosition(pos){

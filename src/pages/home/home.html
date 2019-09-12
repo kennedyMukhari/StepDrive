@@ -14,7 +14,7 @@
         <div class="information">
           <div class="s-image">
             <div class="a-back">
-              <button ion-fab mini (click)="viewSchool(school)" ><ion-icon name="arrow-back"></ion-icon></button>
+              <button style="background: none !important;" ion-fab mini (click)="viewSchool(school)" ><ion-icon name="arrow-back"></ion-icon></button>
             </div>
             <img src="{{school.image}}">
           </div>
@@ -22,6 +22,16 @@
           <p>{{school.desc}}
               </p>
               <p>{{school.address}}</p>
+              <ionic3-star-rating #rating
+        activeIcon = "ios-star"
+        defaultIcon = "ios-star-outline"
+        activeColor = "#FEFFF3"
+        defaultColor = "#FEFFF3"
+        readonly = "true"
+        rating = "{{school.rating}}"
+        fontSize = "15px"
+        (ratingChanged)="logRatingChange($event)">
+    </ionic3-star-rating>
         </div>
         <div class="lesson-cont">
             <div class="lessons" *ngFor="let p of school.packages" (click)="requestLesson(school, p)">
@@ -29,7 +39,7 @@
               </div>
                     <div class="custom">
                         <div class="input">
-                           <div> <p>Custom Lessons</p>
+                           <div> <p>Custom Lessons R{{school.cost}}.00 p/l</p>
                             <input type="tel" [(ngModel)]="noLessons"></div>
                           </div>
                           <div class="r-bbutton">

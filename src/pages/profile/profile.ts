@@ -23,14 +23,42 @@ export class ProfilePage {
   }
   showTips = false;
   count = 0;
+  revsOpen = false;
+  reviewCardLength = 0;
+  review = {
+    datecreated: null,
+    image: '',
+    schooluid: '',
+    text: '',
+    username: ''
+  }
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public alertCtrl: AlertController, public toastCtrl: ToastController, private store: Storage, public plt: Platform, public localNot: LocalNotifications, public element: ElementRef, public renderer: Renderer2) {
   }
   // get the request of the user
   // get the schooldata where they made the request
   ionViewDidLoad() {
-    let reviewDiv = this.element.nativeElement.children[0].children[1].children[1];
+    let reviewDiv = this.element.nativeElement.children[0].children[1].children[0].children[1]
+    let feedbackDiv = this.element.nativeElement.children[0].children[1].children[0].children[0].children[2]
+    this.reviewCardLength = this.element.nativeElement.children[0].children[1].children[0].children[0].children[1].children.length
+
+    for (let i = 0; i < this.reviewCardLength; i++) {
+       let translate = i % 2;
+       console.log('Translate upon load', translate);
+
+      let card = this.element.nativeElement.children[0].children[1].children[0].children[0].children[1].children[i]
+      // console.log('Cards,  ', card);
+      if (translate) {
+        this.renderer.setStyle(card, 'transform', 'translateX(-100vw)');
+      } else {
+        this.renderer.setStyle(card, 'transform', 'translateX(100vw)');
+      }
+    }
+    let Div = this.element
+    console.log(Div);
+
     this.plt.ready().then(ready=>{
       this.renderer.setStyle(reviewDiv, 'top', '80%');
+      this.renderer.setStyle(feedbackDiv, 'opacity', '0');
       this.db.collection('bookings').where('uid', '==', this.user.uid).onSnapshot(res=> {
         this.count += 1;
         // if (this.count > 1) {
@@ -46,6 +74,8 @@ export class ProfilePage {
       this.db.collection('users').doc(res.uid).get().then(user => {
         if (user.data()) {
           this.user.image = user.data().image;
+          this.review.image = user.data().image;
+          this.review.username = `${user.data().name}  ${user.data().surname}`
         } else {
           console.log('Got no data');
 
@@ -57,13 +87,57 @@ this.initialiseTips();
 this.pushNotification();
   }
   reviews(event) {
-    let reviewDiv = this.element.nativeElement.children[0].children[1].children[1];
+    // reference to the feed back div
+    let feedbackDiv = this.element.nativeElement.children[0].children[1].children[0].children[0].children[2];
+
+    // reference to the reviews divs
+    let cards = this.element.nativeElement.children[0].children[1].children[0].children[0].children[1].children.length
+
+    // reference to the review div
+    let reviewDiv = this.element.nativeElement.children[0].children[1].children[0].children[0]
+
+    // reference to the device height
       let height =  this.plt.height();
-      let width =  this.plt.width();
-    console.log(event.deltaY);
-    this.renderer.setStyle(reviewDiv, 'top', `${event.deltaY}px`)
-    if (event.deltaY > height) {
-      // this.renderer.setStyle(reviewDiv, 'top', `${event.deltaY}vh`)
+    // log the event
+    console.log(event.type);
+
+    // check the event type and the status of the review div
+    if (event.type == "click" && !this.revsOpen) {
+      // loop through all the divs that hold the reviews and  apply the style depending on the translate result
+    for (let i = 0; i < cards; i++) {
+      let translate = i % 2;
+      console.log('Translate on open', translate);
+      // reference to individual divs
+      let card = this.element.nativeElement.children[0].children[1].children[0].children[0].children[1].children[i]
+      // console.log('Cards,  ', card);
+      // if translate has a reminder
+      if (translate) {
+        this.renderer.setStyle(card, 'transform', 'translateX(0vw)');
+      } else {
+        this.renderer.setStyle(card, 'transform', 'translateX(0vw)');
+      }
+    }
+      this.revsOpen = !this.revsOpen;
+      this.renderer.setStyle(reviewDiv, 'top', '10vh');
+      this.renderer.setStyle(feedbackDiv, 'opacity', '1');
+    } else {
+
+
+      for (let i = 0; i < cards; i++) {
+        let translate = i % 2;
+        console.log('Translate on close', translate);
+
+      let card = this.element.nativeElement.children[0].children[1].children[0].children[0].children[1].children[i]
+      // console.log('Cards,  ', card);
+      if (translate) {
+        this.renderer.setStyle(card, 'transform', 'translateX(-100vw)');
+      } else {
+        this.renderer.setStyle(card, 'transform', 'translateX(100vw)');
+      }
+    }
+    this.revsOpen = !this.revsOpen;
+      this.renderer.setStyle(reviewDiv, 'top', '80vh');
+      this.renderer.setStyle(feedbackDiv, 'opacity', '0');
     }
 
     // console.log('Element', reviewDiv)
@@ -118,6 +192,8 @@ setTimeout(() => {
         })
       }
     })
+  }
+  sendReview() {
 
   }
   getBooking(){
