@@ -1,16 +1,16 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
-import { NavController, AlertController, App } from 'ionic-angular';
+import { Component, ViewChild, ElementRef, Renderer2 } from '@angular/core';
+import { NavController, AlertController, App, Platform } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Storage } from "@ionic/storage";
 import { CallNumber } from '@ionic-native/call-number';
 import { SchoolsProvider } from "../../providers/schools/schools";
+import {google} from 'google-maps'
 
-declare var google;
 
 import * as firebase from 'firebase';
 import { ContactPage } from '../contact/contact';
 import { Subject } from 'rxjs/Subject';
-
+declare var google: google;
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -52,17 +52,41 @@ mapCenter = {
   searchres
   markers = []
   geocoder = new google.maps.Geocoder;
-  constructor(public navCtrl: NavController, public geolocation: Geolocation, public store: Storage, public alertCtrl: AlertController,private callNumber: CallNumber, public appCtrl: App) { }
+  viewImage = {
+    image: '',
+    open: false
+  }
+
+  constructor(public navCtrl: NavController, public geolocation: Geolocation, public store: Storage, public alertCtrl: AlertController,private callNumber: CallNumber, public appCtrl: App, public renderer: Renderer2, public plt: Platform, public elementref: ElementRef) { }
 
   ionViewDidLoad(){
-    console.log('Native el', this.placeSearch);
 
+    this.plt.ready().then(res => {
+      console.log('Platform ready response', res);
+      console.log('element reference ', this.elementref);
+      let viewimage = this.elementref.nativeElement.children[0].children[1].children[0];
+      this.renderer.setStyle(viewimage, 'transform', 'scale(0)');
+    })
     firebase.auth().onAuthStateChanged(user => {
       this.user.uid = user.uid;
       // console.log('Logg', this.user);
     })
     this.getlocation();
     this.getusers();
+  }
+  openImage(image, cmd) {
+    if (cmd == 'open') {
+      this.viewImage.image = image;
+      this.viewImage.open = true;
+      let viewimage = this.elementref.nativeElement.children[0].children[1].children[0];
+      this.renderer.setStyle(viewimage, 'opacity', '1');
+      this.renderer.setStyle(viewimage, 'transform', 'scale(1)');
+    } else {
+      this.viewImage.open = false;
+      let viewimage = this.elementref.nativeElement.children[0].children[1].children[0];
+      this.renderer.setStyle(viewimage, 'opacity', '0');
+      this.renderer.setStyle(viewimage, 'transform', 'scale(0)');
+    }
   }
   logRatingChange(rating){
     console.log("changed rating: ",rating);
@@ -92,6 +116,25 @@ this.users = filterd
   viewSchool(data) {
     this.school = data;
     this.about = !this.about;
+    let elements = document.querySelectorAll(".tabbar");
+    if (this.about) {
+      console.log('tabs should show');
+
+      if (elements) {
+        Object.keys(elements).map((key) => {
+          elements[key].style.transform = 'translateY(0vh)';
+          elements[key].style.transition = '0.4s';
+        });
+      }
+    } else {
+      if (elements) {
+        console.log('tabs should hide');
+        Object.keys(elements).map((key) => {
+          elements[key].style.transform = 'translateY(50vh)';
+          elements[key].style.transition = '0.4s';
+        });
+      }
+    }
   }
   requestLesson(school, lessons) {
    let data = {
@@ -180,18 +223,20 @@ this.users = filterd
   }
   // add marker function
   addMarker(props) {
+    console.log(props);
+
     // console.log('Marker triggerd', props);
 
     // add marker
     const marker = new google.maps.Marker({
-      position: props.schooladdress,
+      position: props.coords,
       map: this.map,
       icon: 'https://firebasestorage.googleapis.com/v0/b/step-drive-95bbe.appspot.com/o/icons8-car-16.png?alt=media&token=3a913499-e6d2-4128-9b4e-4a4ae206e08d'
     })
     // check for custom icon
     if(props.iconImage) {
       // set custom icon
-      marker.seticon()
+      marker.setIcon(props.iconImage)
     }
     // check for content
     if(props.address || props.schoolname) {

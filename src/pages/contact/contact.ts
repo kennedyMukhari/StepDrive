@@ -6,6 +6,7 @@ import { Http } from '@angular/http';
 import * as firebase from 'firebase'
 import { Question1Page } from '../question1/question1';
 import { Geolocation } from '@ionic-native/geolocation';
+import { TabsPage } from '../tabs/tabs';
 
 
 declare var google;
@@ -82,7 +83,9 @@ export class ContactPage {
       this.request.package.amount = this.navParams.data.school.cost * parseInt(this.request.package.number );
     }
   }
-
+  cancelBooking() {
+    this.navCtrl.setRoot(TabsPage)
+  }
   geocodePosition(pos){
     let geocoder = new google.maps.Geocoder();
     geocoder.geocode

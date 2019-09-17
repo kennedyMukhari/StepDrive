@@ -1,4 +1,7 @@
 <ion-content class="no-scroll">
+  <div (click)="cancelBooking()" class="cancel">
+    <button><ion-icon name="close"></ion-icon></button>
+  </div>
   <div [ngClass]="{'done': showMap, 'done-hide': !showMap}">
     <button *ngIf="showMap" (click)="displayMap()">Find Me here</button>
   </div>

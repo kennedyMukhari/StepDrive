@@ -1,4 +1,9 @@
 <ion-content>
+  <div class="viewImage">
+    <div (click)="openImage('', 'close')" class="close"><p>x</p></div>
+    <img *ngIf="viewImage.image" src="{{viewImage.image}}" alt="">
+    <img *ngIf="!viewImage.image" src="https://icon-library.net/images/image-placeholder-icon/image-placeholder-icon-3.jpg" alt="">
+  </div>
     <div [ngClass]="{'pac-card': display, 'pac-card-hide': !display}" id="pac-card">
         <div id="pac-container">
           <ion-searchbar (ionInput)="onSearchChange($event)"></ion-searchbar>
@@ -40,7 +45,32 @@
                     <div class="custom">
                         <div class="input">
                            <div> <p>Custom Lessons <br> R{{school.cost}}.00 p/l</p>
-                            <input type="tel" [(ngModel)]="noLessons"></div>
+                            <!-- <input type="tel" [(ngModel)]="noLessons"> -->
+                            <!-- <ion-label>Gender</ion-label> -->
+                            <ion-select style="background: rgba(255, 255, 255, 0) !important; margin-right: 0 !important;"[(ngModel)]="noLessons">
+                              <ion-option >1</ion-option>
+                              <ion-option >2</ion-option>
+                              <ion-option >3</ion-option>
+                              <ion-option >4</ion-option>
+                              <ion-option >5</ion-option>
+                              <ion-option >6</ion-option>
+                              <ion-option >7</ion-option>
+                              <ion-option >8</ion-option>
+                              <ion-option >9</ion-option>
+                              <ion-option >10</ion-option>
+                              <ion-option >11</ion-option>
+                              <ion-option >12</ion-option>
+                              <ion-option >13</ion-option>
+                              <ion-option >14</ion-option>
+                              <ion-option >15</ion-option>
+                              <ion-option >16</ion-option>
+                              <ion-option >17</ion-option>
+                              <ion-option >18</ion-option>
+                              <ion-option >19</ion-option>
+                              <ion-option >20</ion-option>
+
+                            </ion-select>
+                          </div>
                           </div>
                           <div class="r-bbutton">
                               <button [disabled]="!noLessons" (click)="requestLesson(school, noLessons)">Request lesson</button>
@@ -56,7 +86,7 @@
           </div>
           <div class="s-list">
             <div class="card" *ngFor="let u of users" (click)="clearMarker()">
-              <div class="image">
+              <div (click)="openImage(u.image, 'open')" class="image">
                 <img *ngIf="u.image" src="{{u.image}}" alt="">
                 <img *ngIf="!u.image" src="https://icon-library.net/images/image-placeholder-icon/image-placeholder-icon-3.jpg" alt="">
               </div>

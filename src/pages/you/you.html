@@ -46,9 +46,19 @@
         <div  class="prof-container">
           <div></div>
           <div *ngIf="!keyOpen" class="user-p">
-              <div class="prof-image">
+              <!-- <circle-progress
+              [percent]="85"
+              [radius]="100"
+              [outerStrokeWidth]="16"
+              [innerStrokeWidth]="8"
+              [outerStrokeColor]="'#78C000'"
+              [innerStrokeColor]="'#C7E596'"
+              [animation]="true"
+              [animationDuration]="300"
+            ></circle-progress> -->
+              <!-- <div class="prof-image">
                   <img src="{{user.image}}" alt="">
-                </div>
+                </div> -->
                 <div class="prof-data">
                   <h1>Hello, {{user.name}}</h1>
                   <p *ngIf="user.address">{{user.address}}</p>
@@ -76,8 +86,10 @@
               <textarea rows="5" placeholder="New Note..." [(ngModel)]="note.text"></textarea>
               <button (click)="createnote()">Create Note</button>
             </div>
+
           </div>
         </div>
       </div>
 </div>
+<div class="space"></div>
 </ion-content>

@@ -46,10 +46,10 @@ export class YouPage {
   }
   ionViewDidEnter() {
     // get the profile
-    this.getprofile();
+
   }
   ionViewDidLoad() {
-
+this.getprofile();
     firebase.auth().onAuthStateChanged(res => {
       this.user.uid = res.uid
     })
@@ -61,7 +61,33 @@ export class YouPage {
     this.getnote();
   }
   checkkeyboard() {
-    console.log('Key');
+    if (this.keyBoard.isOpen()) {
+      console.log('Key open');
+      let elements = document.querySelectorAll(".tabbar");
+      this.store.set('readTips', true)
+      console.log('tabs should show');
+
+            if (elements) {
+              Object.keys(elements).map((key) => {
+                elements[key].style.transform = 'translateY(50vh)';
+                elements[key].style.transition = '0.4s';
+              });
+            }
+    } else {
+      console.log('Key closed');
+      let elements = document.querySelectorAll(".tabbar");
+      this.store.set('readTips', true)
+      console.log('tabs should show');
+
+            if (elements) {
+              Object.keys(elements).map((key) => {
+                elements[key].style.transform = 'translateY(0vh)';
+                // elements[key].style.display = 'flex';
+                elements[key].style.transition = '0.2s';
+              });
+            }
+    }
+
 
 
   }
@@ -224,6 +250,29 @@ export class YouPage {
   editprof() {
     this.isediting = true;
     this.isprofile = !this.isprofile;
+    if (!this.isediting) {
+      let elements = document.querySelectorAll(".tabbar");
+      this.store.set('readTips', true)
+      console.log('tabs should show');
+
+            if (elements) {
+              Object.keys(elements).map((key) => {
+                elements[key].style.transform = 'translateY(50vh)';
+                elements[key].style.transition = '0.4s';
+              });
+            }
+    } else {
+      let elements = document.querySelectorAll(".tabbar");
+      this.store.set('readTips', true)
+      console.log('tabs should hide');
+
+            if (elements) {
+              Object.keys(elements).map((key) => {
+                elements[key].style.transform = 'translateY(0vh)';
+                elements[key].style.transition = '0.4s';
+              });
+            }
+    }
   }
   removeimage(){
     this.user.image = null

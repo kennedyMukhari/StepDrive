@@ -1,4 +1,7 @@
 page-profile {
+  .scroll-content {
+    overflow:  hidden !important;
+  }
   * {
     transition: 0.4s;
     transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1);
@@ -13,7 +16,7 @@ page-profile {
     display: flex;
     background: white;
     width: 90%;
-    margin: auto;
+    margin: 0px auto -10px auto;
     position: relative;
     .r-rating {
       position: absolute;
@@ -22,8 +25,10 @@ page-profile {
       background: linear-gradient(white,rgb(228, 228, 228));
       padding: 0px 10px;
       border-radius: 10px 10px 0px 0px;
+      z-index: 7;
     }
     input {
+      z-index: 10;
       border-radius: 10px 0px 0px 10px;
       margin: 5px 0px;
       width: 70%;
@@ -49,7 +54,7 @@ page-profile {
     bottom: 0;
     left: 0;
     right: 0;
-    padding-bottom: 25vw;
+    padding-bottom: 15vw;
   }
   .r-title{
     background: #FAB62B;
@@ -88,7 +93,7 @@ page-profile {
         right: 0;
       }
       .r-image {
-        width: 50px;
+        width: 80px;
         height: 20vw;
         overflow: hidden;
         display: grid;
@@ -114,17 +119,78 @@ page-profile {
         }
       }
     }
+    .tips-card {
+      box-shadow: 0px 0px 8px #17171717;
+      border-radius: 10px;
+      overflow: hidden;
+      width: 90%;
+      margin: 20px auto;
+      position: relative;
+      background: linear-gradient(rgba(250, 181, 43, 0.055)),url(../../assets/imgs/beanstalk-dark.png);
+      text-align: center;
+      animation: bacgroundmove2 2s linear infinite;
+      color: #FAB62B;
+      padding: 10px;
+      h5 {
+        margin: 0;
+        padding: 0;
+      }
+    }
   }
   .tutorial {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(255, 255, 255, 0.904);
+    top: 0vh;
+    left: 0vw;
+    right: 0vh;
+    bottom: 0vw;
+    width: 100vw;
+    height: 100vh;
+    background:  url(../../assets/icon/schoollistbg.svg),linear-gradient(rgb(240, 240, 240));
+    animation: bacgroundmove 20000s linear infinite;
+    background-attachment: fixed;
+    background-position: 105% 10%;
+    background-repeat: repeat-y;
     overflow-y: auto;
-    z-index: 1700;
-    transform: scale(0);
+    z-index: 700;
+    transform: scale(1);
+    padding: 10px;
+    blockquote {
+      border-left: solid 3px orange;
+      padding: 10px;
+      font-style: italic;
+    }
+    .close {
+      width: 90%;
+      margin: 5vw auto;
+      height: 13vw;
+      background: orange;
+      color: black;
+      display: grid;
+      align-content: center;
+      text-align: center;
+      border-radius: 200px;
+    }
+  }
+  @keyframes bacgroundmove {
+    0% {
+      background-position: 105% 10%;
+    }
+    100% {
+      background-position: 105% 10000%;
+    }
+  }
+  @keyframes bacgroundmove2 {
+    0% {
+      background-position: 0% 105%;
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.02);
+    }
+    100% {
+      background-position: 15000% 11000%;
+      transform: scale(1);
+    }
   }
   .tutorial-inactive {
     position: fixed;
@@ -180,6 +246,7 @@ page-profile {
   height: 80%;
   width: 100%;
   overflow-y: auto;
+  padding-bottom: 20vw;
   .noreqs {
     width: 100%;
     height: 100%;
@@ -255,7 +322,19 @@ page-profile {
       position: absolute;
       width: 40px;
       height: 40px;
-      bottom: -5px;
+      bottom: 0px;
+      left: -5px;
+      z-index: 17;
+      border-radius: 0px 20px 0px 0px;
+      display: grid;
+      align-items: center;
+    }
+    .comment-waiting {
+      background: rgb(173, 184, 216);
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      bottom: 0px;
       left: -5px;
       z-index: 17;
       border-radius: 0px 20px 0px 0px;

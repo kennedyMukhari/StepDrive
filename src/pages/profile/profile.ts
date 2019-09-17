@@ -1,8 +1,26 @@
-import { Component, ViewChild, ElementRef, Renderer2 } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController, AlertController, ToastController, Platform, Keyboard } from 'ionic-angular';
+import {
+  Component,
+  ViewChild,
+  ElementRef,
+  Renderer2
+} from '@angular/core';
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  LoadingController,
+  AlertController,
+  ToastController,
+  Platform,
+  Keyboard
+} from 'ionic-angular';
 import * as firebase from 'firebase';
-import { Storage } from '@ionic/storage';
-import { LocalNotifications} from '@ionic-native/local-notifications';
+import {
+  Storage
+} from '@ionic/storage';
+import {
+  LocalNotifications
+} from '@ionic-native/local-notifications';
 
 @IonicPage()
 @Component({
@@ -26,7 +44,7 @@ export class ProfilePage {
   showTips = false;
   count = 0;
   revsOpen = false;
-  reviewCardLength = 0;
+  reviewCardLength: any;
   review = {
     datecreated: null,
     image: '',
@@ -37,56 +55,57 @@ export class ProfilePage {
   }
   reviewDiv: any;
   feedbackDiv: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public alertCtrl: AlertController, public toastCtrl: ToastController, private store: Storage, public plt: Platform, public localNot: LocalNotifications, public element: ElementRef, public renderer: Renderer2, public keyb: Keyboard) {
-  }
+  constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public alertCtrl: AlertController, public toastCtrl: ToastController, private store: Storage, public plt: Platform, public localNot: LocalNotifications, public element: ElementRef, public renderer: Renderer2, public keyb: Keyboard) {}
   // get the request of the user
   // get the schooldata where they made the request
   ionViewDidLoad() {
     this.getReviews()
     // check if all the elemnts exist
     if (this.element.nativeElement.children[0].children[1].children[0].children[1]) {
-      this.reviewDiv = this.element.nativeElement.children[0].children[1].children[0].children[1]
+      this.reviewDiv = this.element.nativeElement.children[0].children[1].children[1].children[0]
+      console.log('Rev div: ', this.reviewDiv)
     }
-    if (this.element.nativeElement.children[0].children[1].children[0].children[0].children[2]) {
-      this.feedbackDiv = this.element.nativeElement.children[0].children[1].children[0].children[0].children[2]
+    if (this.element.nativeElement.children[0].children[1].children[1].children[0].children[2]) {
+      this.feedbackDiv = this.element.nativeElement.children[0].children[1].children[1].children[0].children[2]
+      console.log('Feedback div: ', this.feedbackDiv)
     }
-    if (this.element.nativeElement.children[0].children[1].children[0].children[0].children[1].children.length) {
-      this.reviewCardLength = this.element.nativeElement.children[0].children[1].children[0].children[0].children[1].children.length
+    if (this.element.nativeElement.children[0].children[1].children[1].children[0].children[1].children.length) {
+      this.reviewCardLength = this.element.nativeElement.children[0].children[1].children[1].children[0].children[1]
     }
 
     // loop through all the reviews that are in the array
-    for (let i = 0; i < this.reviewCardLength; i++) {
-       let translate = i % 2;
-       console.log('Translate upon load', translate);
+    for (let i = 0; i < this.element.nativeElement.children[0].children[1].children[1].children[0].children[1].children.length; i++) {
+      let translate = i % 2;
+      console.log('Translate upon load', translate);
       // reference to each card
-      let card = this.element.nativeElement.children[0].children[1].children[0].children[0].children[1].children[i]
+      let card = this.element.nativeElement.children[0].children[1].children[1].children[0].children[1].children[i]
       // console.log('Cards,  ', card);
       if (translate) {
-        this.renderer.setStyle(card, 'transform', 'translateX(-100vw)');
+        this.renderer.setStyle(card, 'opacity', '0');
+        // this.renderer.setStyle(card, 'transform', 'translateX(-100vw)');
       } else {
-        this.renderer.setStyle(card, 'transform', 'translateX(100vw)');
+        this.renderer.setStyle(card, 'opacity', '0');
+        // this.renderer.setStyle(card, 'transform', 'translateX(100vw)');
       }
     }
-    // log the page's native elements for reverence
+    // // log the page's native elements for reverence
     let Div = this.element
     console.log(Div);
 
-    this.plt.ready().then(ready=>{
+    this.plt.ready().then(ready => {
       // after the platform is ready chech if the reference divs are available
       if (this.reviewDiv) {
-        this.renderer.setStyle(this.reviewDiv, 'top', '80%');
+        // this.renderer.setStyle(this.reviewDiv, 'top', '80%');
       }
 
       if (this.feedbackDiv) {
-        this.renderer.setStyle(this.feedbackDiv, 'opacity', '0');
+        // this.renderer.setStyle(this.feedbackDiv, 'opacity', '0');
       }
-      this.db.collection('bookings').where('uid', '==', this.user.uid).onSnapshot(res=> {
-        this.count += 1;
-        // if (this.count > 1) {
-          // this.pushNotification();
-          console.log('Count :' , this.count);
+      this.db.collection('bookings').where('uid', '==', this.user.uid).onSnapshot(res => {
+        res.forEach(doc => {
 
-        // }
+        })
+        this.count += 1;
       })
     })
     console.log('ionViewDidLoad ProfilePage');
@@ -102,10 +121,12 @@ export class ProfilePage {
 
         }
       })
-      this.getBooking()
+      this.initialiseTips();
+      this.getBooking();
+      this.pushNotification();
     })
-this.initialiseTips();
-this.pushNotification();
+
+
   }
 
   logRatingChange(ev) {
@@ -122,35 +143,37 @@ this.pushNotification();
       this.review.schooluid = school.request.schooluid
     }
 
-    let feedbackDiv = this.element.nativeElement.children[0].children[1].children[0].children[0].children[2];
+    let feedbackDiv = this.element.nativeElement.children[0].children[1].children[1].children[0].children[2]
 
     // reference to the reviews divs
-    let cards = this.element.nativeElement.children[0].children[1].children[0].children[0].children[1].children.length
+    let cards = this.element.nativeElement.children[0].children[1].children[1].children[0].children[1].children.length
 
     // reference to the review div
-    let reviewDiv = this.element.nativeElement.children[0].children[1].children[0].children[0]
+    let reviewDiv = this.element.nativeElement.children[0].children[1].children[1].children[0]
 
     // reference to the device height
-      let height =  this.plt.height();
+    let height = this.plt.height();
     // log the event
     console.log(event.type);
 
     // check the event type and the status of the review div
     if (event.type == "click" && !this.revsOpen) {
       // loop through all the divs that hold the reviews and  apply the style depending on the translate result
-    for (let i = 0; i < cards; i++) {
-      let translate = i % 2;
-      console.log('Translate on open', translate);
-      // reference to individual divs
-      let card = this.element.nativeElement.children[0].children[1].children[0].children[0].children[1].children[i]
-      // console.log('Cards,  ', card);
-      // if translate has a reminder
-      if (translate) {
-        this.renderer.setStyle(card, 'transform', 'translateX(0vw)');
-      } else {
-        this.renderer.setStyle(card, 'transform', 'translateX(0vw)');
+      for (let i = 0; i < cards; i++) {
+        let translate = i % 2;
+        console.log('Translate on open', translate);
+        // reference to individual divs
+        let card = this.element.nativeElement.children[0].children[1].children[1].children[0].children[1].children[i]
+        // console.log('Cards,  ', card);
+        // if translate has a reminder
+        if (translate) {
+          this.renderer.setStyle(card, 'opacity', '1');
+          this.renderer.setStyle(card, 'transform', 'translateX(0vw)');
+        } else {
+          this.renderer.setStyle(card, 'opacity', '1');
+          this.renderer.setStyle(card, 'transform', 'translateX(0vw)');
+        }
       }
-    }
       this.revsOpen = !this.revsOpen;
       this.renderer.setStyle(reviewDiv, 'top', '10vh');
       this.renderer.setStyle(feedbackDiv, 'opacity', '1');
@@ -161,15 +184,17 @@ this.pushNotification();
         let translate = i % 2;
         console.log('Translate on close', translate);
 
-      let card = this.element.nativeElement.children[0].children[1].children[0].children[0].children[1].children[i]
-      // console.log('Cards,  ', card);
-      if (translate) {
-        this.renderer.setStyle(card, 'transform', 'translateX(-100vw)');
-      } else {
-        this.renderer.setStyle(card, 'transform', 'translateX(100vw)');
+        let card = this.element.nativeElement.children[0].children[1].children[1].children[0].children[1].children[i]
+        // console.log('Cards,  ', card);
+        if (translate) {
+          this.renderer.setStyle(card, 'opacity', '0');
+          this.renderer.setStyle(card, 'transform', 'translateX(-100vw)');
+        } else {
+          this.renderer.setStyle(card, 'opacity', '0');
+          this.renderer.setStyle(card, 'transform', 'translateX(100vw)');
+        }
       }
-    }
-    this.revsOpen = !this.revsOpen;
+      this.revsOpen = !this.revsOpen;
       this.renderer.setStyle(reviewDiv, 'top', '80vh');
       this.renderer.setStyle(feedbackDiv, 'opacity', '0');
     }
@@ -177,61 +202,80 @@ this.pushNotification();
     // console.log('Element', reviewDiv)
     if (this.revsOpen == true) {
       let elements = document.querySelectorAll(".tabbar");
-    if (elements != null) {
-      Object.keys(elements).map((key) => {
-          elements[key].style.opacity = '0';
-      });
-      this.showTips = true;
-  }
-    } else {
-      let elements = document.querySelectorAll(".tabbar");
-    if (elements != null) {
-      Object.keys(elements).map((key) => {
-          elements[key].style.opacity = '1';
-      });
-      this.showTips = true;
-  }
-    }
-  }
-  initialiseTips() {
-    let elements = document.querySelectorAll(".tabbar");
-    let readTips = null
-    this.store.get('readTips').then(res => {
-      readTips = res;
-    })
-setTimeout(() => {
-  console.log('readTs: ', readTips);
-
-    if (!readTips) {
-      console.log('no tip property');
-
       if (elements != null) {
         Object.keys(elements).map((key) => {
-            elements[key].style.display = 'none';
-            elements[key].style.transition = '0.4s';
+          elements[key].style.transform = 'translateY(50vh)';
+          // elements[key].style.display = 'none';
         });
-        this.showTips = true;
-    }
-
+      }
     } else {
-      console.log('tip property');
+      let elements = document.querySelectorAll(".tabbar");
+      if (elements != null) {
+        Object.keys(elements).map((key) => {
+          elements[key].style.transform = 'translateY(0vh)';
+          // elements[key].style.display = 'flex';
+        });
+      }
     }
-}, 2000);
+  }
+  openTips() {
+    this.store.set('readTips', false).then(res => {
+      this.initialiseTips();
+    })
+  }
+  async initialiseTips() {
+    let elements = document.querySelectorAll(".tabbar");
+    let readTips = null
+    // this.store.clear()
+    await this.store.get('readTips').then(async res => {
+      readTips = await res;
+      setTimeout(() => {
+        console.log('readTs: ', readTips);
 
+        if (!readTips) {
+          console.log('no tip property');
 
+          if (elements != null) {
+            console.log(' 1 tabs should hide');
+
+            Object.keys(elements).map((key) => {
+              // elements[key].style.display = 'none';
+              elements[key].style.transform = 'translateY(50vh)';
+              elements[key].style.transition = '0.4s';
+            });
+            this.showTips = true;
+          }
+
+        } else {
+          console.log('tabs should show');
+
+          Object.keys(elements).map((key) => {
+            // elements[key].style.display = 'flex';
+            elements[key].style.transform = 'translateY(0vh)';
+            elements[key].style.transition = '0.4s';
+          });
+        }
+      }, 2000);
+    })
   }
   closeTips() {
-    console.log('tip should close');
+    console.log('tabs should show');
 
     let elements = document.querySelectorAll(".tabbar");
     this.store.set('readTips', true)
-    if (elements != null) {
-        Object.keys(elements).map((key) => {
-            elements[key].style.display = 'flex';
-            elements[key].style.transition = '0.4s';
-        });
+    console.log('tabs should show');
 
-    }
+          if (!this.revsOpen) {
+            if (elements) {
+              Object.keys(elements).map((key) => {
+                elements[key].style.transform = 'translateY(0vh)';
+                // elements[key].style.display = 'flex';
+                elements[key].style.transition = '0.4s';
+              });
+            }
+          }
+
+
     this.showTips = false;
   }
 
@@ -249,22 +293,30 @@ setTimeout(() => {
     })
   }
   sendReview() {
-    this.db.collection('reviews').doc(firebase.auth().currentUser.uid).set(this.review).then(res=> {
+    if (this.review.text) {
+      this.db.collection('reviews').doc(firebase.auth().currentUser.uid).set(this.review).then(res => {
+        const toaster = this.toastCtrl.create({
+          message: 'Thank You',
+          duration: 2000
+        }).present()
+        this.userReviews = []
+        this.getReviews()
+      }).catch(err => {
+        const toaster = this.toastCtrl.create({
+          message: 'Oops!' + err.message,
+          duration: 2000
+        }).present()
+      })
+    } else {
       const toaster = this.toastCtrl.create({
-        message: 'Thank You',
+        message: 'Please write something',
         duration: 2000
       }).present()
-      this.userReviews = []
-      this.getReviews()
-    }).catch(err => {
-      const toaster = this.toastCtrl.create({
-        message: 'Oops!'+err.message,
-        duration: 2000
-      }).present()
-    })
+    }
   }
   getReviews() {
     this.db.collection('reviews').get().then(res => {
+
       res.forEach(doc => {
         this.userReviews.push(doc.data());
       })
@@ -272,7 +324,7 @@ setTimeout(() => {
 
     })
   }
-  getBooking(){
+  getBooking() {
     let data = {
       school: {
         allday: null,
@@ -305,20 +357,22 @@ setTimeout(() => {
       content: 'Please Wait'
     })
     loader.present()
-    this.db.collection('bookings').where('uid', '==', this.user.uid).onSnapshot(res => {
+    this.db.collection('bookings').where('uid', '==', this.user.uid).get().then(res => {
+      this.request = []
       res.forEach(doc => {
         data.request.docid = doc.id;
         // this is extreme bad programming :(
         data.request.book = doc.data().book;
         data.request.confirmed = doc.data().confirmed
-        data.request.location= doc.data().location
+        data.request.location = doc.data().location
         data.request.package = doc.data().package
-        data.request.datecreated= doc.data().datecreated
-        data.request.datein= doc.data().datein
-        data.request.dateout= doc.data().dateout
-        data.request.schooluid= doc.data().schooluid
-        data.request.uid= doc.data().uid
+        data.request.datecreated = doc.data().datecreated
+        data.request.datein = doc.data().datein
+        data.request.dateout = doc.data().dateout
+        data.request.schooluid = doc.data().schooluid
+        data.request.uid = doc.data().uid
         this.db.collection('drivingschools').where('schooluid', '==', data.request.schooluid).onSnapshot(res => {
+
           res.forEach(doc => {
             data.school.allday = doc.data().allday;
             data.school.cellnumber = doc.data().cellnumber;
@@ -335,7 +389,7 @@ setTimeout(() => {
           })
 
         })
-        this.request = []
+
         this.request.push(data);
         // this.more = this.request.indexOf()
         this.count += 1;
@@ -352,8 +406,7 @@ setTimeout(() => {
     const alerter = this.alertCtrl.create({
       title: 'Cancel Booking',
       message: 'Are you sure you want to cancel this request',
-      buttons: [
-        {
+      buttons: [{
           text: 'No',
           role: 'cancel'
         },
