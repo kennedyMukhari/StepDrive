@@ -23,7 +23,7 @@
     "@google/maps": "^0.5.5",
     "@ionic-native/call-number": "^4.20.0",
     "@ionic-native/camera": "^4.20.0",
-    "@ionic-native/core": "^4.20.0",
+    "@ionic-native/core": "^5.14.0",
     "@ionic-native/geolocation": "^4.20.0",
     "@ionic-native/google-maps": "^5.5.0",
     "@ionic-native/http": "^5.13.0",
@@ -98,7 +98,10 @@
       "call-number": {},
       "cordova-plugin-screen-orientation": {},
       "cordova-plugin-local-notification": {},
-      "cordova-plugin-googlemaps": {}
+      "cordova-plugin-googlemaps": {
+        "PLAY_SERVICES_VERSION": "15.0.1",
+        "ANDROID_SUPPORT_V4_VERSION": "27.+"
+      }
     },
     "platforms": [
       "android"
