@@ -1,4 +1,17 @@
 page-home {
+  .noschools {
+    text-align: center;
+    opacity: 0.5;
+  }
+  .searchbar-input {
+    // background: linear-gradient(-10deg, rgb(250, 182, 43),rgb(247, 169, 168)) !important;
+    border-radius: 0px !important;
+    // color: white !important;
+    // box-shadow: none !important;
+  }
+  .searchbar  {
+    padding: 0 !important;
+  }
   .select {
     margin: 0 !important;
     max-width: 100% !important;
@@ -81,28 +94,30 @@ page-home {
       width: 100%;
       height: 20px;
       text-align: center;
+      background: rgb(250, 182, 43);
+      box-shadow: 0px 1px 3px #1717173d;
     }
     .s-list{
       display: none;
       width: 100%;
       height: 95%;
-      background: #EEEEEE;
+      background: rgb(238, 238, 238);
       overflow-y: auto;
       .card {
         width: 95%;
         height: 100px;
         margin: 10px auto;
-        background: linear-gradient(#FFFFFF, #FEFEFE, #F0F0F0,#EEEEEE);
+        background: linear-gradient(rgb(255, 255, 255), rgb(254, 254, 254), rgb(240, 240, 240),rgb(238, 238, 238));
         display: flex;
         border-radius: 10px;
-        box-shadow: 0px 3px 2px #00000016;
+        box-shadow: 0px 3px 2px rgba(0, 0, 0, 0.086);
         .image{
           border-radius: 10px;
           overflow: hidden;
           max-width: 30%;
           min-width: 30%;
           height: 100%;
-          background: red;
+          background: rgb(255, 140, 140);
           img{
             width: 100%;
             height: 100%;
@@ -123,31 +138,33 @@ page-home {
     bottom: 0;
     top: 10vh;
     z-index: 5;
-    background: white;
+    background: rgb(255, 255, 255);
     overflow: hidden;
     .toggler {
       width: 100%;
       height: 20px;
       text-align: center;
+      background: rgb(182, 70, 95);
+      box-shadow: 0px 1px 3px #1717173d;
     }
     .s-list{
       display: block;
       width: 100%;
       height: 95%;
-      background: #EEEEEE;
+      background: rgb(238, 238, 238);
       overflow-y: auto;
       .card {
         width: 95%;
         height: 100px;
         margin: 25px auto;
-        // background: linear-gradient(#FFFFFF, #FEFEFE, #F0F0F0,#EEEEEE);
-        background: url(../../assets/icon/schoollistbg.svg);
+       color: white;
+        background: url(../../assets/icon/schoollistbg.svg),linear-gradient(10deg, rgb(42, 50, 75),rgb(182, 70, 95));
         background-attachment: fixed;
         background-repeat: repeat-y;
         background-position: 100% 0;
         display: flex;
         border-radius: 10px;
-        box-shadow: 0px 3px 2px #00000016;
+        box-shadow: 0px 3px 2px rgba(0, 0, 0, 0.086);
         position: relative;
         .call {
           position: absolute;
@@ -211,7 +228,7 @@ page-home {
           width: 100%;
           height: 50%;
           overflow: hidden;
-          background: #FAB62B;
+          background: rgb(250, 182, 43);
           border-radius: 0px 0px 50px 50px;
           text-align: center;
           overflow-y: auto;
@@ -268,8 +285,8 @@ page-home {
               position: absolute;
               bottom: 0;
               right: 0%;
-              text-shadow: 0px 2px 2px #1717174f;
-              box-shadow: 0px 2px 2px #17171713;
+              text-shadow: 0px 2px 2px rgba(23, 23, 23, 0.31);
+              box-shadow: 0px 2px 2px rgba(23, 23, 23, 0.075);
               text-transform: uppercase;
               letter-spacing: 3px;
               color:rgb(36, 36, 36);
@@ -295,14 +312,14 @@ page-home {
               button {
               // position: absolute !important;
               width: 90% !important;
-              text-shadow: 0px 2px 2px #1717174f;
-              box-shadow: 0px 2px 2px #1717174f;
+              text-shadow: 0px 2px 2px rgba(23, 23, 23, 0.31);
+              box-shadow: 0px 2px 2px rgba(23, 23, 23, 0.31);
               text-transform: uppercase;
               letter-spacing: 3px;
               color:#171717;
               border-radius: 30px;
               padding: 15px;
-              background: linear-gradient(#FFFFFF, #D1D1D1);
+              background: linear-gradient(rgb(255, 255, 255), rgb(209, 209, 209));
               width: 40%;
               font-size: 50%;
             }
@@ -317,7 +334,7 @@ page-home {
               align-content: center;
               p{
                 font-size: 80%;
-                background: linear-gradient(#767B91, #2A324B);
+                background: linear-gradient(rgb(118, 123, 145), rgb(42, 50, 75));
                 color: rgb(255, 255, 255);
                 width: 100%;
                 padding: 2px;
@@ -332,9 +349,9 @@ page-home {
                 height: 9.5vw;
                 padding: 15px 10px;
                 border: none;
-                border: solid 1px #2A324B;
+                border: solid 1px rgb(42, 50, 75);
                 background: none;
-                color: #2A324B;
+                color: rgb(42, 50, 75);
                 border-radius:0px 0px 20px 20px;
               }
             }
@@ -349,7 +366,7 @@ page-home {
         left: 0;
         bottom: 0;
         right: 0;
-        background: white;
+        background: rgb(255, 255, 255);
         position: absolute;
         z-index: 17;
         overflow: hidden;
@@ -357,7 +374,7 @@ page-home {
           width: 100%;
           height: 50%;
           overflow: hidden;
-          background: #FAB62B;
+          background: rgb(250, 182, 43);
           border-radius: 0px 0px 50px 50px;
           text-align: center;
           overflow-y: auto;
@@ -397,7 +414,7 @@ page-home {
           overflow-y: auto;
           .lessons {
             width: 40vw;
-            box-shadow: 0px 0px 8px #17171721;
+            box-shadow: 0px 0px 8px rgba(23, 23, 23, 0.129);
             margin: 5px;
             border-radius: 10px;
             text-align: center;
@@ -413,8 +430,8 @@ page-home {
               position: absolute;
               bottom: 0;
               right: 0%;
-              text-shadow: 0px 2px 2px #1717174f;
-              box-shadow: 0px 2px 2px #17171713;
+              text-shadow: 0px 2px 2px rgba(23, 23, 23, 0.31);
+              box-shadow: 0px 2px 2px rgba(23, 23, 23, 0.075);
               text-transform: uppercase;
               letter-spacing: 3px;
               color:rgb(36, 36, 36);
@@ -440,14 +457,14 @@ page-home {
               button {
               // position: absolute !important;
               width: 90% !important;
-              text-shadow: 0px 2px 2px #1717174f;
-              box-shadow: 0px 2px 2px #1717174f;
+              text-shadow: 0px 2px 2px rgba(23, 23, 23, 0.31);
+              box-shadow: 0px 2px 2px rgba(23, 23, 23, 0.31);
               text-transform: uppercase;
               letter-spacing: 3px;
               color:#171717;
               border-radius: 30px;
               padding: 15px;
-              background: linear-gradient(#FFFFFF, #D1D1D1);
+              background: linear-gradient(rgb(255, 255, 255), rgb(209, 209, 209));
               width: 40%;
               font-size: 50%;
             }
@@ -462,7 +479,7 @@ page-home {
               align-content: center;
               p{
                 font-size: 80%;
-                background: linear-gradient(#767B91, #2A324B);
+                background: linear-gradient(rgb(118, 123, 145), rgb(42, 50, 75));
                 color: rgb(255, 255, 255);
                 width: 100%;
                 padding: 2px;
@@ -477,9 +494,9 @@ page-home {
                 height: 9.5vw;
                 padding: 15px 10px;
                 border: none;
-                border: solid 1px #2A324B;
+                border: solid 1px rgb(42, 50, 75);
                 background: none;
-                color: #2A324B;
+                color: rgb(42, 50, 75);
                 border-radius:0px 0px 20px 20px;
               }
             }

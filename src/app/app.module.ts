@@ -33,7 +33,7 @@ import { SchoolsProvider } from '../providers/schools/schools';
 import { HttpClientModule } from '@angular/common/http';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { LocalNotifications } from "@ionic-native/local-notifications";
-import { NgCircleProgressModule } from 'ng-circle-progress';
+// import { NgCircleProgressModule } from 'ng-circle-progress';
 
 @NgModule({
   declarations: [
@@ -60,15 +60,6 @@ import { NgCircleProgressModule } from 'ng-circle-progress';
     IonicModule.forRoot(MyApp),
     HttpModule,
     IonicStorageModule.forRoot(),
-    NgCircleProgressModule.forRoot({
-      // set defaults here
-      radius: 100,
-      outerStrokeWidth: 16,
-      innerStrokeWidth: 8,
-      outerStrokeColor: "#78C000",
-      innerStrokeColor: "#C7E596",
-      animationDuration: 300,
-    }),
     IonicSwipeAllModule,
     StarRatingModule
   ],

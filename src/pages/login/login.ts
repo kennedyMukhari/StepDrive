@@ -9,6 +9,7 @@ import * as firebase from 'firebase';
 import { TabsPage } from '../tabs/tabs';
 import { ProfilePage } from '../profile/profile';
 import { YouPage } from '../you/you';
+import { SplashScreen } from '@ionic-native/splash-screen';
 
 @IonicPage()
 @Component({
@@ -50,7 +51,7 @@ export class LoginPage {
   }
 
 
-  constructor(public navCtrl: NavController, public forms: FormBuilder, public navParams: NavParams, public loadingCtrl: LoadingController,   public alertCtrl: AlertController, public keyboard: Keyboard, public toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController,public splashScreen: SplashScreen, public forms: FormBuilder, public navParams: NavParams, public loadingCtrl: LoadingController,   public alertCtrl: AlertController, public keyboard: Keyboard, public toastCtrl: ToastController) {
 
     this.loginForm = this.forms.group({
       email: new FormControl('', Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-.]+$')])),
@@ -75,14 +76,17 @@ export class LoginPage {
       if (user) {
         this.db.collection('users').where('uid', '==', user.uid).get().then(res => {
           if (res.empty) {
+            this.splashScreen.hide()
             loading.dismiss();
             this.navCtrl.setRoot(YouPage);
           } else {
+            this.splashScreen.hide()
             loading.dismiss();
             this.navCtrl.setRoot(TabsPage);
           }
         })
       } else {
+        this.splashScreen.hide()
         loading.dismiss();
       }
     })

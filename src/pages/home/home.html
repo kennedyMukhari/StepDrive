@@ -4,9 +4,10 @@
     <img *ngIf="viewImage.image" src="{{viewImage.image}}" alt="">
     <img *ngIf="!viewImage.image" src="https://icon-library.net/images/image-placeholder-icon/image-placeholder-icon-3.jpg" alt="">
   </div>
-    <div [ngClass]="{'pac-card': display, 'pac-card-hide': !display}" id="pac-card">
+    <div class="pac-card" id="pac-card">
+        <!-- <div [ngClass]="{'pac-card': display, 'pac-card-hide': !display}" id="pac-card"> -->
         <div id="pac-container">
-          <ion-searchbar (ionInput)="onSearchChange($event)"></ion-searchbar>
+          <ion-searchbar placeholder="Search by Location" (ionInput)="onSearchChange($event)"></ion-searchbar>
         </div>
         <div class="searchresult">
           <div class="res"  *ngFor="let u of users">
@@ -27,7 +28,7 @@
           <p>{{school.desc}}
               </p>
               <p>{{school.address}}</p>
-              <ionic3-star-rating #rating
+              <!-- <ionic3-star-rating #rating
         activeIcon = "ios-star"
         defaultIcon = "ios-star-outline"
         activeColor = "#FEFFF3"
@@ -36,10 +37,10 @@
         rating = "{{school.rating}}"
         fontSize = "15px"
         (ratingChanged)="logRatingChange($event)">
-    </ionic3-star-rating>
+    </ionic3-star-rating> -->
         </div>
         <div class="lesson-cont">
-            <div class="lessons" *ngFor="let p of school.packages" (click)="requestLesson(school, p)">
+            <div class="lessons" *ngFor="let p of school.packages" (click)="requestLesson(school, p, $event)">
                 <p><b>{{p.name}}</b> <br> {{p.number}} lessons R{{p.amount}}.00</p>
               </div>
                     <div class="custom">
@@ -85,7 +86,10 @@
               <ion-icon *ngIf="!display" class="arrow" name="arrow-dropup"></ion-icon>
           </div>
           <div class="s-list">
-            <div class="card" *ngFor="let u of users" (click)="clearMarker()">
+            <div *ngIf="!users[0]" class="noschools">
+              <p>No Driving Schools</p>
+            </div>
+            <div class="card" *ngFor="let u of users" >
               <div (click)="openImage(u.image, 'open')" class="image">
                 <img *ngIf="u.image" src="{{u.image}}" alt="">
                 <img *ngIf="!u.image" src="https://icon-library.net/images/image-placeholder-icon/image-placeholder-icon-3.jpg" alt="">

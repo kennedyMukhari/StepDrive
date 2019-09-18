@@ -96,7 +96,7 @@ mapCenter = {
     let filterd = []
     if (event.target.value) {
   this.users.forEach(element => {
-    let n:string = element.schoolname.includes(event.target.value)
+    let n:string = element.address.includes(event.target.value)
     if (n) {
       console.log('yes');
       filterd.push(element)
@@ -136,13 +136,19 @@ this.users = filterd
       }
     }
   }
-  requestLesson(school, lessons) {
+  requestLesson(school, lessons, event) {
    let data = {
       school: school,
       lessons: lessons
     }
-    console.log('Requesting', data);
-    this.appCtrl.getRootNav().setRoot(ContactPage, data);
+    console.log('event', event.path[0]);
+    this.renderer.setStyle(event.path[0], 'transition', '0.4s');
+    this.renderer.setStyle(event.path[0], 'transform', 'scale(1.01)');
+    this.renderer.setStyle(event.path[0], 'background', '#FAB62B');
+    setTimeout(()=> {
+this.appCtrl.getRootNav().push(ContactPage, data);
+    }, 400)
+    // 
   }
   async getlocation() {
     await this.geolocation.getCurrentPosition().then((resp) => {
@@ -160,7 +166,7 @@ this.users = filterd
       }
       this.store.set('homelocation', data);
 
-      this.loadMap();
+      this.loadMap(14);
       let radius = new google.maps.Circle({
         strokeColor: 'rgba(255, 154, 59, 0.589)',
         strokeOpacity: 0.01,
@@ -191,16 +197,20 @@ this.users = filterd
 
       this.mapCenter.lat = -29.465306;
       this.mapCenter.lng = 24.741967;
+
       console.log('Geo Error: ', err);
       // this.initMap()
-      this.loadMap();
+      this.loadMap(2);
+      setTimeout(()=> {
+
+      })
     })
   }
   swipeUp() {
     this.display = !this.display;
   }
 
-  async loadMap(){
+  async loadMap(zoomlevel: number){
     // console.log('Map Centerd', this.mapCenter);
 
     let location;
@@ -209,7 +219,7 @@ this.users = filterd
 
     let mapOptions = {
       center: this.mapCenter,
-      zoom: 14,
+      zoom: zoomlevel,
       mapTypeId: google.maps.MapTypeId.ROADMAP,
       disableDefaultUI: true,
       restriction: {
@@ -290,8 +300,9 @@ this.users = filterd
 
     })
   }
-  clearMarker() {
-
+  clearMarker(event) {
+    console.log(event.path[2]);
+    // this.renderer.setStyle(event.path[2], 'background', '#FAB62B')
   }
   call(school) {
 

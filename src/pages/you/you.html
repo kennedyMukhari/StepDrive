@@ -33,7 +33,7 @@
                         <button [disabled]="user.image==null" (click)="createUser(user)">Done</button>
                       </div>
           <div *ngIf="!keyOpen" class="image">
-            <img src="../../assets/imgs/blacklogo.svg">
+            <!-- <img src="../../assets/imgs/blacklogo.svg">  -->
           </div>
           <div class="foot">
               <!-- <img src="../../assets/imgs/header.svg" alt=""> -->
@@ -56,9 +56,9 @@
               [animation]="true"
               [animationDuration]="300"
             ></circle-progress> -->
-              <!-- <div class="prof-image">
+              <div class="prof-image">
                   <img src="{{user.image}}" alt="">
-                </div> -->
+                </div>
                 <div class="prof-data">
                   <h1>Hello, {{user.name}}</h1>
                   <p *ngIf="user.address">{{user.address}}</p>
@@ -75,18 +75,16 @@
           <div class="prof-notes">
             <div class="n-head">
               <h2>My Notes</h2>
+              <div class="n-new">
+                <button (click)="createnote()" ion-fab mini><ion-icon name="add"></ion-icon></button>
+              </div>
             </div>
             <div class="n-cont">
               <div *ngFor="let n of notes; let i = index" class="n-bubble">
-                <h5>Lesson {{i+1}}</h5>
+                <h5>Note {{i+1}}</h5>
                 <p>"{{n.text}}" - <sub>{{n.datecreated}}</sub> </p>
               </div>
             </div>
-            <div class="n-input">
-              <textarea rows="5" placeholder="New Note..." [(ngModel)]="note.text"></textarea>
-              <button (click)="createnote()">Create Note</button>
-            </div>
-
           </div>
         </div>
       </div>

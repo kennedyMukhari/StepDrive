@@ -21,7 +21,8 @@ export class ContactPage {
   storage = firebase.storage().ref();
   request = {
     datein: null, // from form
-    dateout: null, // from form
+     time : null, // from form
+    dateout: null, // from calculation
     book: false, // from form
     uid: null, // from auth state
     schooluid: '', // from params
@@ -34,9 +35,14 @@ export class ContactPage {
     },
     package: {
       name: '',
-      number: '',
+      number: null,
       amount: null
     }
+  }
+  dateNow = null;
+  school = {
+    open: '08:00',
+    closed: "20:00"
   }
   addressokay = false;
   message = {
@@ -59,9 +65,14 @@ export class ContactPage {
   constructor(public navCtrl: NavController,public geolocation: Geolocation, public navParams: NavParams, private http: Http, public loadingCtrl: LoadingController, public alertCtrl: AlertController, public toastCtrl: ToastController) {
   }
   ionViewDidLoad(){
+    let today = new Date().toJSON().split('T')[0];
+    this.dateNow = today;
+    console.log('now Date: ', today);
+
     this.getlocation()
     console.log('Contact', this.navParams.data);
-
+    this.school.open = this.navParams.data.school.open;
+    this.school.closed = this.navParams.data.school.closed;
     const date = new Date();
     this.request.datecreated = date.toDateString();
     firebase.auth().onAuthStateChanged(res => {
@@ -84,7 +95,7 @@ export class ContactPage {
     }
   }
   cancelBooking() {
-    this.navCtrl.setRoot(TabsPage)
+    this.navCtrl.pop()
   }
   geocodePosition(pos){
     let geocoder = new google.maps.Geocoder();
@@ -298,6 +309,38 @@ export class ContactPage {
     })
   }
   async createrequest() {
+    if (this.navParams.data.lessons.amount) {
+            // give package name a custom value
+            // get the date out
+            let Dateout = new Date(this.request.datein);
+            let newDateout = Dateout.toDateString();
+            this.request.datein = newDateout;
+      let lessons = parseInt(this.navParams.data.lessons.number);
+      let date = new Date(this.request.datein);
+      let calc = date.setTime(date.getTime() + (lessons * 24 * 60 * 60 * 1000));
+      var dateNew = new Date(calc).toDateString();
+      this.request.dateout = dateNew;
+      console.log(this.request);
+
+    } else {
+      // give package name a custom value
+      this.request.package.name = 'Custom';
+      // get the date out
+      let Dateout = new Date(this.request.datein);
+      let newDateout = Dateout.toDateString();
+      this.request.datein = newDateout;
+      // get lessons as number of days
+      let lessons = parseInt(this.navParams.data.lessons);
+      // declare the date in
+      let date = new Date(this.request.datein);
+      // calculate the number of days
+      let calc = date.setTime(date.getTime() + (lessons * 24 * 60 * 60 * 1000));
+      // convert back to date string
+      var newDate = new Date(calc).toDateString()
+      // assign to property
+      this.request.dateout = newDate;
+      console.log(this.request);
+    }
     const alerter = await this.alertCtrl.create({
       title: 'Just a moment',
       message: 'Would you like us to save this address for future use?',
@@ -307,8 +350,6 @@ export class ContactPage {
           handler: () => {
             // create the request and save the address in the profile
             this.saveAddress()
-            // console.log('Okay');
-
           }
         },
         {
@@ -317,8 +358,6 @@ export class ContactPage {
           handler: () => {
             // create the booking without savein the address in the profile
             this.justRequest()
-            // console.log('Asswipe');
-
           }
         }
       ]

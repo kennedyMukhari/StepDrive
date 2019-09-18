@@ -1,11 +1,12 @@
 import { Component, ViewChild, ElementRef, Renderer2 } from '@angular/core';
-import { IonicPage, NavController, NavParams, Keyboard, LoadingController, ToastController, App } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Keyboard, LoadingController, ToastController, App, AlertController } from 'ionic-angular';
 import { Camera, CameraOptions } from "@ionic-native/camera";
 import { FormBuilder, FormControl, FormGroup, Validator, Validators } from '@angular/forms';
 import * as firebase from 'firebase';
 import { Storage } from "@ionic/storage";
 import { LoginPage } from '../login/login';
 import { TabsPage } from '../tabs/tabs';
+import { text } from '@angular/core/src/render3/instructions';
 @IonicPage()
 @Component({
   selector: 'page-you',
@@ -18,7 +19,7 @@ export class YouPage {
     name: '',
     surname: '',
     phone: null,
-    image: null,
+    image: 'https://firebasestorage.googleapis.com/v0/b/step-drive-95bbe.appspot.com/o/1.png?alt=media&token=c023a9e6-a7a0-4af9-bd13-9778f2bea46d',
     location: {},
     uid: null
   }
@@ -36,7 +37,7 @@ export class YouPage {
   profileForm:FormGroup
   moveto = false
   isediting = false;
-  constructor(public navCtrl: NavController, public navParams: NavParams, private keyBoard: Keyboard, private renderer: Renderer2, private camera: Camera, public loadingCtrl: LoadingController, public forms: FormBuilder, public store: Storage, public toastCtrl: ToastController, private appCtrl: App) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private keyBoard: Keyboard, private renderer: Renderer2, private camera: Camera, public loadingCtrl: LoadingController, public forms: FormBuilder, public store: Storage, public toastCtrl: ToastController, private appCtrl: App,public alertCtrl: AlertController) {
     this.profileForm = this.forms.group({
       name: new FormControl(this.user.name, Validators.compose([Validators.required])),
       surname: new FormControl(this.user.surname, Validators.compose([Validators.required])),
@@ -151,23 +152,51 @@ this.getprofile();
   createnote() {
     let date = new Date();
     this.note.datecreated = date.toDateString();
-    this.db.collection('users').doc(this.user.uid).collection('notes').add(this.note).then(res => {
-      this.getnote();
+    this.alertCtrl.create({
+      title: 'Create new note.',
+      enableBackdropDismiss: false,
+      inputs:[
+        {placeholder: 'Say something',
+        type: 'text',
+        name: 'noteText'
+      }
+      ],
+      buttons: [
+        {text: 'Cancel',role: 'cancel'},
+        {text: 'Create', handler: (data) => {
+          if (!data.noteText) {
+            this.toastCtrl.create({
+              message: "Cannot create empty note",
+              duration: 3000
+            }).present()
+          } else {
+            this.note.text = data.noteText
+            console.log('data', this.note);
+            this.db.collection('users').doc(this.user.uid).collection('notes').add(this.note).then(res => {
+              this.getnote();
 
-      this.toastCtrl.create({
-        message: 'Note saved',
-        duration: 2000
-      }).present();
-      this.note.text = '';
-      this.note.datecreated = ''
-    }).catch(err => {
-      this.store.set('note', this.note);
-      this.getnote()
-      this.toastCtrl.create({
-        message: 'Saved',
-        duration: 2000
-      }).present();
-    })
+              this.toastCtrl.create({
+                message: 'Note saved',
+                duration: 2000
+              }).present();
+              this.note.text = '';
+              this.note.datecreated = ''
+            }).catch(err => {
+              this.store.set('note', this.note);
+              this.getnote()
+              this.toastCtrl.create({
+                message: 'Saved',
+                duration: 2000
+              }).present();
+            })
+          }
+        }}
+      ]
+
+    }).present()
+    /*
+
+    */
   }
   getnote(){
     this.notes = [];
@@ -236,6 +265,16 @@ this.getprofile();
         loader.dismiss();
         if (this.isediting) {
           this.isprofile = true;
+          let elements = document.querySelectorAll(".tabbar");
+          this.store.set('readTips', true)
+          console.log('tabs should show');
+
+                if (elements) {
+                  Object.keys(elements).map((key) => {
+                    elements[key].style.display = 'flex';
+                    elements[key].style.transition = '0.4s';
+                  });
+                }
         } else {
           this.navCtrl.setRoot(TabsPage);
         }
@@ -250,14 +289,14 @@ this.getprofile();
   editprof() {
     this.isediting = true;
     this.isprofile = !this.isprofile;
-    if (!this.isediting) {
+    if (this.isediting) {
       let elements = document.querySelectorAll(".tabbar");
       this.store.set('readTips', true)
       console.log('tabs should show');
 
             if (elements) {
               Object.keys(elements).map((key) => {
-                elements[key].style.transform = 'translateY(50vh)';
+                elements[key].style.display = 'none';
                 elements[key].style.transition = '0.4s';
               });
             }

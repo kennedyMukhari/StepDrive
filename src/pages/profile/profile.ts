@@ -282,12 +282,16 @@ export class ProfilePage {
   pushNotification() {
     this.db.collection('bookings').where('uid', '==', this.user.uid).onSnapshot(res => {
       res.forEach(doc => {
-        if (doc.data().confirmed == 'accepted' || doc.data().confirmed == 'rejected') {
+        if ((doc.data().confirmed == 'accepted') || (doc.data().confirmed == 'rejected') && (!doc.data().notified)) {
           this.localNot.schedule({
             id: 1,
             title: 'StepDrive',
             text: 'One of the driving instructors responded to your request.'
           })
+          this.db.collection('bookings').doc(doc.id).set(
+            {notified: true},
+            {merge: true}
+          )
         }
       })
     })
@@ -357,7 +361,7 @@ export class ProfilePage {
       content: 'Please Wait'
     })
     loader.present()
-    this.db.collection('bookings').where('uid', '==', this.user.uid).get().then(res => {
+    this.db.collection('bookings').where('uid', '==', this.user.uid).onSnapshot(res => {
       this.request = []
       res.forEach(doc => {
         data.request.docid = doc.id;
@@ -371,7 +375,7 @@ export class ProfilePage {
         data.request.dateout = doc.data().dateout
         data.request.schooluid = doc.data().schooluid
         data.request.uid = doc.data().uid
-        this.db.collection('drivingschools').where('schooluid', '==', data.request.schooluid).onSnapshot(res => {
+        this.db.collection('drivingschools').where('schooluid', '==', data.request.schooluid).get().then(res => {
 
           res.forEach(doc => {
             data.school.allday = doc.data().allday;
