@@ -60,7 +60,7 @@ export class QuizPage {
     this.landing.inactive = true;
   }
   cancel(){
-    this.navCtrl.setRoot(TabsPage)
+    this.navCtrl.pop()
   }
   checkAnswer(value) {
     console.log(value);

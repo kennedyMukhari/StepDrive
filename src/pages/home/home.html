@@ -3,6 +3,12 @@
     <div (click)="openImage('', 'close')" class="close"><p>x</p></div>
     <img *ngIf="viewImage.image" src="{{viewImage.image}}" alt="">
     <img *ngIf="!viewImage.image" src="https://icon-library.net/images/image-placeholder-icon/image-placeholder-icon-3.jpg" alt="">
+
+  </div>
+  <div class="loader">
+    <div class="maploader">
+      <ion-icon name="navigate"></ion-icon>
+    </div>
   </div>
     <div class="pac-card" id="pac-card">
         <!-- <div [ngClass]="{'pac-card': display, 'pac-card-hide': !display}" id="pac-card"> -->
@@ -15,7 +21,9 @@
           </div>
         </div>
       </div>
+
       <div #map id="map"></div>
+
     <div class="aboutschool" [ngClass]="{'aboutschool-inactive': about, 'aboutschool': !about}">
         <div class="information">
           <div class="s-image">
@@ -28,16 +36,15 @@
           <p>{{school.desc}}
               </p>
               <p>{{school.address}}</p>
-              <!-- <ionic3-star-rating #rating
+              <ionic3-star-rating #rating
         activeIcon = "ios-star"
         defaultIcon = "ios-star-outline"
         activeColor = "#FEFFF3"
         defaultColor = "#FEFFF3"
         readonly = "true"
         rating = "{{school.rating}}"
-        fontSize = "15px"
-        (ratingChanged)="logRatingChange($event)">
-    </ionic3-star-rating> -->
+        fontSize = "15px">
+    </ionic3-star-rating>
         </div>
         <div class="lesson-cont">
             <div class="lessons" *ngFor="let p of school.packages" (click)="requestLesson(school, p, $event)">

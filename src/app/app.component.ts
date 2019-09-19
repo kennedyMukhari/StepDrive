@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Platform, NavController, IonicApp, AlertController, App } from 'ionic-angular';
+import { Platform, NavController, IonicApp, App, ToastController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -10,15 +10,20 @@ import { ScreenOrientation } from "@ionic-native/screen-orientation";
 import { Storage } from '@ionic/storage';
 import { LoginPage } from '../pages/login/login';
 import {google} from 'google-maps'
-declare var google: any;
-declare var google;
+declare var google: google;
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
   rootPage:any;
 
-  constructor(public platform: Platform,public statusBar: StatusBar, splashScreen: SplashScreen, private screenOrien: ScreenOrientation, public storage: Storage, public alertCtrl: AlertController, public app: App) {
+  constructor(public platform: Platform,
+    public statusBar: StatusBar,
+    splashScreen: SplashScreen,
+    private screenOrien: ScreenOrientation,
+    public storage: Storage,
+    public toastCtrl: ToastController,
+    public app: App) {
     statusBar.backgroundColorByHexString('#D28B2B');
 
     platform.ready().then(async () => {
@@ -53,30 +58,27 @@ export class MyApp {
       // Catches the active view
       let nav = this.app.getActiveNavs()[0];
       let activeView = nav.getActive();
+
       // Checks if can go back before show up the alert
-      if(activeView.name === 'HomePage') {
+      if(activeView.name === 'HomePage' || activeView.name === 'ContactPage') {
           if (nav.canGoBack()){
               nav.pop();
           } else {
-              const alert = this.alertCtrl.create({
-                  title: 'Fechar o App',
-                  message: 'Você tem certeza?',
-                  buttons: [{
-                      text: 'Cancelar',
-                      role: 'cancel',
-                      handler: () => {
-                        this.nav.setRoot('HomePage');
-                        console.log('** Saída do App Cancelada! **');
-                      }
-                  },{
-                      text: 'Fechar o App',
-                      handler: () => {
-                        this.logout();
-                        this.platform.exitApp();
-                      }
-                  }]
-              });
-              alert.present();
+            let exittor = false;
+
+            if (exittor) {
+              this.platform.exitApp();
+            } else {
+
+            exittor = true
+            console.log(exittor);
+
+              this.toastCtrl.create({
+                message: 'Press again to exit app.',
+                duration: 2000
+              })
+            }
+
           }
       }
   });

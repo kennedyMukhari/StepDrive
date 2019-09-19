@@ -27,6 +27,6 @@ export class Question4Page {
     this.popover.create(Question3Page).present()
   }
   quiz() {
-    this.appCtrl.getRootNav().setRoot(QuizPage);
+    this.appCtrl.getRootNav().push(QuizPage);
   }
 }

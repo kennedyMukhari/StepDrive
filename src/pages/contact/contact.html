@@ -35,7 +35,7 @@
           <p>*This information is kept very safe and it is only used
               to notify the instructor where to find you.</p>
           <div class="button">
-              <button [disabled]="!addressokay" (click)="createrequest()">Send Request</button>
+              <button [disabled]="!addressokay||!request.time||!request.datein" (click)="createrequest()">Send Request</button>
             </div>
       </div>
     </div>

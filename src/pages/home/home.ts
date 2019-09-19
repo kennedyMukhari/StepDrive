@@ -143,12 +143,21 @@ this.users = filterd
     }
     console.log('event', event.path[0]);
     this.renderer.setStyle(event.path[0], 'transition', '0.4s');
-    this.renderer.setStyle(event.path[0], 'transform', 'scale(1.01)');
-    this.renderer.setStyle(event.path[0], 'background', '#FAB62B');
+    this.renderer.setStyle(event.path[0], 'transform', 'scale(1.07)');
+    this.renderer.setStyle(event.path[0], 'background', 'url(../../assets/icon/package-background.svg),linear-gradient(45deg, rgba(255, 255, 255, 0.616),rgb(250, 182, 43)');
+    setTimeout(()=>{
+      this.renderer.setStyle(event.path[0], 'transform', 'scale(1)');
+      this.renderer.setStyle(event.path[0], 'background', 'url(../../assets/icon/package-background.svg),linear-gradient(45deg, rgba(255, 255, 255, 0.616),rgb(250, 182, 43)');
+
+      ///
+      this.renderer.setStyle(event.path[0], 'background', 'url(../../assets/icon/package-background.svg),linear-gradient(45deg, rgba(255, 255, 255, 0.616),rgb(250, 182, 43)');
+
+    }, 200);
+
     setTimeout(()=> {
 this.appCtrl.getRootNav().push(ContactPage, data);
     }, 400)
-    // 
+    //
   }
   async getlocation() {
     await this.geolocation.getCurrentPosition().then((resp) => {
